@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Institute for Collaboration Architecture</title>
-    <meta name="description" content="Designing coordination infrastructure for knowledge-working organisations. The layer nobody builds.">
+    <meta name="description" content="Research, methodology, and professional development for coordination infrastructure design in knowledge-working organisations.">
     <meta property="og:title" content="Institute for Collaboration Architecture">
-    <meta property="og:description" content="Designing coordination infrastructure for knowledge-working organisations. The layer nobody builds.">
+    <meta property="og:description" content="Research, methodology, and professional development for coordination infrastructure design in knowledge-working organisations.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://incolarc.com">
     <link rel="canonical" href="https://incolarc.com">
@@ -48,7 +48,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- STRUCTURAL GRID LINES (background motif) --- */
         body::before {
             content: '';
             position: fixed;
@@ -61,7 +60,6 @@
             pointer-events: none;
         }
 
-        /* --- LAYOUT --- */
         .container {
             max-width: 760px;
             margin: 0 auto;
@@ -70,15 +68,6 @@
             z-index: 1;
         }
 
-        .wide-container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* --- HEADER / HERO --- */
         header {
             padding: 4rem 0 3rem;
             border-bottom: 2px solid var(--ink);
@@ -98,13 +87,12 @@
         }
 
         .tagline {
-            font-family: var(--mono);
-            font-size: 0.82rem;
-            font-weight: 400;
+            font-family: var(--sans);
+            font-size: 0.95rem;
+            font-weight: 300;
             color: var(--mid-grey);
-            letter-spacing: 0.03em;
             margin-top: 1.2rem;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .legal-form {
@@ -117,7 +105,6 @@
             margin-top: 0.6rem;
         }
 
-        /* --- SECTIONS --- */
         section {
             padding: 3.5rem 0;
         }
@@ -158,8 +145,7 @@
             font-weight: 600;
         }
 
-        /* --- THE PROBLEM STATEMENT --- */
-        .problem-statement {
+        .research-question {
             font-family: var(--serif);
             font-size: 1.35rem;
             line-height: 1.5;
@@ -168,7 +154,7 @@
             position: relative;
         }
 
-        .problem-statement::before {
+        .research-question::before {
             content: '';
             position: absolute;
             left: -2rem;
@@ -178,7 +164,6 @@
             background: var(--accent);
         }
 
-        /* --- GENEALOGY TIMELINE --- */
         .genealogy {
             display: grid;
             grid-template-columns: 5.5rem 1fr;
@@ -211,29 +196,28 @@
             color: var(--mid-grey);
         }
 
-        /* --- FRAMEWORKS --- */
-        .framework-grid {
+        .research-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
             margin: 2rem 0;
         }
 
-        .framework-card {
+        .research-card {
             padding: 1.5rem;
             background: rgba(255,255,255,0.5);
             border: 1px solid var(--warm-grey);
             border-top: 3px solid var(--structure);
         }
 
-        .framework-card h3 {
+        .research-card h3 {
             font-family: var(--serif);
             font-size: 1.15rem;
             margin-bottom: 0.5rem;
             color: var(--structure);
         }
 
-        .framework-card .german-term {
+        .research-card .german-term {
             font-family: var(--mono);
             font-size: 0.72rem;
             font-weight: 500;
@@ -244,12 +228,30 @@
             display: block;
         }
 
-        .framework-card p {
+        .research-card p {
             font-size: 0.88rem;
             line-height: 1.6;
         }
 
-        /* --- EA DACH BANNER --- */
+        .training-block {
+            background: rgba(255,255,255,0.5);
+            border: 1px solid var(--warm-grey);
+            padding: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .training-block h3 {
+            font-family: var(--serif);
+            font-size: 1.15rem;
+            margin-bottom: 0.8rem;
+            color: var(--structure);
+        }
+
+        .training-block p {
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+
         .conference-banner {
             background: var(--structure);
             color: var(--paper);
@@ -293,7 +295,44 @@
             line-height: 1.5;
         }
 
-        /* --- LINKS / RESOURCES --- */
+        .newsletter-block {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 2rem 2.5rem;
+            margin: 2rem 0;
+        }
+
+        .newsletter-block h3 {
+            font-family: var(--serif);
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletter-block p {
+            font-size: 0.88rem;
+            color: rgba(245,240,232,0.75);
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+        }
+
+        .newsletter-block a {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: var(--paper);
+            border: 1px solid var(--accent);
+            padding: 0.5rem 1.2rem;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .newsletter-block a:hover {
+            background: var(--accent);
+            color: var(--paper);
+        }
+
         .resource-list {
             margin: 1.5rem 0;
         }
@@ -341,7 +380,6 @@
             transition: transform 0.2s;
         }
 
-        /* --- CONTACT / FOOTER --- */
         .founder-block {
             margin: 2rem 0;
         }
@@ -402,54 +440,22 @@
             margin-left: 1.5rem;
         }
 
-        /* --- RESPONSIVE --- */
         @media (max-width: 640px) {
             html { font-size: 16px; }
-
             .institute-name { font-size: 2rem; }
-
-            .problem-statement {
-                font-size: 1.15rem;
-                padding-left: 1.5rem;
-            }
-
-            .problem-statement::before {
-                left: 0;
-            }
-
-            .framework-grid {
-                grid-template-columns: 1fr;
-                gap: 1.2rem;
-            }
-
-            .genealogy {
-                grid-template-columns: 4.5rem 1fr;
-            }
-
-            .footer-content {
-                flex-direction: column;
-            }
-
-            .conference-banner {
-                padding: 1.5rem;
-            }
+            .research-question { font-size: 1.15rem; padding-left: 1.5rem; }
+            .research-question::before { left: 0; }
+            .research-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+            .genealogy { grid-template-columns: 4.5rem 1fr; }
+            .footer-content { flex-direction: column; }
+            .conference-banner, .newsletter-block { padding: 1.5rem; }
         }
 
-        /* --- SUBTLE ANIMATION --- */
         @media (prefers-reduced-motion: no-preference) {
-            section {
-                animation: fadeUp 0.5s ease-out both;
-            }
-
+            section { animation: fadeUp 0.5s ease-out both; }
             @keyframes fadeUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(12px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+                from { opacity: 0; transform: translateY(12px); }
+                to { opacity: 1; transform: translateY(0); }
             }
         }
     </style>
@@ -458,40 +464,38 @@
 
 <div class="container">
 
-    <!-- HEADER -->
     <header>
         <h1 class="institute-name">
             <span>Institute for</span>
             <span>Collaboration Architecture</span>
         </h1>
-        <p class="tagline">Designing coordination infrastructure for knowledge-working organisations.<br>The layer nobody builds.</p>
+        <p class="tagline">Research, methodology, and professional development for coordination infrastructure design in knowledge-working organisations.</p>
         <p class="legal-form">gGmbH · Rostock, Germany</p>
     </header>
 
-    <!-- THE PROBLEM -->
+    <!-- RESEARCH QUESTION -->
     <section>
-        <div class="section-label">The Problem</div>
-        <div class="problem-statement">
-            Knowledge workers spend 70% of their week on coordination that should have been designed away. Organisations deploy tools. They restructure teams. They buy platforms. But nobody designs the infrastructure between the tools and the people.
+        <div class="section-label">The Research Question</div>
+        <div class="research-question">
+            How should organisations design the coordination infrastructure between their tools and their people — and why has no professional discipline held this mandate for the past sixty-five years?
         </div>
-        <p>Every established framework — Enterprise Architecture, ITIL, Organisational Development — reaches the boundary of coordination infrastructure and stops. Each claims adjacent territory. None occupies the operational layer where coordination actually happens.</p>
-        <p>The consequence has a name: <strong>KostenAbwälzung</strong>. When coordination infrastructure is not designed, the cost of making things work lands on whoever cannot refuse it — teams, families, frontline staff. The relevant question is not "how do people feel about collaboration?" but <em>how many hours per week are people spending on coordination work that should have been designed away?</em></p>
+        <p>Knowledge workers spend the majority of their week on coordination that was never designed. Organisations deploy tools, restructure teams, and buy platforms — but the infrastructure layer between governance and operational work remains undesigned. Every established framework — Enterprise Architecture, ITIL, Organisational Development — reaches this boundary and stops.</p>
+        <p>The Institute studies this gap, develops methodology to address it, and trains practitioners to do the work.</p>
     </section>
 
     <!-- INTELLECTUAL GENEALOGY -->
     <section>
         <div class="section-label">Intellectual Genealogy</div>
-        <h2>Sixty-five years of diagnosis.<br>No operational discipline — until now.</h2>
-        <p>Collaboration Architecture does not emerge from nowhere. It stands at the intersection of four bodies of knowledge, each of which identified part of the problem and stopped short of solving it.</p>
+        <h2>The discipline stands on sixty-five years of research that never transferred to practice.</h2>
 
         <div class="genealogy">
             <div class="genealogy-entry">
-                <div class="genealogy-year">1959</div>
-                <div class="genealogy-text"><strong>Knowledge Work Theory</strong> — Peter Drucker describes what knowledge work requires: autonomy, self-management, different structures. <em>Organisations heard "buy computers."</em></div>
-            </div>
-            <div class="genealogy-entry">
                 <div class="genealogy-year">1951</div>
                 <div class="genealogy-text"><strong>Sociotechnical Systems</strong> — Tavistock Institute establishes that technical and social systems must be designed together. <em>The principle was identified. It was not operationalised.</em></div>
+            </div>
+            <div class="genealogy-entry">
+                <div class="genealogy-year">1959</div>
+                <div class="genealogy-text"><strong>Knowledge Work Theory</strong> — Peter Drucker describes what knowledge work requires: autonomy, self-management, fundamentally different organisational structures. <em>Organisations heard "buy computers."</em></div>
             </div>
             <div class="genealogy-entry">
                 <div class="genealogy-year">1984</div>
@@ -499,63 +503,85 @@
             </div>
             <div class="genealogy-entry">
                 <div class="genealogy-year">1999</div>
-                <div class="genealogy-text"><strong>Infrastructure Studies</strong> — Susan Leigh Star develops methods for making invisible infrastructure visible. <em>Star shows how to study infrastructure. The question of how to design it remained open.</em></div>
+                <div class="genealogy-text"><strong>Infrastructure Studies</strong> — Susan Leigh Star develops methods for making invisible infrastructure visible through breakdown analysis. <em>Star shows how to study infrastructure. The question of how to design it remained open.</em></div>
             </div>
             <div class="genealogy-entry">
                 <div class="genealogy-year">2006–</div>
-                <div class="genealogy-text"><strong>The Practice Branch</strong> — Enterprise Social Networks, Working Out Loud, Digital Workplace. Everyone sold tools. <em>Nobody designed structure.</em></div>
+                <div class="genealogy-text"><strong>The Practice Branch</strong> — Enterprise Social Networks, Working Out Loud, Digital Workplace. Tools were deployed at scale. <em>Nobody designed the coordination structure around them.</em></div>
             </div>
             <div class="genealogy-entry">
                 <div class="genealogy-year">2026</div>
                 <div class="genealogy-text"><strong>Collaboration Architecture</strong> — The professional practice of designing coordination infrastructure. The operational discipline that bridges the research-practice gap.</div>
             </div>
         </div>
+
+        <p>The full argument is developed in the position paper, including the diagnosis of how responsibility for coordination currently falls between Organisational Development and IT Management, and why neither can close the gap alone.</p>
     </section>
 
-    <!-- KEY FRAMEWORKS -->
+    <!-- RESEARCH AREAS -->
     <section>
-        <div class="section-label">Key Frameworks</div>
-        <h2>Instruments, not abstractions</h2>
-        <p>These frameworks are validated through three years of embedded practice in an 11,000-person industrial organisation, not derived from theory alone.</p>
+        <div class="section-label">Research Areas</div>
+        <h2>What we study</h2>
+        <p>The Institute develops frameworks and methods grounded in three years of embedded fieldwork in an 11,000-person industrial organisation, in dialogue with CSCW research, Science and Technology Studies, and Enterprise Architecture practice.</p>
 
-        <div class="framework-grid">
-            <div class="framework-card">
+        <div class="research-grid">
+            <div class="research-card">
                 <span class="german-term">KostenAbwälzung</span>
                 <h3>Cost Externalization</h3>
-                <p>When coordination infrastructure is absent, costs transfer systematically to those who cannot refuse them. Measuring this — in hours, not satisfaction surveys — reveals the true cost of undesigned infrastructure.</p>
+                <p>How undesigned coordination infrastructure transfers costs systematically to those who cannot refuse them. Developing measurement methods based on hours and euros rather than satisfaction surveys.</p>
             </div>
-            <div class="framework-card">
+            <div class="research-card">
                 <span class="german-term">Mündigkeit</span>
                 <h3>Organisational Capacity</h3>
-                <p>The capacity for self-determined action. Build capability, not dependency. Transfer knowledge, don't hoard it. The ethical foundation of the discipline: organisations that understand their own coordination infrastructure can maintain it without permanent external help.</p>
+                <p>The conditions under which organisations develop the capacity to design and maintain their own coordination infrastructure — without permanent external dependency. The ethical foundation of the discipline.</p>
             </div>
-            <div class="framework-card">
+            <div class="research-card">
                 <span class="german-term">Trampelpfade des Wissens</span>
                 <h3>Desire Paths of Knowledge</h3>
-                <p>Mapping how information actually flows — versus how org charts suggest it should. The archaeological method that makes invisible coordination infrastructure visible before redesigning it.</p>
+                <p>Archaeological methods for mapping how information actually flows in organisations, making invisible coordination infrastructure visible as a precondition for deliberate design.</p>
             </div>
-            <div class="framework-card">
+            <div class="research-card">
                 <span class="german-term">Fachwerkhaus-Modell</span>
                 <h3>Timber-Frame Model</h3>
-                <p>A minimum viable collaborative structure — visualising the functional categories of coordination tools and the cross-braces that hold them together. The mnemonic device that makes infrastructure design tangible.</p>
+                <p>A structural model for minimum viable collaborative infrastructure — identifying functional categories of coordination tools and the cross-braces that connect them into a load-bearing whole.</p>
             </div>
         </div>
     </section>
 
-    <!-- EA DACH -->
+    <!-- TRAINING -->
     <section>
-        <div class="section-label">Current</div>
+        <div class="section-label">Training &amp; Certification</div>
+        <h2>Building the profession</h2>
+        <p>Germany has almost no Business Architect roles — while the need for coordination infrastructure design grows with every tool deployment, every AI implementation, every organisational restructure. The Institute is developing training and certification to build the profession from the ground up.</p>
+
+        <div class="training-block">
+            <h3>Business Architecture &amp; Collaboration Architecture</h3>
+            <p>Training in established Business Architecture frameworks (capability modelling, value stream mapping, strategic alignment) — combined, on request, with Collaboration Architecture qualification: the operational design layer that existing frameworks explicitly scope out.</p>
+            <p>The certification programme is portfolio-based, requiring demonstrated competence in coordination infrastructure analysis and design — not multiple-choice exams on memorised standards.</p>
+        </div>
+
+        <p>Target participants include Enterprise Architects, organisational developers, internal consultants, service designers, and project managers who encounter coordination problems their current frameworks cannot address.</p>
+    </section>
+
+    <!-- CURRENT ACTIVITY -->
+    <section>
+        <div class="section-label">Activity</div>
         <div class="conference-banner">
             <div class="event-label">Conference · May 2026</div>
             <h3>EA Insights DACH 2026, Bonn</h3>
-            <p>Talk and workshop: integrating Collaboration Architecture into the Enterprise Architecture capability model. Co-presented with an Enterprise Architect from a major industrial organisation.</p>
+            <p>Talk and workshop: integrating Collaboration Architecture into the Business Capabilities Model. Co-presented with an Enterprise Architect from a major industrial organisation.</p>
         </div>
-        <p>The Institute publishes research, develops methodology, designs certification programmes, and maintains open-source tools for the discipline. The position paper — outlining the intellectual genealogy, the diagnosis, and the operational discipline — is available on ResearchGate.</p>
+
+        <div class="newsletter-block">
+            <h3>Institute Newsletter</h3>
+            <p>Research updates, methodology development, conference reports, and new publications. Written for practitioners and researchers working on coordination infrastructure.</p>
+            <a href="#">Subscribe →</a>
+        </div>
     </section>
 
-    <!-- RESOURCES -->
+    <!-- PUBLICATIONS -->
     <section>
-        <div class="section-label">Resources</div>
+        <div class="section-label">Publications</div>
         <h2>Read the work</h2>
         <div class="resource-list">
             <a class="resource-item" href="https://www.researchgate.net/publication/401202410_Collaboration_Architecture_A_Position_Paper" target="_blank" rel="noopener">
@@ -563,7 +589,7 @@
                 <span class="resource-title">Collaboration Architecture: A Position Paper (2026)</span>
                 <span class="resource-arrow">→</span>
             </a>
-            <a class="resource-item" href="https://www.linkedin.com/company/institute-for-collaboration-architecture" target="_blank" rel="noopener">
+            <a class="resource-item" href="https://www.linkedin.com/company/institute-for-collaboration-architecture/" target="_blank" rel="noopener">
                 <span class="resource-type">LinkedIn</span>
                 <span class="resource-title">Institute for Collaboration Architecture</span>
                 <span class="resource-arrow">→</span>
@@ -582,18 +608,17 @@
         <div class="founder-block">
             <div class="founder-name">Anke Holst</div>
             <div class="founder-role">Business Architect (Collaboration Architecture)</div>
-            <p class="founder-bio">Collaborating online since the early 1990s. Advising organisations on coordination infrastructure since 2008, across UK public sector and German industry. Three years embedded in an 11,000-person industrial organisation documented the coordination failures, tool deployment patterns, and knowledge routing problems that the discipline addresses. Developing Collaboration Architecture as a professional discipline through the Institute.</p>
+            <p class="founder-bio">Collaborating online since the early 1990s. Advising organisations on coordination infrastructure since 2008, across UK public sector and German industry. Three years embedded in an 11,000-person industrial organisation produced the fieldwork, the documented coordination failures, and the methodology that the discipline is built on.</p>
         </div>
     </section>
 
     <!-- CONTACT -->
     <section>
         <div class="section-label">Contact</div>
-        <p>For research collaboration, speaking enquiries, or to discuss coordination infrastructure in your organisation:</p>
+        <p>For research collaboration, academic partnership, training enquiries, or conference invitations:</p>
         <p style="margin-top: 0.5rem;"><strong>hallo@ankeholst.de</strong></p>
     </section>
 
-    <!-- FOOTER -->
     <footer>
         <div class="footer-content">
             <div class="footer-left">
