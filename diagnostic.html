@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Does Your Organisation Need Business Architecture?</title>
+    <meta name="description" content="A diagnostic tool from the Institute for Collaboration Architecture. Find out whether your organisation's coordination infrastructure is designed — or just happening.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #1a1a1a;
+            --paper: #f5f0e8;
+            --warm-grey: #e8e0d4;
+            --mid-grey: #8a8279;
+            --accent: #c45a3c;
+            --accent-dark: #a04530;
+            --structure: #2c3e50;
+            --structure-light: #3d5a73;
+            --green: #4a7c59;
+            --amber: #b8860b;
+            --red-soft: #a04530;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+            --mono: 'IBM Plex Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { font-size: 18px; scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.7;
+            font-weight: 300;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 3rem 0 2.5rem;
+            border-bottom: 2px solid var(--ink);
+            margin-bottom: 2rem;
+        }
+
+        .institute-label {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+        }
+
+        h1 {
+            font-family: var(--serif);
+            font-size: 2.2rem;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            margin-bottom: 0.8rem;
+        }
+
+        .intro-text {
+            font-size: 0.92rem;
+            color: var(--mid-grey);
+            line-height: 1.6;
+        }
+
+        /* --- PROGRESS --- */
+        .progress-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--paper);
+            padding: 0.8rem 0 0.6rem;
+            border-bottom: 1px solid var(--warm-grey);
+        }
+
+        .progress-track {
+            height: 3px;
+            background: var(--warm-grey);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+
+        .progress-label {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: var(--mid-grey);
+            margin-top: 0.4rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* --- SECTIONS --- */
+        .diagnostic-section {
+            display: none;
+            padding: 2.5rem 0;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .diagnostic-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-number {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+        }
+
+        .section-title {
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            line-height: 1.3;
+            color: var(--structure);
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- QUESTIONS --- */
+        .question-block {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--warm-grey);
+        }
+
+        .question-block:last-child {
+            border-bottom: none;
+        }
+
+        .question-text {
+            font-size: 0.95rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            line-height: 1.55;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--warm-grey);
+            background: rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 2px;
+        }
+
+        .option:hover {
+            border-color: var(--structure-light);
+            background: rgba(255,255,255,0.7);
+        }
+
+        .option.selected {
+            border-color: var(--accent);
+            background: rgba(196,90,60,0.06);
+        }
+
+        .option-radio {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--mid-grey);
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 2px;
+            position: relative;
+            transition: border-color 0.2s;
+        }
+
+        .option.selected .option-radio {
+            border-color: var(--accent);
+        }
+
+        .option.selected .option-radio::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .option-text {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: var(--ink);
+        }
+
+        /* --- NAVIGATION --- */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0 3rem;
+            border-top: 1px solid var(--warm-grey);
+            margin-top: 1rem;
+        }
+
+        .btn {
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            padding: 0.65rem 1.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-back {
+            background: none;
+            color: var(--mid-grey);
+            padding-left: 0;
+        }
+
+        .btn-back:hover {
+            color: var(--ink);
+        }
+
+        .btn-next {
+            background: var(--structure);
+            color: var(--paper);
+            border-radius: 2px;
+        }
+
+        .btn-next:hover {
+            background: var(--ink);
+        }
+
+        .btn-next:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btn-result {
+            background: var(--accent);
+            color: var(--paper);
+            border-radius: 2px;
+            font-size: 0.85rem;
+            padding: 0.75rem 2rem;
+        }
+
+        .btn-result:hover {
+            background: var(--accent-dark);
+        }
+
+        /* --- RESULTS --- */
+        .results-section {
+            display: none;
+            padding: 2.5rem 0 3rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .result-pattern {
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent);
+        }
+
+        .result-pattern.green { border-left-color: var(--green); background: rgba(74,124,89,0.06); }
+        .result-pattern.amber { border-left-color: var(--amber); background: rgba(184,134,11,0.06); }
+        .result-pattern.red { border-left-color: var(--red-soft); background: rgba(160,69,48,0.06); }
+
+        .result-pattern h3 {
+            font-family: var(--serif);
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--structure);
+        }
+
+        .result-pattern p {
+            font-size: 0.88rem;
+            line-height: 1.65;
+            margin-bottom: 0.6rem;
+        }
+
+        .dimension-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+
+        .dimension-card {
+            padding: 1.2rem;
+            background: rgba(255,255,255,0.5);
+            border: 1px solid var(--warm-grey);
+        }
+
+        .dimension-label {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--mid-grey);
+            margin-bottom: 0.3rem;
+        }
+
+        .dimension-status {
+            font-family: var(--serif);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .dimension-status.good { color: var(--green); }
+        .dimension-status.fragile { color: var(--amber); }
+        .dimension-status.absent { color: var(--red-soft); }
+
+        .dimension-detail {
+            font-size: 0.78rem;
+            color: var(--mid-grey);
+            line-height: 1.5;
+        }
+
+        .next-steps {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--warm-grey);
+        }
+
+        .next-steps h3 {
+            font-family: var(--serif);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-link {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid var(--warm-grey);
+            text-decoration: none;
+            color: var(--ink);
+            transition: color 0.2s;
+        }
+
+        .step-link:hover { color: var(--accent); }
+
+        .step-type {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--mid-grey);
+            flex-shrink: 0;
+            width: 4.5rem;
+        }
+
+        .step-title { font-size: 0.9rem; }
+
+        .step-arrow {
+            font-family: var(--mono);
+            color: var(--accent);
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 2rem 0;
+            border-top: 2px solid var(--ink);
+            margin-top: 1rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-left {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            color: var(--mid-grey);
+        }
+
+        .footer-left a {
+            color: var(--mid-grey);
+            text-decoration: none;
+        }
+
+        .footer-left a:hover { color: var(--accent); }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 640px) {
+            html { font-size: 16px; }
+            h1 { font-size: 1.8rem; }
+            .dimension-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <div class="institute-label">Institute for Collaboration Architecture · Diagnostic Tool</div>
+        <h1>Does your organisation need Business Architecture?</h1>
+        <p class="intro-text">20 questions about how coordination actually works in your organisation. Takes about 8 minutes. No email required. Your answers stay in your browser.</p>
+    </header>
+
+    <div class="progress-bar">
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-label" id="progressLabel">Section 1 of 7</div>
+    </div>
+
+    <main id="diagnosticMain"></main>
+
+    <div class="results-section" id="resultsSection">
+        <div class="section-number">Your Pattern</div>
+        <div id="resultsContent"></div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <a href="https://incolarc.github.io">Institute for Collaboration Architecture</a> · Rostock, Germany
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<script>
+const sections = [
+    {
+        number: "Section 1 of 7",
+        title: "How does information reach people?",
+        key: "information_flow",
+        questions: [
+            {
+                text: "When someone new joins a team, how do they find out how things work here?",
+                options: [
+                    { text: "There is a structured onboarding process with documented workflows", score: 0 },
+                    { text: "Colleagues explain things informally — it works, but depends on who's available", score: 1 },
+                    { text: "They mostly figure it out alone by watching and asking", score: 2 },
+                    { text: "It depends entirely on who they happen to sit near", score: 3 }
+                ]
+            },
+            {
+                text: "If you needed a document from six months ago, how confident are you that you'd find it?",
+                options: [
+                    { text: "Very — we have a maintained, searchable knowledge base", score: 0 },
+                    { text: "Somewhat — I'd probably find it but it would take a while", score: 1 },
+                    { text: "Not at all — I'd have to ask the person who wrote it", score: 2 },
+                    { text: "It might not exist anymore, or I wouldn't know where to look", score: 3 }
+                ]
+            },
+            {
+                text: "When a decision is made in a meeting, where is it recorded?",
+                options: [
+                    { text: "In a shared system that people actually check", score: 0 },
+                    { text: "In meeting notes that someone usually writes", score: 1 },
+                    { text: "Nowhere reliably — it lives in people's heads", score: 2 },
+                    { text: "It depends entirely on who attended the meeting", score: 3 }
+                ]
+            }
+        ]
+    },
+    {
+        number: "Section 2 of 7",
+        title: "How do teams coordinate across boundaries?",
+        key: "cross_team",
+        questions: [
+            {
+                text: "When your work depends on another team's output, how do you find out what they're doing?",
+                options: [
+                    { text: "Through a shared system or defined coordination process", score: 0 },
+                    { text: "Through regular meetings set up for this purpose", score: 1 },
+                    { text: "I message someone I know personally", score: 2 },
+                    { text: "I usually don't find out until something breaks", score: 3 }
+                ]
+            },
+            {
+                text: "If a key person is absent for two weeks, what happens to cross-team coordination?",
+                options: [
+                    { text: "It continues normally — the infrastructure carries it", score: 0 },
+                    { text: "It slows down but doesn't stop", score: 1 },
+                    { text: "Specific things stop until they return", score: 2 },
+                    { text: "Nobody notices until a deadline is missed", score: 3 }
+                ]
+            },
+            {
+                text: "How many of your meetings exist primarily because no other system carries that information?",
+                options: [
+                    { text: "Very few — most meetings are for decisions, not information transfer", score: 0 },
+                    { text: "Some — we could probably replace a few with better documentation", score: 1 },
+                    { text: "Many — meetings are how we coordinate", score: 2 },
+                    { text: "Most of our meetings are information transfer that should happen differently", score: 3 }
+                ]
+            }
+        ]
+    },
+    {
+        number: "Section 3 of 7",
+        title: "Where do workarounds live?",
+        key: "workarounds",
+        questions: [
+            {
+                text: "Does your organisation have WhatsApp groups, unofficial Teams channels, or private email threads that carry real coordination work?",
+                options: [
+                    { text: "No — our official channels cover what's needed", score: 0 },
+                    { text: "A few, for specific fast-moving situations", score: 1 },
+                    { text: "Many — the informal channels are where real work gets coordinated", score: 2 },
+                    { text: "That's how most coordination actually happens", score: 3 }
+                ]
+            },
+            {
+                text: "When an official process doesn't work, what happens?",
+                options: [
+                    { text: "It gets reported, analysed, and redesigned", score: 0 },
+                    { text: "People build workarounds and eventually someone notices", score: 1 },
+                    { text: "People complain, but nothing changes", score: 2 },
+                    { text: "People quietly stop using the process and find their own way", score: 3 }
+                ]
+            }
+        ]
+    },
+    {
+        number: "Section 4 of 7",
+        title: "Who carries the coordination work?",
+        key: "coordination_labour",
+        questions: [
+            {
+                text: "Is there someone in your organisation whose unofficial job is 'making sure people talk to each other'?",
+                options: [
+                    { text: "That role is formally defined and resourced", score: 0 },
+                    { text: "One or two key people do this informally — everyone knows who they are", score: 1 },
+                    { text: "It happens but nobody is recognised for it", score: 2 },
+                    { text: "It's supposedly everyone's job, which means it's nobody's job", score: 3 }
+                ]
+            },
+            {
+                text: "When coordination fails — rework, delays, miscommunication — who absorbs the cost?",
+                options: [
+                    { text: "It's visible and addressed structurally", score: 0 },
+                    { text: "Specific teams end up doing extra work", score: 1 },
+                    { text: "Specific individuals carry it — the ones who can't say no", score: 2 },
+                    { text: "It's invisible — it shows up as overtime, stress, and turnover", score: 3 }
+                ]
+            },
+            {
+                text: "Has anyone ever measured how many hours per week people spend on coordination that could be designed away?",
+                options: [
+                    { text: "Yes — we track coordination overhead and work to reduce it", score: 0 },
+                    { text: "We've estimated it informally", score: 1 },
+                    { text: "Nobody has asked that question", score: 2 },
+                    { text: "We measure satisfaction instead", score: 3 }
+                ]
+            }
+        ]
+    },
+    {
+        number: "Section 5 of 7",
+        title: "What happens when tools get deployed?",
+        key: "tool_deployment",
+        questions: [
+            {
+                text: "When a new platform or tool is introduced, who decides how it fits into existing workflows?",
+                options: [
+                    { text: "A dedicated role designs the integration with users", score: 0 },
+                    { text: "IT configures it; users adapt", score: 1 },
+                    { text: "The vendor recommends a setup; we follow it", score: 2 },
+                    { text: "Nobody — people figure it out themselves", score: 3 }
+                ]
+            },
+            {
+                text: "After the last major tool deployment, did coordination get better, stay the same, or get more complex?",
+                options: [
+                    { text: "Better — the tool was designed into our coordination infrastructure", score: 0 },
+                    { text: "About the same — the tool added features but didn't change how we coordinate", score: 1 },
+                    { text: "More complex — we now have another system to manage alongside the old ones", score: 2 },
+                    { text: "We added another tool on top to manage the first one", score: 3 }
+                ]
+            },
+            {
+                text: "When collaboration tools are provided, are they also resourced with design and ongoing maintenance?",
+                options: [
+                    { text: "Yes — someone is responsible for how the tool is used, not just that it runs", score: 0 },
+                    { text: "Initially, but maintenance falls off after launch", score: 1 },
+                    { text: "The tool is provided and configured; usage is up to teams", score: 2 },
+                    { text: "Tools are deployed and forgotten until the next one arrives", score: 3 }
+                ]
+            }
+        ]
+    },
+    {
+        number: "Section 6 of 7",
+        title: "Who has the mandate?",
+        key: "mandate",
+        questions: [
+            {
+                text: "Is there a role in your organisation explicitly responsible for designing how teams coordinate?",
+                options: [
+                    { text: "Yes, with authority, budget, and a clear mandate", score: 0 },
+                    { text: "Someone does it informally but without formal authority", score: 1 },
+                    { text: "Someone tried, but the role wasn't supported", score: 2 },
+                    { text: "No — nobody holds that responsibility", score: 3 }
+                ]
+            },
+            {
+                text: "Where does 'how we work together' sit in your governance structure?",
+                options: [
+                    { text: "It's a board-level or leadership priority with resources behind it", score: 0 },
+                    { text: "Middle management deals with it when problems arise", score: 1 },
+                    { text: "HR runs culture programmes; IT provides tools; nobody connects the two", score: 2 },
+                    { text: "It's nobody's explicit responsibility", score: 3 }
+                ]
+            }
+        ]
+    },
+    {
+        number: "Section 7 of 7",
+        title: "How does leadership relate to coordination?",
+        key: "leadership",
+        questions: [
+            {
+                text: "Does leadership actively model collaborative behaviour?",
+                options: [
+                    { text: "Consistently — they use the same coordination infrastructure they ask teams to use", score: 0 },
+                    { text: "Sometimes — it depends on the leader", score: 1 },
+                    { text: "They talk about collaboration but operate differently themselves", score: 2 },
+                    { text: "They don't see coordination design as part of their role", score: 3 }
+                ]
+            },
+            {
+                text: "When coordination problems surface, what is leadership's typical response?",
+                options: [
+                    { text: "Investigate the structural cause and redesign", score: 0 },
+                    { text: "Add a meeting or a process to address the symptom", score: 1 },
+                    { text: "Tell teams to 'communicate better' or 'collaborate more'", score: 2 },
+                    { text: "Deploy a new tool", score: 3 }
+                ]
+            }
+        ]
+    }
+];
+
+let currentSection = 0;
+let answers = {};
+
+function init() {
+    renderSection(0);
+    updateProgress();
+}
+
+function renderSection(index) {
+    const main = document.getElementById('diagnosticMain');
+    const section = sections[index];
+
+    let html = `<div class="diagnostic-section active">
+        <div class="section-number">${section.number}</div>
+        <div class="section-title">${section.title}</div>`;
+
+    section.questions.forEach((q, qIdx) => {
+        const qKey = `${section.key}_${qIdx}`;
+        html += `<div class="question-block">
+            <div class="question-text">${q.text}</div>
+            <div class="options">`;
+
+        q.options.forEach((opt, oIdx) => {
+            const selected = answers[qKey] === oIdx ? 'selected' : '';
+            html += `<div class="option ${selected}" onclick="selectOption('${qKey}', ${oIdx}, this, ${opt.score})">
+                <div class="option-radio"></div>
+                <div class="option-text">${opt.text}</div>
+            </div>`;
+        });
+
+        html += `</div></div>`;
+    });
+
+    const isFirst = index === 0;
+    const isLast = index === sections.length - 1;
+    const allAnswered = sectionComplete(index);
+
+    html += `<div class="nav-buttons">
+        <button class="btn btn-back" onclick="goBack()" ${isFirst ? 'style="visibility:hidden"' : ''}>← Back</button>`;
+
+    if (isLast) {
+        html += `<button class="btn btn-result" onclick="showResults()" ${!allAnswered ? 'disabled' : ''}>See your pattern →</button>`;
+    } else {
+        html += `<button class="btn btn-next" onclick="goNext()" ${!allAnswered ? 'disabled' : ''}>Continue →</button>`;
+    }
+
+    html += `</div></div>`;
+
+    main.innerHTML = html;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function sectionComplete(index) {
+    const section = sections[index];
+    for (let i = 0; i < section.questions.length; i++) {
+        if (answers[`${section.key}_${i}`] === undefined) return false;
+    }
+    return true;
+}
+
+function selectOption(qKey, optionIndex, el, score) {
+    answers[qKey] = optionIndex;
+    answers[qKey + '_score'] = score;
+
+    const parent = el.closest('.options');
+    parent.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+
+    // Re-check if section is complete and update buttons
+    const allAnswered = sectionComplete(currentSection);
+    const nextBtn = document.querySelector('.btn-next, .btn-result');
+    if (nextBtn) nextBtn.disabled = !allAnswered;
+}
+
+function goNext() {
+    if (currentSection < sections.length - 1) {
+        currentSection++;
+        renderSection(currentSection);
+        updateProgress();
+    }
+}
+
+function goBack() {
+    if (currentSection > 0) {
+        currentSection--;
+        renderSection(currentSection);
+        updateProgress();
+    }
+}
+
+function updateProgress() {
+    const pct = ((currentSection) / sections.length) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = sections[currentSection].number;
+}
+
+function calculateResults() {
+    const dimensions = {};
+    let totalScore = 0;
+    let totalQuestions = 0;
+
+    sections.forEach(section => {
+        let sectionScore = 0;
+        let sectionCount = 0;
+        section.questions.forEach((q, qIdx) => {
+            const scoreKey = `${section.key}_${qIdx}_score`;
+            if (answers[scoreKey] !== undefined) {
+                sectionScore += answers[scoreKey];
+                sectionCount++;
+                totalScore += answers[scoreKey];
+                totalQuestions++;
+            }
+        });
+        dimensions[section.key] = {
+            score: sectionScore,
+            max: sectionCount * 3,
+            avg: sectionCount > 0 ? sectionScore / sectionCount : 0,
+            title: section.title
+        };
+    });
+
+    return { dimensions, totalScore, totalQuestions, avgScore: totalScore / totalQuestions };
+}
+
+function getDimensionStatus(avg) {
+    if (avg <= 0.8) return { label: 'Designed', css: 'good' };
+    if (avg <= 1.8) return { label: 'Fragile', css: 'fragile' };
+    return { label: 'Absent', css: 'absent' };
+}
+
+function showResults() {
+    document.getElementById('diagnosticMain').innerHTML = '';
+    document.querySelector('.progress-bar').style.display = 'none';
+
+    const results = calculateResults();
+    const resultsEl = document.getElementById('resultsSection');
+    resultsEl.classList.add('active');
+
+    let overallPattern, patternClass, patternTitle, patternText;
+
+    if (results.avgScore <= 0.8) {
+        patternClass = 'green';
+        patternTitle = 'Your coordination infrastructure appears designed and maintained.';
+        patternText = 'Your answers suggest that coordination in your organisation doesn\'t depend primarily on informal networks or individual heroism. Systems exist, people use them, and knowledge flows through infrastructure rather than personal relationships alone. This is rare. The question now is maintenance: coordination infrastructure degrades when it isn\'t actively maintained, especially during growth or restructuring.';
+    } else if (results.avgScore <= 1.8) {
+        patternClass = 'amber';
+        patternTitle = 'Your coordination works — but it depends on people, not infrastructure.';
+        patternText = 'Your answers suggest that coordination in your organisation functions, but relies heavily on specific individuals, informal networks, and workarounds that have grown organically. When those people are absent, when teams grow, or when new tools are deployed, coordination degrades. The informal infrastructure is real — it carries load — but it\'s fragile because nobody designed it and nobody maintains it explicitly. This is where most organisations are. It\'s also where the cost of not designing becomes measurable.';
+    } else {
+        patternClass = 'red';
+        patternTitle = 'Your coordination infrastructure is not designed.';
+        patternText = 'Your answers suggest that coordination in your organisation happens despite the system, not because of it. Information reaches people through personal networks or not at all. Tools are deployed without designing the coordination structure around them. When coordination fails, the cost is absorbed by whoever cannot refuse it — teams doing rework, individuals staying late, frontline staff navigating systems that were never designed for how work actually flows. Nobody holds the mandate for coordination infrastructure design. This is the gap that Business Architecture — specifically Collaboration Architecture — addresses.';
+    }
+
+    const dimNames = {
+        information_flow: 'Information Flow',
+        cross_team: 'Cross-team Coordination',
+        workarounds: 'Workaround Dependency',
+        coordination_labour: 'Coordination Labour',
+        tool_deployment: 'Tool Deployment',
+        mandate: 'Design Mandate',
+        leadership: 'Leadership & Coordination'
+    };
+
+    let dimHtml = '';
+    Object.entries(results.dimensions).forEach(([key, dim]) => {
+        const status = getDimensionStatus(dim.avg);
+        dimHtml += `<div class="dimension-card">
+            <div class="dimension-label">${dimNames[key] || key}</div>
+            <div class="dimension-status ${status.css}">${status.label}</div>
+            <div class="dimension-detail">${getDetailText(key, dim.avg)}</div>
+        </div>`;
+    });
+
+    resultsEl.querySelector('#resultsContent').innerHTML = `
+        <div class="result-pattern ${patternClass}">
+            <h3>${patternTitle}</h3>
+            <p>${patternText}</p>
+        </div>
+
+        <h3 style="font-family: var(--serif); font-size: 1.2rem; margin-top: 2.5rem; margin-bottom: 0.5rem;">Your seven dimensions</h3>
+        <p style="font-size: 0.88rem; color: var(--mid-grey); margin-bottom: 1rem;">How coordination infrastructure shows up — or doesn't — across your organisation.</p>
+        <div class="dimension-grid">${dimHtml}</div>
+
+        <div class="next-steps">
+            <h3>What to do with this</h3>
+            <p style="font-size: 0.88rem; line-height: 1.65; margin-bottom: 1.2rem;">This diagnostic identifies patterns, not prescriptions. The patterns tell you where coordination infrastructure is designed, where it's fragile, and where it's absent. What comes next depends on your context.</p>
+            <a class="step-link" href="https://www.researchgate.net/publication/401202410_Collaboration_Architecture_A_Position_Paper" target="_blank" rel="noopener">
+                <span class="step-type">Read</span>
+                <span class="step-title">The position paper: why this gap exists and what the discipline addresses</span>
+                <span class="step-arrow">→</span>
+            </a>
+            <a class="step-link" href="https://incolarc.github.io" target="_blank" rel="noopener">
+                <span class="step-type">Learn</span>
+                <span class="step-title">Institute for Collaboration Architecture: research, training, methodology</span>
+                <span class="step-arrow">→</span>
+            </a>
+            <a class="step-link" href="https://ankeholst.de" target="_blank" rel="noopener">
+                <span class="step-type">Explore</span>
+                <span class="step-title">Trampelpfade des Wissens workshop: map how knowledge actually flows</span>
+                <span class="step-arrow">→</span>
+            </a>
+        </div>
+
+        <div style="margin-top: 2.5rem; padding: 1.5rem; background: var(--ink); color: var(--paper);">
+            <p style="font-family: var(--serif); font-size: 1rem; margin-bottom: 0.5rem; color: var(--paper);">Share this diagnostic</p>
+            <p style="font-size: 0.82rem; color: rgba(245,240,232,0.7); margin-bottom: 0;">If this was useful, share it with someone who keeps asking why their tools don't fix their coordination problems.</p>
+        </div>
+    `;
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getDetailText(key, avg) {
+    const texts = {
+        information_flow: {
+            good: "Knowledge is documented and findable. People don't depend on who they know to get information they need.",
+            fragile: "Information reaches people, but through informal channels and personal relationships rather than designed systems.",
+            absent: "Information is trapped in heads, meetings, and personal networks. Finding what you need depends on knowing who to ask."
+        },
+        cross_team: {
+            good: "Teams coordinate through infrastructure that works regardless of who's present.",
+            fragile: "Cross-team coordination works but depends on specific people. When they're absent, things slow down.",
+            absent: "Teams operate in silos. Coordination happens through personal networks or not at all."
+        },
+        workarounds: {
+            good: "Official processes work well enough that workarounds are rare.",
+            fragile: "Workarounds exist alongside official processes. Some carry real coordination load.",
+            absent: "Informal channels and workarounds are the actual coordination infrastructure. Official processes are bypassed routinely."
+        },
+        coordination_labour: {
+            good: "Coordination work is recognised, resourced, and designed into roles.",
+            fragile: "Specific people carry coordination informally. Their contribution is visible but not formally supported.",
+            absent: "Coordination labour is invisible. The people who hold things together are unrecognised, and the cost of failure lands on whoever can't refuse it."
+        },
+        tool_deployment: {
+            good: "Tools are designed into coordination infrastructure with user involvement.",
+            fragile: "Tools are deployed with some thought about integration, but usage design is left to teams.",
+            absent: "Tools are deployed without designing the coordination structure around them. Each new tool adds complexity."
+        },
+        mandate: {
+            good: "Someone holds the explicit mandate for coordination infrastructure design.",
+            fragile: "The work gets done informally, but without formal authority or recognition.",
+            absent: "Nobody holds responsibility for designing how teams coordinate. It falls between OD and IT."
+        },
+        leadership: {
+            good: "Leadership designs coordination actively and models what they ask of teams.",
+            fragile: "Leadership supports coordination in principle but doesn't consistently model or resource it.",
+            absent: "Leadership responds to coordination failures with more meetings, more tools, or exhortations to 'collaborate better.'"
+        }
+    };
+
+    const level = avg <= 0.8 ? 'good' : avg <= 1.8 ? 'fragile' : 'absent';
+    return texts[key]?.[level] || '';
+}
+
+init();
+</script>
+
+</body>
+</html>
