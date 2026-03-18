@@ -1,31 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Institute for Collaboration Architecture</title>
-    <meta name="description" content="Research, methodology, and professional development for coordination infrastructure design in knowledge-working organisations.">
-    <meta property="og:title" content="Institute for Collaboration Architecture">
-    <meta property="og:description" content="Research, methodology, and professional development for coordination infrastructure design in knowledge-working organisations.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://incolarc.com">
-    <link rel="canonical" href="https://incolarc.com">
+    <title>Institute for Collaboration Architecture — Verein i.G.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --ink: #1a1a1a;
-            --paper: #f5f0e8;
-            --warm-grey: #e8e0d4;
-            --mid-grey: #8a8279;
-            --accent: #c45a3c;
-            --accent-dark: #a04530;
-            --structure: #2c3e50;
-            --structure-light: #3d5a73;
-            --serif: 'DM Serif Display', Georgia, serif;
-            --sans: 'IBM Plex Sans', -apple-system, sans-serif;
-            --mono: 'IBM Plex Mono', monospace;
+            --paper: #faf9f6;
+            --warm-grey: #e8e5df;
+            --mid-grey: #9a9590;
+            --accent: #8b4513;
+            --accent-light: #d4a574;
         }
 
         * {
@@ -34,605 +23,247 @@
             box-sizing: border-box;
         }
 
-        html {
-            font-size: 18px;
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: var(--sans);
+            font-family: 'Source Serif 4', Georgia, serif;
             background: var(--paper);
             color: var(--ink);
             line-height: 1.7;
-            font-weight: 300;
             -webkit-font-smoothing: antialiased;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 50%;
-            width: 1px;
-            height: 100vh;
-            background: linear-gradient(to bottom, transparent, rgba(44,62,80,0.06) 20%, rgba(44,62,80,0.06) 80%, transparent);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .container {
-            max-width: 760px;
+        .page {
+            max-width: 720px;
             margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
+            padding: 80px 24px 120px;
         }
 
-        header {
-            padding: 4rem 0 3rem;
-            border-bottom: 2px solid var(--ink);
+        /* Logo placeholder */
+        .logo-block {
+            margin-bottom: 64px;
         }
 
-        .institute-name {
-            font-family: var(--serif);
-            font-size: 2.6rem;
-            line-height: 1.15;
-            letter-spacing: -0.02em;
-            color: var(--ink);
-            margin-bottom: 0.3rem;
-        }
-
-        .institute-name span {
-            display: block;
-        }
-
-        .tagline {
-            font-family: var(--sans);
-            font-size: 0.95rem;
-            font-weight: 300;
+        .logo-placeholder {
+            width: 120px;
+            height: 120px;
+            border: 2px solid var(--warm-grey);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: var(--mid-grey);
-            margin-top: 1.2rem;
-            line-height: 1.6;
-        }
-
-        .legal-form {
-            font-family: var(--mono);
-            font-size: 0.72rem;
-            font-weight: 400;
-            color: var(--mid-grey);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            margin-top: 0.6rem;
         }
 
-        section {
-            padding: 3.5rem 0;
-        }
-
-        section + section {
-            border-top: 1px solid var(--warm-grey);
-        }
-
-        .section-label {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--accent);
-            margin-bottom: 1.2rem;
-        }
-
-        h2 {
-            font-family: var(--serif);
-            font-size: 1.8rem;
+        /* Institute name */
+        .institute-name {
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 300;
             line-height: 1.2;
             letter-spacing: -0.01em;
-            margin-bottom: 1.2rem;
-            color: var(--ink);
+            margin-bottom: 8px;
         }
 
-        p {
-            margin-bottom: 1.1rem;
-            color: var(--ink);
+        .institute-status {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            color: var(--mid-grey);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 64px;
         }
 
-        p:last-child {
+        /* Divider */
+        .divider {
+            width: 48px;
+            height: 1px;
+            background: var(--accent-light);
+            margin: 48px 0;
+        }
+
+        /* Mission text */
+        .mission {
+            font-size: 19px;
+            font-weight: 400;
+            line-height: 1.8;
             margin-bottom: 0;
         }
 
-        strong {
+        .mission p {
+            margin-bottom: 24px;
+        }
+
+        .mission p:last-child {
+            margin-bottom: 0;
             font-weight: 600;
-        }
-
-        .research-question {
-            font-family: var(--serif);
-            font-size: 1.35rem;
-            line-height: 1.5;
-            color: var(--structure);
-            padding: 2.5rem 0;
-            position: relative;
-        }
-
-        .research-question::before {
-            content: '';
-            position: absolute;
-            left: -2rem;
-            top: 2.5rem;
-            bottom: 0;
-            width: 3px;
-            background: var(--accent);
-        }
-
-        .genealogy {
-            display: grid;
-            grid-template-columns: 5.5rem 1fr;
-            gap: 0;
-            margin: 2rem 0;
-        }
-
-        .genealogy-entry {
-            display: contents;
-        }
-
-        .genealogy-year {
-            font-family: var(--mono);
-            font-size: 0.78rem;
-            font-weight: 500;
-            color: var(--accent);
-            padding: 0.9rem 0;
-            border-top: 1px solid var(--warm-grey);
-        }
-
-        .genealogy-text {
-            padding: 0.9rem 0 0.9rem 1.5rem;
-            border-top: 1px solid var(--warm-grey);
-            border-left: 1px solid var(--warm-grey);
-            font-size: 0.92rem;
-        }
-
-        .genealogy-text em {
             font-style: italic;
-            color: var(--mid-grey);
         }
 
-        .research-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin: 2rem 0;
+        /* Invitation section */
+        .invitation {
+            margin-top: 80px;
+            padding: 48px;
+            background: #f3f1ec;
+            border-left: 3px solid var(--accent-light);
         }
 
-        .research-card {
-            padding: 1.5rem;
-            background: rgba(255,255,255,0.5);
-            border: 1px solid var(--warm-grey);
-            border-top: 3px solid var(--structure);
-        }
-
-        .research-card h3 {
-            font-family: var(--serif);
-            font-size: 1.15rem;
-            margin-bottom: 0.5rem;
-            color: var(--structure);
-        }
-
-        .research-card .german-term {
-            font-family: var(--mono);
-            font-size: 0.72rem;
-            font-weight: 500;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 0.6rem;
-            display: block;
-        }
-
-        .research-card p {
-            font-size: 0.88rem;
-            line-height: 1.6;
-        }
-
-        .training-block {
-            background: rgba(255,255,255,0.5);
-            border: 1px solid var(--warm-grey);
-            padding: 2rem;
-            margin: 1.5rem 0;
-        }
-
-        .training-block h3 {
-            font-family: var(--serif);
-            font-size: 1.15rem;
-            margin-bottom: 0.8rem;
-            color: var(--structure);
-        }
-
-        .training-block p {
-            font-size: 0.88rem;
-            line-height: 1.6;
-        }
-
-        .conference-banner {
-            background: var(--structure);
-            color: var(--paper);
-            padding: 2rem 2.5rem;
-            margin: 2rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .conference-banner::after {
-            content: '';
-            position: absolute;
-            right: -20px;
-            top: -20px;
-            width: 100px;
-            height: 100px;
-            border: 2px solid rgba(196,90,60,0.4);
-            transform: rotate(45deg);
-        }
-
-        .conference-banner .event-label {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            font-weight: 500;
-            text-transform: uppercase;
+        .invitation-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
             letter-spacing: 0.12em;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .conference-banner h3 {
-            font-family: var(--serif);
-            font-size: 1.3rem;
-            line-height: 1.3;
-            margin-bottom: 0.5rem;
-        }
-
-        .conference-banner p {
-            font-size: 0.88rem;
-            color: rgba(245,240,232,0.75);
-            line-height: 1.5;
-        }
-
-        .newsletter-block {
-            background: var(--ink);
-            color: var(--paper);
-            padding: 2rem 2.5rem;
-            margin: 2rem 0;
-        }
-
-        .newsletter-block h3 {
-            font-family: var(--serif);
-            font-size: 1.15rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .newsletter-block p {
-            font-size: 0.88rem;
-            color: rgba(245,240,232,0.75);
-            line-height: 1.6;
-            margin-bottom: 0.8rem;
-        }
-
-        .newsletter-block a {
-            display: inline-block;
-            font-family: var(--mono);
-            font-size: 0.78rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            color: var(--paper);
-            border: 1px solid var(--accent);
-            padding: 0.5rem 1.2rem;
-            text-decoration: none;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .newsletter-block a:hover {
-            background: var(--accent);
-            color: var(--paper);
-        }
-
-        .resource-list {
-            margin: 1.5rem 0;
-        }
-
-        .resource-item {
-            display: flex;
-            align-items: baseline;
-            gap: 1rem;
-            padding: 0.7rem 0;
-            border-bottom: 1px solid var(--warm-grey);
-            text-decoration: none;
-            color: var(--ink);
-            transition: color 0.2s;
-        }
-
-        .resource-item:hover {
-            color: var(--accent);
-        }
-
-        .resource-item:hover .resource-arrow {
-            transform: translateX(3px);
-        }
-
-        .resource-type {
-            font-family: var(--mono);
-            font-size: 0.68rem;
-            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--mid-grey);
-            flex-shrink: 0;
-            width: 5rem;
-        }
-
-        .resource-title {
-            font-size: 0.95rem;
-            font-weight: 400;
-            flex-grow: 1;
-        }
-
-        .resource-arrow {
-            font-family: var(--mono);
             color: var(--accent);
-            flex-shrink: 0;
-            transition: transform 0.2s;
+            margin-bottom: 24px;
         }
 
-        .founder-block {
-            margin: 2rem 0;
+        .invitation-text {
+            font-size: 17px;
+            line-height: 1.8;
         }
 
-        .founder-name {
-            font-family: var(--serif);
-            font-size: 1.15rem;
-            margin-bottom: 0.2rem;
+        .invitation-text p {
+            margin-bottom: 20px;
         }
 
-        .founder-role {
-            font-size: 0.88rem;
+        .invitation-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Board section */
+        .board-section {
+            margin-top: 64px;
+        }
+
+        .board-heading {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             color: var(--mid-grey);
-            margin-bottom: 0.8rem;
+            margin-bottom: 32px;
         }
 
-        .founder-bio {
-            font-size: 0.88rem;
-            line-height: 1.65;
+        .board-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 24px;
         }
 
-        footer {
-            padding: 2.5rem 0;
-            border-top: 2px solid var(--ink);
-            margin-top: 1rem;
+        .board-member {
+            padding: 20px 0;
+            border-top: 1px solid var(--warm-grey);
         }
 
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
-            gap: 1rem;
+        .board-member-name {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: var(--ink);
         }
 
-        .footer-left {
-            font-family: var(--mono);
-            font-size: 0.72rem;
+        .board-member-role {
+            font-size: 14px;
+            color: var(--mid-grey);
+            font-style: italic;
+        }
+
+        .board-member.placeholder .board-member-name {
             color: var(--mid-grey);
         }
 
-        .footer-right {
-            font-family: var(--mono);
-            font-size: 0.72rem;
+        /* Contact */
+        .contact {
+            margin-top: 80px;
+            padding-top: 48px;
+            border-top: 1px solid var(--warm-grey);
         }
 
-        .footer-right a {
+        .contact-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             color: var(--mid-grey);
+            margin-bottom: 16px;
+        }
+
+        .contact-detail {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .contact-detail a {
+            color: var(--accent);
             text-decoration: none;
-            transition: color 0.2s;
+            border-bottom: 1px solid var(--accent-light);
         }
 
-        .footer-right a:hover {
-            color: var(--accent);
+        .contact-detail a:hover {
+            border-bottom-color: var(--accent);
         }
 
-        .footer-right a + a {
-            margin-left: 1.5rem;
+        /* Footer */
+        .footer {
+            margin-top: 80px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            color: var(--mid-grey);
         }
 
-        @media (max-width: 640px) {
-            html { font-size: 16px; }
-            .institute-name { font-size: 2rem; }
-            .research-question { font-size: 1.15rem; padding-left: 1.5rem; }
-            .research-question::before { left: 0; }
-            .research-grid { grid-template-columns: 1fr; gap: 1.2rem; }
-            .genealogy { grid-template-columns: 4.5rem 1fr; }
-            .footer-content { flex-direction: column; }
-            .conference-banner, .newsletter-block { padding: 1.5rem; }
-        }
-
-        @media (prefers-reduced-motion: no-preference) {
-            section { animation: fadeUp 0.5s ease-out both; }
-            @keyframes fadeUp {
-                from { opacity: 0; transform: translateY(12px); }
-                to { opacity: 1; transform: translateY(0); }
+        @media (max-width: 600px) {
+            .page {
+                padding: 48px 20px 80px;
+            }
+            .invitation {
+                padding: 32px 24px;
+            }
+            .board-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <div class="page">
 
-<div class="container">
-
-    <header>
-        <h1 class="institute-name">
-            <span>Institute for</span>
-            <span>Collaboration Architecture</span>
-        </h1>
-        <p class="tagline">Research, methodology, and professional development for coordination infrastructure design in knowledge-working organisations.</p>
-        <p class="legal-form">gGmbH · Rostock, Germany</p>
-    </header>
-
-    <!-- RESEARCH QUESTION -->
-    <section>
-        <div class="section-label">The Research Question</div>
-        <div class="research-question">
-            How should organisations design the coordination infrastructure between their tools and their people — and why has no professional discipline held this mandate for the past sixty-five years?
+        <div class="logo-block">
+            <div class="logo-placeholder">Logo</div>
         </div>
-        <p>Knowledge workers spend the majority of their week on coordination that was never designed. Organisations deploy tools, restructure teams, and buy platforms — but the infrastructure layer between governance and operational work remains undesigned. Every established framework — Enterprise Architecture, ITIL, Organisational Development — reaches this boundary and stops.</p>
-        <p>The Institute studies this gap, develops methodology to address it, and trains practitioners to do the work.</p>
-    </section>
 
-    <!-- INTELLECTUAL GENEALOGY -->
-    <section>
-        <div class="section-label">Intellectual Genealogy</div>
-        <h2>The discipline stands on sixty-five years of research that never transferred to practice.</h2>
+        <h1 class="institute-name">Institute for<br>Collaboration Architecture</h1>
+        <div class="institute-status">Verein in Gründung · Rostock</div>
 
-        <div class="genealogy">
-            <div class="genealogy-entry">
-                <div class="genealogy-year">1951</div>
-                <div class="genealogy-text"><strong>Sociotechnical Systems</strong> — Tavistock Institute establishes that technical and social systems must be designed together. <em>The principle was identified. It was not operationalised.</em></div>
-            </div>
-            <div class="genealogy-entry">
-                <div class="genealogy-year">1959</div>
-                <div class="genealogy-text"><strong>Knowledge Work Theory</strong> — Peter Drucker describes what knowledge work requires: autonomy, self-management, fundamentally different organisational structures. <em>Organisations heard "buy computers."</em></div>
-            </div>
-            <div class="genealogy-entry">
-                <div class="genealogy-year">1984</div>
-                <div class="genealogy-text"><strong>CSCW</strong> — Computer-Supported Cooperative Work. Four decades of research into how people collaborate and what technology supports. <em>Theory and methods for support — not for infrastructure design.</em></div>
-            </div>
-            <div class="genealogy-entry">
-                <div class="genealogy-year">1999</div>
-                <div class="genealogy-text"><strong>Infrastructure Studies</strong> — Susan Leigh Star develops methods for making invisible infrastructure visible through breakdown analysis. <em>Star shows how to study infrastructure. The question of how to design it remained open.</em></div>
-            </div>
-            <div class="genealogy-entry">
-                <div class="genealogy-year">2006–</div>
-                <div class="genealogy-text"><strong>The Practice Branch</strong> — Enterprise Social Networks, Working Out Loud, Digital Workplace. Tools were deployed at scale. <em>Nobody designed the coordination structure around them.</em></div>
-            </div>
-            <div class="genealogy-entry">
-                <div class="genealogy-year">2026</div>
-                <div class="genealogy-text"><strong>Collaboration Architecture</strong> — The professional practice of designing coordination infrastructure. The operational discipline that bridges the research-practice gap.</div>
+        <div class="divider"></div>
+
+        <div class="mission">
+            <p>Das Institute for Collaboration Architecture erforscht und entwickelt wissenschaftlich fundierte Methoden zur nutzerzentrierten Gestaltung von Koordinationsinfrastruktur in Organisationen.</p>
+            <p>Das Fehlen von Wissensinfrastruktur führt an vielen Arbeitsplätzen zu unsichtbarer Mehrbelastung. Wo Wissen nur mündlich, durch persönliche Beziehungen und informelle Strukturen fließt, wird Wissensarbeit weder anerkannt noch belohnt und ist für die Organisation nicht nutzbar.</p>
+            <p>Collaboration Architecture eröffnet Gestaltungsräume, in denen aus Trampelpfaden tragfähige Infrastruktur wird.</p>
+        </div>
+
+        <div class="invitation">
+            <div class="invitation-label">Einladung zur Gründung</div>
+            <div class="invitation-text">
+                <p>Wir gründen einen Verein, der eine neue Disziplin aufbaut. Collaboration Architecture verbindet nutzerzentriertes Design, Infrastrukturdenken und Organisationsforschung — und schließt eine Lücke, die seit Jahrzehnten dokumentiert, aber nie adressiert wurde.</p>
+                <p>Der Vorstand setzt sich aus Frauen zusammen, die Infrastruktur gestalten — über Domänen hinweg. Wenn Sie Interesse haben, Teil dieser Gründung zu werden, nehmen Sie gern Kontakt auf.</p>
             </div>
         </div>
 
-        <p>The full argument is developed in the position paper, including the diagnosis of how responsibility for coordination currently falls between Organisational Development and IT Management, and why neither can close the gap alone.</p>
-    </section>
 
-    <!-- RESEARCH AREAS -->
-    <section>
-        <div class="section-label">Research Areas</div>
-        <h2>What we study</h2>
-        <p>The Institute develops frameworks and methods grounded in three years of embedded fieldwork in an 11,000-person industrial organisation, in dialogue with CSCW research, Science and Technology Studies, and Enterprise Architecture practice.</p>
 
-        <div class="research-grid">
-            <div class="research-card">
-                <span class="german-term">KostenAbwälzung</span>
-                <h3>Cost Externalization</h3>
-                <p>How undesigned coordination infrastructure transfers costs systematically to those who cannot refuse them. Developing measurement methods based on hours and euros rather than satisfaction surveys.</p>
-            </div>
-            <div class="research-card">
-                <span class="german-term">Mündigkeit</span>
-                <h3>Organisational Capacity</h3>
-                <p>The conditions under which organisations develop the capacity to design and maintain their own coordination infrastructure — without permanent external dependency. The ethical foundation of the discipline.</p>
-            </div>
-            <div class="research-card">
-                <span class="german-term">Trampelpfade des Wissens</span>
-                <h3>Desire Paths of Knowledge</h3>
-                <p>Archaeological methods for mapping how information actually flows in organisations, making invisible coordination infrastructure visible as a precondition for deliberate design.</p>
-            </div>
-            <div class="research-card">
-                <span class="german-term">Fachwerkhaus-Modell</span>
-                <h3>Timber-Frame Model</h3>
-                <p>A structural model for minimum viable collaborative infrastructure — identifying functional categories of coordination tools and the cross-braces that connect them into a load-bearing whole.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- TRAINING -->
-    <section>
-        <div class="section-label">Training &amp; Certification</div>
-        <h2>Building the profession</h2>
-        <p>Germany has almost no Business Architect roles — while the need for coordination infrastructure design grows with every tool deployment, every AI implementation, every organisational restructure. The Institute is developing training and certification to build the profession from the ground up.</p>
-
-        <div class="training-block">
-            <h3>Business Architecture &amp; Collaboration Architecture</h3>
-            <p>Training in established Business Architecture frameworks (capability modelling, value stream mapping, strategic alignment) — combined, on request, with Collaboration Architecture qualification: the operational design layer that existing frameworks explicitly scope out.</p>
-            <p>The certification programme is portfolio-based, requiring demonstrated competence in coordination infrastructure analysis and design — not multiple-choice exams on memorised standards.</p>
+        <div class="contact">
+            <div class="contact-label">Kontakt</div>
+            <div class="contact-detail">Anke Holst</div>
+            <div class="contact-detail"><a href="mailto:hallo@ankeholst.de">hallo@ankeholst.de</a></div>
+            <div class="contact-detail">Kempowski-Ufer 7 · 18055 Rostock</div>
         </div>
 
-        <p>Target participants include Enterprise Architects, organisational developers, internal consultants, service designers, and project managers who encounter coordination problems their current frameworks cannot address.</p>
-    </section>
-
-    <!-- CURRENT ACTIVITY -->
-    <section>
-        <div class="section-label">Activity</div>
-        <div class="conference-banner">
-            <div class="event-label">Conference · May 2026</div>
-            <h3>EA Insights DACH 2026, Bonn</h3>
-            <p>Talk and workshop: integrating Collaboration Architecture into the Business Capabilities Model. Co-presented with an Enterprise Architect from a major industrial organisation.</p>
+        <div class="footer">
+            © 2026 Institute for Collaboration Architecture · Verein i.G.
         </div>
 
-        <div class="newsletter-block">
-            <h3>Institute Newsletter</h3>
-            <p>Research updates, methodology development, conference reports, and new publications. Written for practitioners and researchers working on coordination infrastructure.</p>
-            <a href="https://f41f8952.sibforms.com/serve/MUIFAFVOjmL3GAAJJhI0yRvDTdCLr7H7k1RAMLg_0fbbIrZMN1jws_7ldK9CXdqJF80eKEQ1YBVbq3QJZLyUEnkOGkzULMopSh1lsjE-uWafWoXJv6689Oii3GU_YmhI18W4QZo3xWFTaBUAdIw2hNpZz89Yhh1L8VtIP3Ubh5nqiuk9ckcKJv5KQlDsfGSAXZlvVxWh6GHk7lq-Iw==">Subscribe →</a>
-        </div>
-    </section>
-
-    <!-- PUBLICATIONS -->
-    <section>
-        <div class="section-label">Publications</div>
-        <h2>Read the work</h2>
-        <div class="resource-list">
-            <a class="resource-item" href="https://www.researchgate.net/publication/401202410_Collaboration_Architecture_A_Position_Paper" target="_blank" rel="noopener">
-                <span class="resource-type">Paper</span>
-                <span class="resource-title">Collaboration Architecture: A Position Paper (2026)</span>
-                <span class="resource-arrow">→</span>
-            </a>
-            <a class="resource-item" href="https://www.linkedin.com/company/institute-for-collaboration-architecture/" target="_blank" rel="noopener">
-                <span class="resource-type">LinkedIn</span>
-                <span class="resource-title">Institute for Collaboration Architecture</span>
-                <span class="resource-arrow">→</span>
-            </a>
-            <a class="resource-item" href="https://ankeholst.de" target="_blank" rel="noopener">
-                <span class="resource-type">Blog</span>
-                <span class="resource-title">ankeholst.de — Writing on coordination, design, and infrastructure</span>
-                <span class="resource-arrow">→</span>
-            </a>
-        </div>
-    </section>
-
-    <!-- FOUNDER -->
-    <section>
-        <div class="section-label">Founder</div>
-        <div class="founder-block">
-            <div class="founder-name">Anke Holst</div>
-            <div class="founder-role">Business Architect (Collaboration Architecture)</div>
-            <p class="founder-bio">Collaborating online since the early 1990s. Advising organisations on coordination infrastructure since 2008, across UK public sector and German industry. Three years embedded in an 11,000-person industrial organisation produced the fieldwork, the documented coordination failures, and the methodology that the discipline is built on.</p>
-        </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section>
-        <div class="section-label">Contact</div>
-        <p>For research collaboration, academic partnership, training enquiries, or conference invitations:</p>
-        <p style="margin-top: 0.5rem;"><strong>hallo@ankeholst.de</strong></p>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-left">
-                Institute for Collaboration Architecture · Rostock, Germany<br>
-                gemeinnützige GmbH (in Gründung)
-            </div>
-            <div class="footer-right">
-                <a href="https://www.linkedin.com/company/institute-for-collaboration-architecture/" target="_blank" rel="noopener">LinkedIn</a>
-                <a href="https://www.researchgate.net/publication/401202410_Collaboration_Architecture_A_Position_Paper" target="_blank" rel="noopener">ResearchGate</a>
-            </div>
-        </div>
-    </footer>
-
-</div>
-
+    </div>
 </body>
 </html>
