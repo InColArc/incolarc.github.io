@@ -29,105 +29,78 @@ header .draft{display:inline-block;border:2px solid #000;padding:2px 8px;font-si
 .house-panel{position:sticky;top:1rem}
 .house-frame{border:2px solid #000;padding:1rem;background:#fff}
 .house-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem;color:#888}
-
-/* ── House canvas: the visual area ── */
-.house-canvas{position:relative;width:100%;aspect-ratio:1/1;overflow:visible}
-
-/* ── Image slots ── */
-.el-slot{position:absolute;opacity:0;transition:opacity .4s;overflow:visible}
-.el-slot img{display:block;width:100%;height:100%;object-fit:fill}
+.house-canvas{position:relative;width:100%;aspect-ratio:1/1.1}
+.el-slot{position:absolute;opacity:0;transition:opacity .4s}
+.el-slot img{display:block;width:100%;height:100%;object-fit:contain}
 .el-slot.visible{opacity:1}
 
 /*
-  House layout (percentage positions within canvas):
+  HOUSE LAYOUT — no rotations, using pre-rotated image files
   
-  The house is roughly:
-  - Roof triangle: top area
-  - Top beam (Kommunikation): horizontal, connecting pillar tops
-  - Left pillar (Aufgaben): vertical, left side
-  - Right pillar (Wissen): vertical, right side  
-  - Bottom beam (Besprechungen): horizontal, connecting pillar bottoms
-  - Culture cross-brace: diagonal from bottom-right to top-left
-  - Habits cross-brace: diagonal from bottom-left to top-right
+  The house structure (percentage of canvas):
+  
+       ___ROOF___
+      /          \
+     /  FÜHRUNG   \
+    /_______________\
+    |  KOMM (top)  |     ← horizontal beam
+    |              |
+  A |   ╲    ╱    | W    ← A=Aufgaben pillar, W=Wissen pillar
+  U |    ╲  ╱     | I
+  F |  K  ╳  G    | S    ← K=Kultur, G=Gewohnheiten (cross-braces)
+  G |    ╱  ╲     | S
+  A |   ╱    ╲    | E
+  B |              | N
+    | BESPR (bot) |      ← horizontal beam
+    |_____________|
+    [  GRUNDLAGE  ]
 */
 
-/* Wall 1: Left pillar — vertical, no rotation needed */
-.slot-wall1{
-  left:10%;top:30%;width:8%;height:48%;
-}
+/* Wall 1: Left pillar (vertical) — uses beam.png / twig.png */
+.slot-wall1{left:8%;top:28%;width:7%;height:48%}
 
-/* Wall 2: Right pillar — vertical, no rotation needed */
-.slot-wall2{
-  right:10%;top:30%;width:8%;height:48%;
-}
+/* Wall 2: Right pillar (vertical) — uses beam.png / twig.png */
+.slot-wall2{right:8%;top:28%;width:7%;height:48%}
 
-/* Wall 3: Bottom beam — horizontal, rotate 90deg */
-.slot-wall3{
-  left:18%;top:66%;width:64%;height:12%;
-}
-.slot-wall3 img{
-  transform:rotate(90deg);
-  transform-origin:center center;
-}
+/* Wall 3: Bottom beam (horizontal) — uses beam-h.png / twig-h.png */
+.slot-wall3{left:15%;bottom:14%;width:70%;height:7%}
 
-/* Wall 4: Top beam — horizontal, rotate 90deg */
-.slot-wall4{
-  left:18%;top:22%;width:64%;height:12%;
-}
-.slot-wall4 img{
-  transform:rotate(90deg);
-  transform-origin:center center;
-}
+/* Wall 4: Top beam (horizontal) — uses beam-h.png / twig-h.png */
+.slot-wall4{left:15%;top:25%;width:70%;height:7%}
 
-/* Culture: diagonal cross-brace, bottom-right to top-left (~-50deg) */
-.slot-culture{
-  left:15%;top:30%;width:10%;height:50%;
-  transform:rotate(-50deg);
-  transform-origin:bottom center;
-}
+/* Culture: diagonal cross-brace — uses beam-culture.png / twig-culture.png */
+.slot-culture{left:12%;top:30%;width:40%;height:46%}
 
-/* Habits: diagonal cross-brace, bottom-left to top-right (~50deg) */
-.slot-habits{
-  right:15%;top:30%;width:10%;height:50%;
-  transform:rotate(50deg);
-  transform-origin:bottom center;
-}
+/* Habits: diagonal cross-brace — uses beam-habits.png / twig-habits.png */
+.slot-habits{right:12%;top:30%;width:40%;height:46%}
 
-/* Roof: triangle area at top — we use the beam image rotated/positioned as two angled beams */
-.slot-roof{
-  left:25%;top:2%;width:50%;height:24%;
-}
-.slot-roof img{
-  /* For now, show as-is; Tino can design the proper roof later */
-}
+/* Roof — uses beam.png for now, centered at top */
+.slot-roof{left:20%;top:2%;width:60%;height:26%}
 
 /* Guide frame */
-.guide-frame{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:.15;transition:opacity .5s}
+.guide-frame{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:.12;transition:opacity .5s}
 
 /* Human figures */
 .figure{position:absolute;opacity:0;transition:opacity .5s;pointer-events:none}
 .figure.visible{opacity:1}
-.fig-wall1{left:8%;top:45%;width:12%;height:22%}
-.fig-wall2{right:8%;top:45%;width:12%;height:22%}
-.fig-wall3{left:43%;top:68%;width:14%;height:14%}
-.fig-wall4{left:43%;top:20%;width:14%;height:14%}
+.fig-wall1{left:6%;top:42%;width:11%;height:22%}
+.fig-wall2{right:6%;top:42%;width:11%;height:22%}
+.fig-wall3{left:42%;top:72%;width:14%;height:10%}
+.fig-wall4{left:42%;top:25%;width:14%;height:10%}
 
-/* Element labels */
+/* Labels */
 .el-label{position:absolute;font-size:9px;font-weight:700;color:#999;text-align:center;pointer-events:none;opacity:0;transition:opacity .3s;text-transform:uppercase;letter-spacing:.05em}
 .el-label.visible{opacity:1}
-.lbl-wall1{left:2%;top:27%;width:16%}
-.lbl-wall2{right:2%;top:27%;width:16%}
-.lbl-wall3{left:30%;top:80%;width:40%}
-.lbl-wall4{left:30%;top:18%;width:40%}
-.lbl-culture{left:18%;top:55%;width:20%;transform:rotate(-50deg)}
-.lbl-habits{right:18%;top:55%;width:20%;transform:rotate(50deg)}
-.lbl-roof{left:30%;top:10%;width:40%}
+.lbl-wall1{left:1%;top:25%;width:14%}
+.lbl-wall2{right:1%;top:25%;width:14%}
+.lbl-wall3{left:30%;top:81%;width:40%}
+.lbl-wall4{left:30%;top:22%;width:40%}
+.lbl-culture{left:10%;top:52%;width:16%}
+.lbl-habits{right:10%;top:52%;width:16%}
+.lbl-roof{left:30%;top:12%;width:40%}
 
-/* Foundation */
-.foundation{position:absolute;bottom:2%;left:8%;width:84%;height:5%;border:1px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:8px;color:#aaa;text-transform:uppercase;letter-spacing:.05em}
-
-/* Gravity arrows */
-.gravity-arrows{position:absolute;top:-1%;left:0;width:100%;text-align:center;font-size:10px;color:#888;opacity:0;transition:opacity .5s;font-weight:700}
+.foundation{position:absolute;bottom:2%;left:8%;width:84%;height:4%;border:1px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:8px;color:#aaa;text-transform:uppercase;letter-spacing:.05em}
+.gravity-arrows{position:absolute;top:-2%;left:0;width:100%;text-align:center;font-size:10px;color:#888;opacity:0;transition:opacity .5s;font-weight:700}
 .gravity-arrows.visible{opacity:1}
 
 .legend{display:flex;gap:1rem;margin-top:.6rem;flex-wrap:wrap}
@@ -152,8 +125,6 @@ header .draft{display:inline-block;border:2px solid #000;padding:2px 8px;font-si
 .rblock.cost h3{color:#c44}
 footer{margin-top:2.5rem;padding-top:.75rem;border-top:1px solid #ccc;text-align:center;font-size:.7rem;color:#aaa}
 footer a{color:#888;text-decoration:none}
-
-/* Gravity collapse animations */
 @keyframes tiltL{to{transform:rotate(-14deg)}}
 @keyframes tiltR{to{transform:rotate(14deg)}}
 @keyframes leanL{to{transform:rotate(-5deg)}}
@@ -182,39 +153,38 @@ footer a{color:#888;text-decoration:none}
 <div class="house-label">Ihr Haus</div>
 <div class="house-canvas" id="hCanvas">
 
-<!-- Guide frame: dashed outline of where the house should be -->
-<svg class="guide-frame" id="guides" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-<!-- Roof -->
-<path d="M50 5 L90 28 L10 28 Z" fill="none" stroke="#000" stroke-width=".5" stroke-dasharray="2 2"/>
-<!-- Top beam -->
-<rect x="18" y="28" width="64" height="5" fill="none" stroke="#000" stroke-width=".5" stroke-dasharray="2 2"/>
-<!-- Left pillar -->
-<rect x="10" y="33" width="8" height="45" fill="none" stroke="#000" stroke-width=".5" stroke-dasharray="2 2"/>
-<!-- Right pillar -->
-<rect x="82" y="33" width="8" height="45" fill="none" stroke="#000" stroke-width=".5" stroke-dasharray="2 2"/>
-<!-- Bottom beam -->
-<rect x="18" y="78" width="64" height="5" fill="none" stroke="#000" stroke-width=".5" stroke-dasharray="2 2"/>
-<!-- Cross braces -->
-<line x1="18" y1="78" x2="82" y2="33" stroke="#000" stroke-width=".5" stroke-dasharray="2 2"/>
-<line x1="82" y1="78" x2="18" y2="33" stroke="#000" stroke-width=".5" stroke-dasharray="2 2"/>
+<svg class="guide-frame" id="guides" viewBox="0 0 100 110" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M50 5 L88 28 L12 28 Z" fill="none" stroke="#000" stroke-width=".4" stroke-dasharray="1.5 1.5"/>
+<rect x="15" y="28" width="70" height="5" fill="none" stroke="#000" stroke-width=".4" stroke-dasharray="1.5 1.5"/>
+<rect x="8" y="33" width="7" height="45" fill="none" stroke="#000" stroke-width=".4" stroke-dasharray="1.5 1.5"/>
+<rect x="85" y="33" width="7" height="45" fill="none" stroke="#000" stroke-width=".4" stroke-dasharray="1.5 1.5"/>
+<rect x="15" y="78" width="70" height="5" fill="none" stroke="#000" stroke-width=".4" stroke-dasharray="1.5 1.5"/>
+<line x1="15" y1="78" x2="85" y2="33" stroke="#000" stroke-width=".4" stroke-dasharray="1.5 1.5"/>
+<line x1="85" y1="78" x2="15" y2="33" stroke="#000" stroke-width=".4" stroke-dasharray="1.5 1.5"/>
 </svg>
 
-<!-- Structural element image slots -->
-<div class="el-slot slot-wall1" id="e-wall1"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
-<div class="el-slot slot-wall2" id="e-wall2"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
-<div class="el-slot slot-wall3" id="e-wall3"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
-<div class="el-slot slot-wall4" id="e-wall4"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
-<div class="el-slot slot-culture" id="e-culture"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
-<div class="el-slot slot-habits" id="e-habits"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
-<div class="el-slot slot-roof" id="e-roof"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
+<!--
+  IMAGE FILE MAP:
+  Vertical elements use:   img/beam.png, img/twig.png
+  Horizontal elements use: img/beam-h.png, img/twig-h.png
+  Culture cross-brace:     img/beam-culture.png, img/twig-culture.png
+  Habits cross-brace:      img/beam-habits.png, img/twig-habits.png
+  Roof (for now):           img/beam.png, img/twig.png
+-->
 
-<!-- Human figures where structure is absent -->
+<div class="el-slot slot-wall1" id="e-wall1" data-beam="img/beam.png" data-twig="img/twig.png"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
+<div class="el-slot slot-wall2" id="e-wall2" data-beam="img/beam.png" data-twig="img/twig.png"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
+<div class="el-slot slot-wall3" id="e-wall3" data-beam="img/beam-h.png" data-twig="img/twig-h.png"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
+<div class="el-slot slot-wall4" id="e-wall4" data-beam="img/beam-h.png" data-twig="img/twig-h.png"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
+<div class="el-slot slot-culture" id="e-culture" data-beam="img/beam-culture.png" data-twig="img/twig-culture.png"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
+<div class="el-slot slot-habits" id="e-habits" data-beam="img/beam-habits.png" data-twig="img/twig-habits.png"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
+<div class="el-slot slot-roof" id="e-roof" data-beam="img/beam.png" data-twig="img/twig.png"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
+
 <svg class="figure fig-wall1" id="f-wall1" viewBox="0 0 40 100"><ellipse cx="20" cy="12" rx="7" ry="9" fill="none" stroke="#000" stroke-width="2"/><line x1="20" y1="21" x2="20" y2="58" stroke="#000" stroke-width="2"/><line x1="20" y1="32" x2="8" y2="20" stroke="#000" stroke-width="2"/><line x1="20" y1="32" x2="32" y2="20" stroke="#000" stroke-width="2"/><line x1="20" y1="58" x2="10" y2="88" stroke="#000" stroke-width="2"/><line x1="20" y1="58" x2="30" y2="88" stroke="#000" stroke-width="2"/></svg>
 <svg class="figure fig-wall2" id="f-wall2" viewBox="0 0 40 100"><ellipse cx="20" cy="12" rx="7" ry="9" fill="none" stroke="#000" stroke-width="2"/><line x1="20" y1="21" x2="20" y2="58" stroke="#000" stroke-width="2"/><line x1="20" y1="32" x2="8" y2="20" stroke="#000" stroke-width="2"/><line x1="20" y1="32" x2="32" y2="20" stroke="#000" stroke-width="2"/><line x1="20" y1="58" x2="10" y2="88" stroke="#000" stroke-width="2"/><line x1="20" y1="58" x2="30" y2="88" stroke="#000" stroke-width="2"/></svg>
 <svg class="figure fig-wall3" id="f-wall3" viewBox="0 0 40 50"><ellipse cx="20" cy="8" rx="6" ry="7" fill="none" stroke="#000" stroke-width="2"/><line x1="20" y1="15" x2="20" y2="34" stroke="#000" stroke-width="2"/><line x1="20" y1="22" x2="10" y2="14" stroke="#000" stroke-width="2"/><line x1="20" y1="22" x2="30" y2="14" stroke="#000" stroke-width="2"/></svg>
 <svg class="figure fig-wall4" id="f-wall4" viewBox="0 0 40 50"><ellipse cx="20" cy="8" rx="6" ry="7" fill="none" stroke="#000" stroke-width="2"/><line x1="20" y1="15" x2="20" y2="34" stroke="#000" stroke-width="2"/><line x1="20" y1="22" x2="10" y2="14" stroke="#000" stroke-width="2"/><line x1="20" y1="22" x2="30" y2="14" stroke="#000" stroke-width="2"/></svg>
 
-<!-- Labels -->
 <div class="el-label lbl-wall1" id="l-wall1">Aufgaben</div>
 <div class="el-label lbl-wall2" id="l-wall2">Wissen</div>
 <div class="el-label lbl-wall3" id="l-wall3">Besprechungen</div>
@@ -245,8 +215,11 @@ footer a{color:#888;text-decoration:none}
 </footer>
 </div>
 <script>
-const BEAM='img/beam.png',TWIG='img/twig.png';
-document.querySelectorAll('.el-slot').forEach(el=>{el.querySelector('.img-beam').src=BEAM;el.querySelector('.img-twig').src=TWIG});
+// Set image sources from data attributes (each slot knows its own files)
+document.querySelectorAll('.el-slot').forEach(el=>{
+  el.querySelector('.img-beam').src=el.dataset.beam;
+  el.querySelector('.img-twig').src=el.dataset.twig;
+});
 const S=[
 {id:'wall1',t:'wall',name:'Wand 1 — Aufgabenverteilung',qs:[
 {text:'Wenn Arbeit anfällt und niemand offiziell zuständig ist — wie wird sie verteilt?',opts:[{l:'Über ein System, das Auslastung und Kapazitäten sichtbar macht',s:2},{l:'Wer zuerst gefragt wird oder sich meldet',s:1},{l:'Sie wird nicht verteilt — sie bleibt bei dem, der es bemerkt',s:0}]},
@@ -290,14 +263,12 @@ const G={id:'gravity',t:'gravity',name:'Schwerkraft — Was drückt auf diese St
 {text:'Wenn wichtige Personen gehen — wie viel Wissen geht mit ihnen?',opts:[{l:'Kritisches Wissen verschwindet — Projekte geraten ins Stocken',s:3},{l:'Es gibt Störungen, aber das Team erholt sich',s:2},{l:'Minimale Auswirkung — Wissen ist dokumentiert',s:1}]},
 {text:'Wie viele der Tools und Prozesse wurden eingeführt, ohne die Menschen zu fragen, die damit arbeiten?',opts:[{l:'Die meisten',s:3},{l:'Einige',s:2},{l:'Sehr wenige — die Menschen wurden einbezogen',s:1}]}
 ]};
-const ans={},gans={};
-const totalQ=S.reduce((n,s)=>n+s.qs.length,0)+G.qs.length;
-let done=0;
+const ans={},gans={};const totalQ=S.reduce((n,s)=>n+s.qs.length,0)+G.qs.length;let done=0;
 function render(){const p=document.getElementById('qP');let h='';S.forEach(s=>{h+=sec(s)});h+=sec(G);p.innerHTML=h}
 function sec(s){let h=`<div class="section"><div class="section-head">${s.name}</div>`;s.qs.forEach((q,i)=>{const qid=s.id+'-'+i;h+=`<div class="question"><p class="question-text">${q.text}</p><ul class="options">`;q.opts.forEach(o=>{h+=`<li><button class="opt" data-q="${qid}" data-s="${o.s}" data-sec="${s.id}" onclick="pick(this)">${o.l}</button></li>`});h+='</ul></div>'});return h+'</div>'}
 function pick(b){const qid=b.dataset.q,score=+b.dataset.s,sid=b.dataset.sec,isG=sid==='gravity',store=isG?gans:ans;if(store[qid]===undefined)done++;store[qid]=score;document.querySelectorAll(`[data-q="${qid}"]`).forEach(x=>x.className='opt');b.classList.add('s'+score);document.getElementById('pBar').style.width=(done/totalQ*100)+'%';document.getElementById('pLabel').textContent=done+'/'+totalQ;if(!isG)upEl(sid);if(done>=totalQ)document.getElementById('gArea').classList.add('show')}
 function state(sid){const s=S.find(x=>x.id===sid);if(!s)return null;const sc=[];s.qs.forEach((q,i)=>{const k=sid+'-'+i;if(ans[k]!==undefined)sc.push(ans[k])});if(!sc.length)return null;if(sc.includes(0))return 0;if(sc.includes(1))return 1;return 2}
-function upEl(sid){const st=state(sid),el=document.getElementById('e-'+sid),label=document.getElementById('l-'+sid),fig=document.getElementById('f-'+sid);if(st===null){el.classList.remove('visible');label.classList.remove('visible');return}el.classList.add('visible');label.classList.add('visible');el.querySelector('.img-beam').style.display='none';el.querySelector('.img-twig').style.display='none';if(st===2)el.querySelector('.img-beam').style.display='block';else if(st===1)el.querySelector('.img-twig').style.display='block';if(fig){if(st===0)fig.classList.add('visible');else fig.classList.remove('visible')}const a=S.filter(s=>state(s.id)!==null).length;document.getElementById('guides').style.opacity=Math.max(.03,.15-a/S.length*.15)}
+function upEl(sid){const st=state(sid),el=document.getElementById('e-'+sid),label=document.getElementById('l-'+sid),fig=document.getElementById('f-'+sid);if(st===null){el.classList.remove('visible');label.classList.remove('visible');return}el.classList.add('visible');label.classList.add('visible');el.querySelector('.img-beam').style.display='none';el.querySelector('.img-twig').style.display='none';if(st===2)el.querySelector('.img-beam').style.display='block';else if(st===1)el.querySelector('.img-twig').style.display='block';if(fig){if(st===0)fig.classList.add('visible');else fig.classList.remove('visible')}const a=S.filter(s=>state(s.id)!==null).length;document.getElementById('guides').style.opacity=Math.max(.03,.12-a/S.length*.12)}
 function gWeight(){let t=0,c=0;G.qs.forEach((q,i)=>{const k='gravity-'+i;if(gans[k]!==undefined){t+=gans[k];c++}});if(!c)return'light';const a=t/c;return a>=2.5?'heavy':a>=1.8?'moderate':'light'}
 function applyGravity(){const btn=document.getElementById('gBtn');btn.disabled=true;btn.textContent='...';const canvas=document.getElementById('hCanvas'),w=gWeight();document.getElementById('gravArrows').classList.add('visible');S.forEach(s=>{const fig=document.getElementById('f-'+s.id);if(fig&&state(s.id)===0)fig.classList.add('visible')});const st={};S.forEach(s=>{st[s.id]=state(s.id)});const brAbs=(st.culture===0?1:0)+(st.habits===0?1:0),brFr=(st.culture===1?1:0)+(st.habits===1?1:0);setTimeout(()=>{canvas.classList.add('grav-on');const w1=document.getElementById('e-wall1'),w2=document.getElementById('e-wall2'),rf=document.getElementById('e-roof');if(brAbs===2){if(st.wall1!==0)w1.classList.add('do-tiltL');if(st.wall2!==0)w2.classList.add('do-tiltR');if(st.roof!==0)rf.classList.add('do-rsink')}else if(brAbs===1||brFr>0){if(st.wall1!==0)w1.classList.add('do-leanL');if(st.wall2!==0)w2.classList.add('do-leanR')}if(w==='heavy')document.querySelectorAll('.figure.visible').forEach(f=>f.classList.add('do-buckle'));setTimeout(()=>showResults(st,w),2500)},300)}
 function showResults(st,w){const r=document.getElementById('res');let h='<h2>Ihr Haus</h2>';const brAbs=(st.culture===0?1:0)+(st.habits===0?1:0),brFr=(st.culture===1?1:0)+(st.habits===1?1:0),wn={wall1:'Aufgabenverteilung',wall2:'Wissensressourcen',wall3:'Besprechungen',wall4:'Kommunikation'},allB=Object.values(st).every(v=>v===2);if(allB){h+='<p>Ihre Koordinationsinfrastruktur ist tragfähig. Das Haus steht. Das ist selten.</p>'}else{if(brAbs===2)h+='<p>Sie haben Wände, aber nichts verbindet sie. Ohne Kultur und Gewohnheiten wird die erste ernsthafte Belastung die Wände nach außen drücken.</p>';else if(brAbs===1){const miss=st.culture===0?'Kultur':'Gewohnheiten',have=st.culture===0?'Gewohnheiten':'Kultur';h+=`<p>${have} hält, aber ${miss} fehlt. ${miss==='Kultur'?'Compliance ohne Commitment.':'Wohlwollen ohne Zuverlässigkeit.'}</p>`}else if(brFr>0)h+='<p>Ihre Querstreben sind Zweige. Das hält — bis sich etwas ändert.</p>';const absent=Object.entries(wn).filter(([k])=>st[k]===0),twigs=Object.entries(wn).filter(([k])=>st[k]===1);if(twigs.length>0)h+=`<p><strong>${twigs.map(([,n])=>n).join(', ')}</strong> — hält, weil bestimmte Menschen es am Laufen halten.</p>`;if(absent.length>0)h+=`<p><strong>${absent.map(([,n])=>n).join(', ')}</strong> — nicht vorhanden.</p>`;if(st.roof!==0&&(brAbs>0||twigs.length>=2))h+='<p>Das Dach drückt die Wände nach außen. Strategie macht es schlimmer.</p>'}h+=`<div class="rblock grav"><h3>Schwerkraft</h3>`;if(w==='heavy')h+='<p>Hoher Druck. Wo Balken fehlen, drückt die Last auf Menschen.</p>';else if(w==='moderate')h+='<p>Mittlere Last. Zweige geben bei der nächsten Belastung nach.</p>';else h+='<p>Relativ stabil. Aber die Struktur wächst nicht mit.</p>';h+='</div>';h+=`<div class="rblock cost"><h3>Wo landen die Kosten?</h3><p>Jedes fehlende Element bedeutet: jemand trägt die Last informell. Die Kosten landen bei denen, die sich nicht wehren können.</p></div>`;h+='<p style="margin-top:1.2rem;font-weight:700">Wer in Ihrer Organisation sollte dieses Haus noch sehen?</p>';r.innerHTML=h;r.classList.add('show');r.scrollIntoView({behavior:'smooth',block:'start'})}
