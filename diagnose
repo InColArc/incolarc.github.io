@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Das Fachwerkhaus — Collaboration Infrastructure Diagnostic</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap');
+:root{--paper:#F5F0E8;--ink:#2C2A26;--ink-light:#6B6860;--ink-faint:#B5B0A5;--terracotta:#C4613A;--beam:#8B7355;--beam-dark:#5C4A33;--twig:#A89880;--culture:#C47A50;--habits:#A0694A;--roof-col:#6B5E50;--ff-display:'DM Serif Display',serif;--ff-body:'IBM Plex Sans',sans-serif;--ff-mono:'IBM Plex Mono',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--ff-body);font-size:16px;line-height:1.6}
+.page{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
+header{text-align:center;margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--ink-faint)}
+header h1{font-family:var(--ff-display);font-size:2.2rem;font-weight:400}
+header p{font-size:.95rem;color:var(--ink-light);margin-top:.4rem}
+header .credit{font-family:var(--ff-mono);font-size:.7rem;color:var(--ink-faint);margin-top:.75rem}
+header .credit a{color:var(--ink-light);text-decoration:none}
+.layout{display:grid;grid-template-columns:1fr 380px;gap:2.5rem;align-items:start}
+@media(max-width:860px){.layout{grid-template-columns:1fr}.house-panel{order:-1;position:static!important;max-width:400px;margin:0 auto}}
+.questions-panel{min-width:0}
+.section{margin-bottom:2rem}
+.section-head{display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem}
+.section-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.section-dot.wall{background:var(--beam)}
+.section-dot.brace{background:var(--culture)}
+.section-dot.roof{background:var(--roof-col)}
+.section-dot.gravity{background:var(--ink)}
+.section-name{font-family:var(--ff-display);font-size:1.15rem;font-weight:400}
+.question{margin-bottom:1.25rem;padding-left:22px}
+.question-text{font-size:.9rem;margin-bottom:.4rem;line-height:1.5}
+.options{list-style:none}
+.options li{margin-bottom:.3rem}
+.opt{display:block;width:100%;text-align:left;padding:.5rem .75rem;border:1px solid var(--ink-faint);border-radius:5px;background:transparent;cursor:pointer;font-family:var(--ff-body);font-size:.82rem;color:var(--ink-light);line-height:1.4;transition:all .15s}
+.opt:hover{border-color:var(--ink-light);background:rgba(0,0,0,.02)}
+.opt.s0{border-color:var(--ink-faint);color:var(--ink-faint);font-style:italic}
+.opt.s1{border-color:var(--twig);background:rgba(168,152,128,.1);color:var(--beam-dark)}
+.opt.s2{border-color:var(--beam-dark);background:rgba(92,74,51,.1);color:var(--beam-dark);font-weight:500}
+.house-panel{position:sticky;top:1.5rem}
+.house-frame{background:#fff;border:1px solid var(--ink-faint);border-radius:8px;padding:1.25rem}
+.house-label{font-family:var(--ff-mono);font-size:.65rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
+.house-svg{width:100%;height:auto;display:block}
+.legend{display:flex;gap:1rem;margin-top:.75rem;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:.35rem;font-family:var(--ff-mono);font-size:.65rem;color:var(--ink-light)}
+.legend-swatch{width:20px;height:8px;border-radius:2px}
+.ptrack{height:2px;background:var(--ink-faint);border-radius:1px;margin-top:1rem;overflow:hidden}
+.pbar{height:100%;width:0%;background:var(--ink);transition:width .4s}
+.plabel{font-family:var(--ff-mono);font-size:.65rem;color:var(--ink-faint);margin-top:.3rem}
+.gravity-area{text-align:center;margin:2rem 0;display:none}
+.gravity-area.show{display:block}
+.gravity-btn{font-family:var(--ff-display);font-size:1.3rem;padding:.8rem 2rem;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;border-radius:6px;transition:all .2s}
+.gravity-btn:hover{background:var(--ink);color:var(--paper)}
+.gravity-btn:disabled{opacity:.4;cursor:default}
+.results{display:none;margin-top:1.5rem;padding:1.5rem;background:#fff;border:1px solid var(--ink-faint);border-radius:8px}
+.results.show{display:block}
+.results h2{font-family:var(--ff-display);font-size:1.4rem;font-weight:400;margin-bottom:.75rem}
+.results p{font-size:.9rem;color:var(--ink-light);line-height:1.7;margin-bottom:.75rem}
+.rblock{padding:1rem;border-radius:6px;margin-bottom:1rem}
+.rblock h3{font-family:var(--ff-display);font-size:1.05rem;font-weight:400;margin-bottom:.4rem}
+.rblock.cost{background:#F3E8E0;border-left:3px solid var(--terracotta)}
+.rblock.cost h3{color:var(--terracotta)}
+.rblock.grav{background:#E8E4DC;border-left:3px solid var(--ink-light)}
+.rblock.grav h3{color:var(--ink)}
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--ink-faint);text-align:center;font-family:var(--ff-mono);font-size:.7rem;color:var(--ink-faint)}
+footer a{color:var(--ink-light);text-decoration:none}
+.element-group{transition:opacity .5s}
+@keyframes tiltL{to{transform:rotate(-14deg)}}
+@keyframes tiltR{to{transform:rotate(14deg)}}
+@keyframes leanL{to{transform:rotate(-5deg)}}
+@keyframes leanR{to{transform:rotate(5deg)}}
+@keyframes rsink{to{transform:translateY(30px)}}
+@keyframes buckle{0%,100%{transform:translateY(0) scaleY(1)}50%{transform:translateY(2px) scaleY(.96)}}
+.grav-on .do-tiltL{animation:tiltL 2s ease-in forwards}
+.grav-on .do-tiltR{animation:tiltR 2s ease-in forwards}
+.grav-on .do-leanL{animation:leanL 1.5s ease-in forwards}
+.grav-on .do-leanR{animation:leanR 1.5s ease-in forwards}
+.grav-on .do-rsink{animation:rsink 2.5s ease-in .3s forwards}
+.grav-on .do-buckle{animation:buckle 1.2s ease-in-out infinite}
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+<h1>Das Fachwerkhaus</h1>
+<p>Beantworten Sie Fragen darüber, wie Ihre Organisation tatsächlich arbeitet.<br>Sehen Sie, wie das Haus entsteht. Dann schalten Sie die Schwerkraft ein.</p>
+<div class="credit">Institute for Collaboration Architecture · <a href="https://incolarc.com">incolarc.com</a></div>
+</header>
+<div class="layout">
+<div class="questions-panel" id="qP"></div>
+<div class="house-panel">
+<div class="house-frame">
+<div class="house-label">Ihr Haus</div>
+<svg id="hSvg" class="house-svg" viewBox="0 0 360 400" xmlns="http://www.w3.org/2000/svg">
+
+<!-- Guide frame -->
+<g id="guides" opacity=".12">
+<path d="M180 40L310 150L50 150Z" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="60" y="150" width="240" height="24" rx="2" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="60" y="174" width="24" height="160" rx="2" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="276" y="174" width="24" height="160" rx="2" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="60" y="334" width="240" height="24" rx="2" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="84" y1="334" x2="276" y2="174" stroke="#888" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="276" y1="334" x2="84" y2="174" stroke="#888" stroke-width="1" stroke-dasharray="4 4"/>
+</g>
+
+<!-- Foundation -->
+<rect x="40" y="362" width="280" height="18" rx="3" fill="none" stroke="var(--ink-faint)" stroke-width="1"/>
+<text x="180" y="375" text-anchor="middle" font-family="var(--ff-mono)" font-size="8" fill="var(--ink-faint)">Grundlage (Werte) — separat erhoben</text>
+
+<!-- Wall 1: Left pillar — Aufgabenverteilung -->
+<g id="e-wall1" class="element-group" opacity="0" style="transform-origin:72px 334px">
+<g class="st2" style="display:none">
+<!-- PLACEHOLDER: beam artwork -->
+<rect x="60" y="174" width="24" height="160" rx="2" fill="var(--beam)" stroke="var(--beam-dark)" stroke-width="1.5"/>
+<line x1="68" y1="180" x2="68" y2="328" stroke="var(--beam-dark)" stroke-width=".5" opacity=".3"/>
+<line x1="76" y1="180" x2="76" y2="328" stroke="var(--beam-dark)" stroke-width=".5" opacity=".2"/>
+</g>
+<g class="st1" style="display:none">
+<!-- PLACEHOLDER: twig artwork -->
+<line x1="72" y1="178" x2="70" y2="330" stroke="var(--twig)" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="70" y1="240" x2="64" y2="225" stroke="var(--twig)" stroke-width="1.5" stroke-linecap="round"/>
+<line x1="71" y1="280" x2="78" y2="268" stroke="var(--twig)" stroke-width="1" stroke-linecap="round"/>
+</g>
+<text x="72" y="168" text-anchor="middle" font-family="var(--ff-mono)" font-size="7" fill="var(--ink-light)" class="elabel">Aufgaben</text>
+</g>
+
+<!-- Wall 2: Right pillar — Wissensressourcen -->
+<g id="e-wall2" class="element-group" opacity="0" style="transform-origin:288px 334px">
+<g class="st2" style="display:none">
+<rect x="276" y="174" width="24" height="160" rx="2" fill="var(--beam)" stroke="var(--beam-dark)" stroke-width="1.5"/>
+<line x1="284" y1="180" x2="284" y2="328" stroke="var(--beam-dark)" stroke-width=".5" opacity=".3"/>
+<line x1="292" y1="180" x2="292" y2="328" stroke="var(--beam-dark)" stroke-width=".5" opacity=".2"/>
+</g>
+<g class="st1" style="display:none">
+<line x1="288" y1="178" x2="286" y2="330" stroke="var(--twig)" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="287" y1="230" x2="294" y2="218" stroke="var(--twig)" stroke-width="1.5" stroke-linecap="round"/>
+<line x1="287" y1="290" x2="280" y2="278" stroke="var(--twig)" stroke-width="1" stroke-linecap="round"/>
+</g>
+<text x="288" y="168" text-anchor="middle" font-family="var(--ff-mono)" font-size="7" fill="var(--ink-light)" class="elabel">Wissen</text>
+</g>
+
+<!-- Wall 3: Bottom beam — Besprechungen -->
+<g id="e-wall3" class="element-group" opacity="0" style="transform-origin:180px 346px">
+<g class="st2" style="display:none">
+<rect x="60" y="334" width="240" height="24" rx="2" fill="var(--beam)" stroke="var(--beam-dark)" stroke-width="1.5"/>
+<line x1="66" y1="342" x2="294" y2="342" stroke="var(--beam-dark)" stroke-width=".5" opacity=".3"/>
+<line x1="66" y1="350" x2="294" y2="350" stroke="var(--beam-dark)" stroke-width=".5" opacity=".2"/>
+</g>
+<g class="st1" style="display:none">
+<line x1="64" y1="346" x2="296" y2="344" stroke="var(--twig)" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="120" y1="345" x2="112" y2="338" stroke="var(--twig)" stroke-width="1.5" stroke-linecap="round"/>
+<line x1="220" y1="344" x2="228" y2="338" stroke="var(--twig)" stroke-width="1" stroke-linecap="round"/>
+</g>
+<text x="180" y="330" text-anchor="middle" font-family="var(--ff-mono)" font-size="7" fill="var(--ink-light)" class="elabel">Besprechungen</text>
+</g>
+
+<!-- Wall 4: Top beam — Kommunikation -->
+<g id="e-wall4" class="element-group" opacity="0" style="transform-origin:180px 162px">
+<g class="st2" style="display:none">
+<rect x="60" y="150" width="240" height="24" rx="2" fill="var(--beam)" stroke="var(--beam-dark)" stroke-width="1.5"/>
+<line x1="66" y1="158" x2="294" y2="158" stroke="var(--beam-dark)" stroke-width=".5" opacity=".3"/>
+<line x1="66" y1="166" x2="294" y2="166" stroke="var(--beam-dark)" stroke-width=".5" opacity=".2"/>
+</g>
+<g class="st1" style="display:none">
+<line x1="64" y1="162" x2="296" y2="160" stroke="var(--twig)" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="140" y1="161" x2="132" y2="155" stroke="var(--twig)" stroke-width="1.5" stroke-linecap="round"/>
+<line x1="230" y1="160" x2="238" y2="154" stroke="var(--twig)" stroke-width="1" stroke-linecap="round"/>
+</g>
+<text x="180" y="146" text-anchor="middle" font-family="var(--ff-mono)" font-size="7" fill="var(--ink-light)" class="elabel">Kommunikation</text>
+</g>
+
+<!-- Cross-brace: Culture -->
+<g id="e-culture" class="element-group" opacity="0">
+<g class="st2" style="display:none">
+<line x1="276" y1="330" x2="84" y2="178" stroke="var(--culture)" stroke-width="10" stroke-linecap="round" opacity=".85"/>
+</g>
+<g class="st1" style="display:none">
+<line x1="276" y1="330" x2="84" y2="178" stroke="var(--culture)" stroke-width="2.5" stroke-linecap="round" opacity=".5" stroke-dasharray="8 6"/>
+</g>
+<text x="160" y="222" text-anchor="middle" font-family="var(--ff-mono)" font-size="7" fill="var(--culture)" transform="rotate(-40 160 222)">Kultur</text>
+</g>
+
+<!-- Cross-brace: Habits -->
+<g id="e-habits" class="element-group" opacity="0">
+<g class="st2" style="display:none">
+<line x1="84" y1="330" x2="276" y2="178" stroke="var(--habits)" stroke-width="10" stroke-linecap="round" opacity=".85"/>
+</g>
+<g class="st1" style="display:none">
+<line x1="84" y1="330" x2="276" y2="178" stroke="var(--habits)" stroke-width="2.5" stroke-linecap="round" opacity=".5" stroke-dasharray="8 6"/>
+</g>
+<text x="200" y="222" text-anchor="middle" font-family="var(--ff-mono)" font-size="7" fill="var(--habits)" transform="rotate(40 200 222)">Gewohnheiten</text>
+</g>
+
+<!-- Roof -->
+<g id="e-roof" class="element-group" opacity="0" style="transform-origin:180px 150px">
+<g class="st2" style="display:none">
+<path d="M180 45L315 150L45 150Z" fill="var(--roof-col)" stroke="var(--beam-dark)" stroke-width="1.5" stroke-linejoin="round" opacity=".8"/>
+</g>
+<g class="st1" style="display:none">
+<path d="M180 45L315 150L45 150Z" fill="none" stroke="var(--twig)" stroke-width="2" stroke-linejoin="round" stroke-dasharray="8 6" opacity=".6"/>
+</g>
+<text x="180" y="115" text-anchor="middle" font-family="var(--ff-mono)" font-size="7" fill="var(--ink-light)" class="elabel">Führung</text>
+</g>
+
+<!-- Human figures (appear where structure is absent) -->
+<g id="figs" opacity="0">
+<g id="f-wall1" style="display:none">
+<ellipse cx="72" cy="240" rx="5" ry="6" fill="none" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="72" y1="246" x2="72" y2="285" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="72" y1="255" x2="62" y2="245" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="72" y1="255" x2="82" y2="245" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="72" y1="285" x2="65" y2="305" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="72" y1="285" x2="79" y2="305" stroke="var(--terracotta)" stroke-width="1.2"/>
+</g>
+<g id="f-wall2" style="display:none">
+<ellipse cx="288" cy="240" rx="5" ry="6" fill="none" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="288" y1="246" x2="288" y2="285" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="288" y1="255" x2="278" y2="245" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="288" y1="255" x2="298" y2="245" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="288" y1="285" x2="281" y2="305" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="288" y1="285" x2="295" y2="305" stroke="var(--terracotta)" stroke-width="1.2"/>
+</g>
+<g id="f-wall3" style="display:none">
+<ellipse cx="180" cy="340" rx="5" ry="6" fill="none" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="180" y1="346" x2="180" y2="358" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="180" y1="350" x2="170" y2="342" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="180" y1="350" x2="190" y2="342" stroke="var(--terracotta)" stroke-width="1.2"/>
+</g>
+<g id="f-wall4" style="display:none">
+<ellipse cx="180" cy="152" rx="5" ry="6" fill="none" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="180" y1="158" x2="180" y2="172" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="180" y1="162" x2="170" y2="155" stroke="var(--terracotta)" stroke-width="1.2"/>
+<line x1="180" y1="162" x2="190" y2="155" stroke="var(--terracotta)" stroke-width="1.2"/>
+</g>
+</g>
+
+<!-- Gravity arrows (appear when gravity is applied) -->
+<g id="gravArrows" opacity="0">
+<text x="180" y="22" text-anchor="middle" font-family="var(--ff-mono)" font-size="9" fill="var(--ink-light)">↓ ↓ ↓ Schwerkraft ↓ ↓ ↓</text>
+</g>
+
+</svg>
+<div class="legend">
+<div class="legend-item"><div class="legend-swatch" style="background:var(--beam)"></div>Balken (gestaltet)</div>
+<div class="legend-item"><div class="legend-swatch" style="background:var(--twig);opacity:.6"></div>Zweig (fragil)</div>
+<div class="legend-item"><div class="legend-swatch" style="background:transparent;border:1px dashed var(--ink-faint)"></div>Fehlt</div>
+</div>
+<div class="ptrack"><div class="pbar" id="pBar"></div></div>
+<div class="plabel" id="pLabel">0 von 25 beantwortet</div>
+</div>
+</div>
+</div>
+
+<div class="gravity-area" id="gArea">
+<p style="font-size:.85rem;color:var(--ink-light);margin-bottom:1rem">Alle Fragen beantwortet.</p>
+<button class="gravity-btn" id="gBtn" onclick="applyGravity()">Schwerkraft einschalten</button>
+</div>
+<div class="results" id="res"></div>
+
+<footer>
+<p>Institute for Collaboration Architecture · <a href="https://incolarc.com">incolarc.com</a> · 2026</p>
+<p style="margin-top:.3rem">Alle Antworten bleiben in Ihrem Browser. Es werden keine Daten gesendet.</p>
+</footer>
+</div>
+
+<script>
+const S=[
+{id:'wall1',el:'e-wall1',t:'wall',name:'Wand 1 — Aufgabenverteilung',qs:[
+{text:'Wenn Arbeit anfällt und niemand offiziell zuständig ist — wie wird sie verteilt?',opts:[
+{l:'Über ein System, das Auslastung und Kapazitäten sichtbar macht',s:2},
+{l:'Wer zuerst gefragt wird oder sich meldet',s:1},
+{l:'Sie wird nicht verteilt — sie bleibt bei dem, der es bemerkt',s:0}]},
+{text:'Können Menschen in Ihrer Organisation die Arbeitsbelastung im Team überblicken?',opts:[
+{l:'Ja, über ein gemeinsames System',s:2},
+{l:'Informell — die Teamleitung hat ein Gefühl dafür',s:1},
+{l:'Nein — jeder verwaltet seine Arbeit allein',s:0}]},
+{text:'Was passiert, wenn jemand zwei Wochen ausfällt?',opts:[
+{l:'Aufgaben sind sichtbar und können umverteilt werden',s:2},
+{l:'Ein Kollege springt ein, aber nur weil er die Person kennt',s:1},
+{l:'Dinge bleiben liegen oder fallen durch, bis die Person zurück ist',s:0}]}
+]},
+{id:'wall2',el:'e-wall2',t:'wall',name:'Wand 2 — Wissensressourcen',qs:[
+{text:'Wo schauen Menschen zuerst, wenn sie wissen müssen, wie etwas funktioniert?',opts:[
+{l:'In einer gepflegten Wissensdatenbank oder Dokumentation',s:2},
+{l:'Sie fragen eine bestimmte Person, die die Antwort kennt',s:1},
+{l:'Es gibt keinen verlässlichen ersten Anlaufpunkt',s:0}]},
+{text:'Können Sie Dokumentation von vor sechs Monaten finden?',opts:[
+{l:'Ja, zuverlässig und schnell',s:2},
+{l:'Wahrscheinlich, aber es würde Suchen und Nachfragen kosten',s:1},
+{l:'Sie existiert wahrscheinlich nicht mehr, oder ich wüsste nicht wo',s:0}]},
+{text:'Wer pflegt gemeinsame Wissensressourcen?',opts:[
+{l:'Eine definierte Rolle oder verteilte Verantwortung mit Standards',s:2},
+{l:'Ein oder zwei engagierte Personen, die es freiwillig tun',s:1},
+{l:'Niemand — Ressourcen werden erstellt und dann sich selbst überlassen',s:0}]}
+]},
+{id:'wall3',el:'e-wall3',t:'wall',name:'Wand 3 — Besprechungen',qs:[
+{text:'Bei wie vielen Ihrer Besprechungen entstehen dokumentierte, auffindbare Entscheidungen?',opts:[
+{l:'Bei den meisten — Entscheidungen werden festgehalten und sind zugänglich',s:2},
+{l:'Bei einigen — es hängt davon ab, wer Protokoll führt',s:1},
+{l:'Bei wenigen oder keinen — Entscheidungen bleiben in den Köpfen',s:0}]},
+{text:'Wie viele Meetings dienen hauptsächlich der Informationsweitergabe, die auch anders fließen könnte?',opts:[
+{l:'Sehr wenige — Meetings sind für Entscheidungen und komplexe Diskussionen',s:2},
+{l:'Einige — wir könnten ein paar durch bessere asynchrone Wege ersetzen',s:1},
+{l:'Die meisten — Meetings sind unser Hauptkanal für Informationen',s:0}]},
+{text:'Wenn ein Meeting eine Entscheidung produziert — kann jemand, der nicht dabei war, sie eine Woche später finden?',opts:[
+{l:'Ja — Entscheidungen werden an einem bekannten Ort dokumentiert',s:2},
+{l:'Vielleicht — wenn man weiß, wen man fragen muss',s:1},
+{l:'Nein — man musste dabei gewesen sein',s:0}]}
+]},
+{id:'wall4',el:'e-wall4',t:'wall',name:'Wand 4 — Schnelle informelle Kommunikation',qs:[
+{text:'Gibt es einen Chat-Kanal, in dem Routinefragen schnell beantwortet werden?',opts:[
+{l:'Ja, und er ist ein offizieller Teil unserer Arbeitsweise',s:2},
+{l:'Ja, aber er ist informell entstanden und nicht alle nutzen ihn',s:1},
+{l:'Nein — Fragen gehen per E-Mail oder Anruf an Einzelpersonen',s:0}]},
+{text:'Können neue Mitarbeitende diese Kanäle leicht finden und beitreten?',opts:[
+{l:'Ja — sie sind auffindbar und Teil des Onboardings',s:2},
+{l:'Wenn jemand sie zeigt — es läuft über Mundpropaganda',s:1},
+{l:'Es gibt keine gemeinsamen Kanäle, oder sie sind für Neue unsichtbar',s:0}]},
+{text:'Wenn etwas Wichtiges im Chat entschieden wird — wird es an einem dauerhafteren Ort festgehalten?',opts:[
+{l:'Ja — Entscheidungen wandern vom Chat in die Dokumentation',s:2},
+{l:'Manchmal, wenn jemand daran denkt',s:1},
+{l:'Nein — es scrollt weg und ist praktisch verloren',s:0}]}
+]},
+{id:'culture',el:'e-culture',t:'brace',name:'Querstrebe — Kultur',qs:[
+{text:'Wird um Hilfe bitten als Kompetenz oder als Schwäche gesehen?',opts:[
+{l:'Als Kompetenz — es wird erwartet und von Führungskräften vorgelebt',s:2},
+{l:'Kommt auf das Team oder die Führungskraft an',s:1},
+{l:'Als Schwäche — man löst Probleme allein',s:0}]},
+{text:'Teilen Menschen Zwischenergebnisse, oder nur fertige Arbeit?',opts:[
+{l:'Zwischenergebnisse werden geteilt, Feedback ist normal',s:2},
+{l:'Informell, innerhalb vertrauensvoller Beziehungen',s:1},
+{l:'Nur fertige Ergebnisse — Entwürfe zu zeigen fühlt sich riskant an',s:0}]},
+{text:'Werden Fehler offen besprochen oder versteckt?',opts:[
+{l:'Offen besprochen als Lernmöglichkeit',s:2},
+{l:'Privat besprochen, aber nicht organisationsweit',s:1},
+{l:'Versteckt — Fehler sichtbar zu machen ist ein Karriererisiko',s:0}]}
+]},
+{id:'habits',el:'e-habits',t:'brace',name:'Querstrebe — Gewohnheiten',qs:[
+{text:'Schauen Menschen in gemeinsame Kanäle, bevor sie ein Meeting einberufen?',opts:[
+{l:'Ja — asynchron zuerst ist die Norm',s:2},
+{l:'Manchmal, aber Meetings sind immer noch der Standard',s:1},
+{l:'Nein — ein Meeting ist immer die erste Reaktion',s:0}]},
+{text:'Ist „Ich dokumentiere das" ein Satz, den Sie regelmäßig hören?',opts:[
+{l:'Ja — Dokumentieren ist ein normaler Teil der Arbeit',s:2},
+{l:'Von bestimmten Personen, nicht von allen',s:1},
+{l:'Selten oder nie — Dokumentation gilt als Extraarbeit',s:0}]},
+{text:'Wie geben erfahrene Kolleg:innen Wissen an neue weiter?',opts:[
+{l:'Durch strukturierte Übergabe mit dokumentierten Ressourcen',s:2},
+{l:'Durch persönliches Mentoring und mündliche Weitergabe',s:1},
+{l:'Neue Mitarbeitende finden sich weitgehend allein zurecht',s:0}]}
+]},
+{id:'roof',el:'e-roof',t:'roof',name:'Dach — Führung und strategische Absicht',qs:[
+{text:'Nutzt die Führungsebene dieselben Zusammenarbeitstools, die sie den Teams bereitstellt?',opts:[
+{l:'Konsequent — sie leben vor, was sie erwarten',s:2},
+{l:'Uneinheitlich — es hängt von der Führungskraft ab',s:1},
+{l:'Nein — Führung arbeitet über E-Mail und Assistenz',s:0}]},
+{text:'Wird Zusammenarbeit gemessen oder nur erwähnt?',opts:[
+{l:'Gemessen — es gibt Kennzahlen oder zumindest regelmäßige Reflexion',s:2},
+{l:'Erwähnt in Leitbildern und Town Halls, aber nicht nachverfolgt',s:1},
+{l:'Weder noch — „besser zusammenarbeiten" ist ein Appell, keine Strategie',s:0}]},
+{text:'Wenn ein neues Tool eingeführt wird — gibt es eine Gestaltungsphase mit den Menschen, die es nutzen werden?',opts:[
+{l:'Ja — Nutzende gestalten mit, wie Tools konfiguriert und eingeführt werden',s:2},
+{l:'Teilweise — es gibt Schulungen, aber kein Co-Design',s:1},
+{l:'Nein — Tools werden ausgerollt und man soll sich anpassen',s:0}]}
+]}
+];
+
+const G={id:'gravity',t:'gravity',name:'Schwerkraft — Was drückt auf diese Struktur?',qs:[
+{text:'Wie häufig durchläuft Ihre Organisation grundlegende Veränderungen?',opts:[
+{l:'Ständig — Veränderung ist Dauerzustand',s:3},
+{l:'Alle ein bis zwei Jahre',s:2},
+{l:'Selten — es ist relativ stabil',s:1}]},
+{text:'Wie viel Ihrer Arbeit hängt von Abstimmung über Team- oder Abteilungsgrenzen hinweg ab?',opts:[
+{l:'Fast alles — nichts geht allein',s:3},
+{l:'Ein erheblicher Teil',s:2},
+{l:'Überwiegend eigenständige Arbeit innerhalb der Teams',s:1}]},
+{text:'Wenn wichtige Personen gehen — wie viel Wissen geht mit ihnen?',opts:[
+{l:'Kritisches Wissen verschwindet — Projekte geraten ins Stocken',s:3},
+{l:'Es gibt Störungen, aber das Team erholt sich',s:2},
+{l:'Minimale Auswirkung — Wissen ist dokumentiert',s:1}]},
+{text:'Wie viele der Tools und Prozesse wurden eingeführt, ohne die Menschen zu fragen, die damit arbeiten?',opts:[
+{l:'Die meisten',s:3},
+{l:'Einige',s:2},
+{l:'Sehr wenige — die Menschen wurden einbezogen',s:1}]}
+]};
+
+const ans={},gans={};
+const totalS=S.reduce((n,s)=>n+s.qs.length,0);
+const totalG=G.qs.length;
+const totalQ=totalS+totalG;
+let done=0;
+
+function render(){
+const p=document.getElementById('qP');
+let h='';
+S.forEach(s=>{h+=sec(s)});
+h+=sec(G);
+p.innerHTML=h;
+}
+
+function sec(s){
+let h=`<div class="section"><div class="section-head"><div class="section-dot ${s.t}"></div><div class="section-name">${s.name}</div></div>`;
+s.qs.forEach((q,i)=>{
+const qid=s.id+'-'+i;
+h+=`<div class="question"><p class="question-text">${q.text}</p><ul class="options">`;
+q.opts.forEach(o=>{
+h+=`<li><button class="opt" data-q="${qid}" data-s="${o.s}" data-sec="${s.id}" onclick="pick(this)">${o.l}</button></li>`;
+});
+h+='</ul></div>';
+});
+return h+'</div>';
+}
+
+function pick(b){
+const qid=b.dataset.q,score=+b.dataset.s,sid=b.dataset.sec;
+const isG=sid==='gravity';
+const store=isG?gans:ans;
+if(store[qid]===undefined)done++;
+store[qid]=score;
+document.querySelectorAll(`[data-q="${qid}"]`).forEach(x=>x.className='opt');
+b.classList.add('s'+score);
+document.getElementById('pBar').style.width=(done/totalQ*100)+'%';
+document.getElementById('pLabel').textContent=done+' von '+totalQ+' beantwortet';
+if(!isG)upEl(sid);
+if(done>=totalQ)document.getElementById('gArea').classList.add('show');
+}
+
+function state(sid){
+const s=S.find(x=>x.id===sid);
+if(!s)return null;
+const sc=[];
+s.qs.forEach((q,i)=>{const k=sid+'-'+i;if(ans[k]!==undefined)sc.push(ans[k])});
+if(!sc.length)return null;
+if(sc.includes(0))return 0;
+if(sc.includes(1))return 1;
+return 2;
+}
+
+function upEl(sid){
+const st=state(sid);
+const s=S.find(x=>x.id===sid);
+const el=document.getElementById(s.el);
+if(st===null){el.setAttribute('opacity','0');return}
+el.setAttribute('opacity','1');
+el.querySelectorAll('.st0,.st1,.st2').forEach(g=>g.style.display='none');
+if(st>0){const g=el.querySelector('.st'+st);if(g)g.style.display='block'}
+// figures for absent walls
+const fig=document.getElementById('f-'+sid);
+if(fig)fig.style.display=st===0?'block':'none';
+// fade guides
+const answered=S.filter(s=>state(s.id)!==null).length;
+document.getElementById('guides').setAttribute('opacity',Math.max(.03,.12-answered/S.length*.12));
+}
+
+function gWeight(){
+let t=0,c=0;
+G.qs.forEach((q,i)=>{const k='gravity-'+i;if(gans[k]!==undefined){t+=gans[k];c++}});
+if(!c)return'light';
+const a=t/c;
+return a>=2.5?'heavy':a>=1.8?'moderate':'light';
+}
+
+function applyGravity(){
+const btn=document.getElementById('gBtn');
+btn.disabled=true;btn.textContent='Schwerkraft wirkt...';
+const svg=document.getElementById('hSvg');
+const w=gWeight();
+document.getElementById('gravArrows').setAttribute('opacity','1');
+document.getElementById('figs').setAttribute('opacity','1');
+
+const st={};S.forEach(s=>{st[s.id]=state(s.id)});
+const brAbsent=(st.culture===0?1:0)+(st.habits===0?1:0);
+const brFrail=(st.culture===1?1:0)+(st.habits===1?1:0);
+
+setTimeout(()=>{
+svg.classList.add('grav-on');
+const w1=document.getElementById('e-wall1');
+const w2=document.getElementById('e-wall2');
+const rf=document.getElementById('e-roof');
+
+if(brAbsent===2){
+if(st.wall1!==0)w1.classList.add('do-tiltL');
+if(st.wall2!==0)w2.classList.add('do-tiltR');
+if(st.roof!==0)rf.classList.add('do-rsink');
+}else if(brAbsent===1||brFrail>0){
+if(st.wall1!==0)w1.classList.add('do-leanL');
+if(st.wall2!==0)w2.classList.add('do-leanR');
+}
+
+if(w==='heavy'){
+document.querySelectorAll('#figs g[style*="block"]').forEach(f=>f.classList.add('do-buckle'));
+}
+
+setTimeout(()=>showResults(st,w),2500);
+},300);
+}
+
+function showResults(st,w){
+const r=document.getElementById('res');
+let h='<h2>Ihr Haus</h2>';
+const brAbs=(st.culture===0?1:0)+(st.habits===0?1:0);
+const brFr=(st.culture===1?1:0)+(st.habits===1?1:0);
+const wn={wall1:'Aufgabenverteilung',wall2:'Wissensressourcen',wall3:'Besprechungen',wall4:'Kommunikation'};
+const allBeam=Object.values(st).every(v=>v===2);
+
+if(allBeam){
+h+='<p>Ihre Koordinationsinfrastruktur ist tragfähig. Das Haus steht. Das ist selten — und es lohnt sich, es zu schützen.</p>';
+}else{
+if(brAbs===2){
+h+='<p>Sie haben Wände, aber nichts verbindet sie. Werkzeuge existieren, aber ohne Kultur und Gewohnheiten, die sie zusammenhalten, wird die erste ernsthafte Belastung die Wände nach außen drücken. Die Struktur fällt nicht, weil Teile fehlen, sondern weil nichts die Kräfte zwischen ihnen überträgt.</p>';
+}else if(brAbs===1){
+const miss=st.culture===0?'Kultur':'Gewohnheiten';
+const have=st.culture===0?'Gewohnheiten':'Kultur';
+h+=`<p>Die Querstrebe ${have} hält, aber ${miss} fehlt. ${miss==='Kultur'?'Menschen folgen Abläufen, aber vertrauen dem System nicht — Compliance ohne Commitment.':'Menschen vertrauen einander, aber es gibt keine verlässlichen Praktiken — Wohlwollen ohne Zuverlässigkeit.'}</p>`;
+}else if(brFr>0){
+h+='<p>Ihre Querstreben sind Zweige, keine Balken. Kultur und Gewohnheiten existieren, aber sie hängen von bestimmten Personen oder informellen Absprachen ab. Das hält — bis sich etwas ändert.</p>';
+}
+
+const absent=Object.entries(wn).filter(([k])=>st[k]===0);
+const twigs=Object.entries(wn).filter(([k])=>st[k]===1);
+
+if(twigs.length>0)h+=`<p><strong>${twigs.map(([,n])=>n).join(' und ')}</strong> — ${twigs.length>1?'funktionieren':'funktioniert'}, weil bestimmte Menschen es am Laufen halten. Wenn diese Menschen gehen, geht die Wand mit.</p>`;
+if(absent.length>0)h+=`<p><strong>${absent.map(([,n])=>n).join(' und ')}</strong> — nicht vorhanden. Andere Elemente, die darauf aufbauen, hängen in der Luft.</p>`;
+
+if(st.roof!==0&&(brAbs>0||twigs.length>=2)){
+h+='<p>Ihre Führung legt strategisches Gewicht auf eine Struktur, die es nicht tragen kann. Das Dach drückt die Wände nach außen. Strategie macht es schlimmer, nicht besser.</p>';
+}
+}
+
+h+=`<div class="rblock grav"><h3>Die Schwerkraft</h3>`;
+if(w==='heavy')h+='<p>Ihre Organisation steht unter hohem Druck: ständige Veränderung, starke Abhängigkeit von Abstimmung, Wissensverlust bei Personalwechsel. Diese Last drückt auf die Struktur — und wo Balken fehlen, auf die Menschen darunter.</p>';
+else if(w==='moderate')h+='<p>Ihre Organisation trägt eine mittlere Last. Eine tragfähige Struktur hält das aus — eine aus Zweigen wird bei der nächsten Belastung nachgeben.</p>';
+else h+='<p>Ihre Organisation ist relativ stabil. Auch eine schwächere Struktur kann das vorübergehend tragen — aber sie wird nicht mitwachsen, wenn sich das ändert.</p>';
+h+='</div>';
+
+h+=`<div class="rblock cost"><h3>Wo landen die Kosten?</h3>`;
+h+='<p>Jedes fehlende oder fragile Element bedeutet: Koordinationsarbeit wird von jemandem informell erledigt — oder gar nicht. Die Kosten verschwinden nicht. Sie landen bei denen, die sich nicht wehren können.</p>';
+const absent2=Object.entries(wn).filter(([k])=>st[k]===0);
+if(absent2.length>0)h+='<p>In Ihrer Organisation tragen gerade Menschen die Last von fehlender Infrastruktur. Das sind die Menschen, die „irgendwie dafür sorgen, dass es läuft" — bis sie es nicht mehr können.</p>';
+h+='</div>';
+
+h+='<p style="margin-top:1.5rem;font-size:.9rem;color:var(--ink);font-weight:500">Wer in Ihrer Organisation sollte dieses Haus noch sehen?</p>';
+
+r.innerHTML=h;
+r.classList.add('show');
+r.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+render();
+</script>
+</body>
+</html>
