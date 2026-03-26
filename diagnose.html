@@ -12,8 +12,8 @@ header{margin-bottom:2rem;padding-bottom:1rem;border-bottom:2px solid #000}
 header h1{font-size:2rem;font-weight:700;font-family:Georgia,serif}
 header p{font-size:.9rem;color:#444;margin-top:.3rem}
 header .draft{display:inline-block;border:2px solid #000;padding:2px 8px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-top:.5rem}
-.layout{display:grid;grid-template-columns:1fr 360px;gap:2rem;align-items:start}
-@media(max-width:820px){.layout{grid-template-columns:1fr}.house-panel{order:-1;position:static!important;max-width:380px;margin:0 auto}}
+.layout{display:grid;grid-template-columns:1fr 400px;gap:2rem;align-items:start}
+@media(max-width:860px){.layout{grid-template-columns:1fr}.house-panel{order:-1;position:static!important;max-width:420px;margin:0 auto}}
 .questions-panel{min-width:0}
 .section{margin-bottom:1.5rem}
 .section-head{font-weight:700;font-size:.95rem;margin-bottom:.5rem;padding:4px 0;border-bottom:1px solid #ccc}
@@ -29,36 +29,107 @@ header .draft{display:inline-block;border:2px solid #000;padding:2px 8px;font-si
 .house-panel{position:sticky;top:1rem}
 .house-frame{border:2px solid #000;padding:1rem;background:#fff}
 .house-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem;color:#888}
-.house-canvas{position:relative;width:100%;aspect-ratio:36/40;overflow:hidden}
-.el-slot{position:absolute;opacity:0;transition:opacity .4s}
-.el-slot img{display:block;width:100%;height:100%;object-fit:contain}
+
+/* ── House canvas: the visual area ── */
+.house-canvas{position:relative;width:100%;aspect-ratio:1/1;overflow:visible}
+
+/* ── Image slots ── */
+.el-slot{position:absolute;opacity:0;transition:opacity .4s;overflow:visible}
+.el-slot img{display:block;width:100%;height:100%;object-fit:fill}
 .el-slot.visible{opacity:1}
-.slot-wall1{left:16%;top:43%;width:7%;height:40%}
-.slot-wall2{right:16%;top:43%;width:7%;height:40%}
-.slot-wall3{left:16%;top:83%;width:68%;height:6%}
-.slot-wall4{left:16%;top:37%;width:68%;height:6%}
-.slot-culture{left:16%;top:43%;width:68%;height:40%}
-.slot-habits{left:16%;top:43%;width:68%;height:40%}
-.slot-roof{left:12%;top:8%;width:76%;height:31%}
+
+/*
+  House layout (percentage positions within canvas):
+  
+  The house is roughly:
+  - Roof triangle: top area
+  - Top beam (Kommunikation): horizontal, connecting pillar tops
+  - Left pillar (Aufgaben): vertical, left side
+  - Right pillar (Wissen): vertical, right side  
+  - Bottom beam (Besprechungen): horizontal, connecting pillar bottoms
+  - Culture cross-brace: diagonal from bottom-right to top-left
+  - Habits cross-brace: diagonal from bottom-left to top-right
+*/
+
+/* Wall 1: Left pillar — vertical, no rotation needed */
+.slot-wall1{
+  left:10%;top:30%;width:8%;height:48%;
+}
+
+/* Wall 2: Right pillar — vertical, no rotation needed */
+.slot-wall2{
+  right:10%;top:30%;width:8%;height:48%;
+}
+
+/* Wall 3: Bottom beam — horizontal, rotate 90deg */
+.slot-wall3{
+  left:18%;top:66%;width:64%;height:12%;
+}
+.slot-wall3 img{
+  transform:rotate(90deg);
+  transform-origin:center center;
+}
+
+/* Wall 4: Top beam — horizontal, rotate 90deg */
+.slot-wall4{
+  left:18%;top:22%;width:64%;height:12%;
+}
+.slot-wall4 img{
+  transform:rotate(90deg);
+  transform-origin:center center;
+}
+
+/* Culture: diagonal cross-brace, bottom-right to top-left (~-50deg) */
+.slot-culture{
+  left:15%;top:30%;width:10%;height:50%;
+  transform:rotate(-50deg);
+  transform-origin:bottom center;
+}
+
+/* Habits: diagonal cross-brace, bottom-left to top-right (~50deg) */
+.slot-habits{
+  right:15%;top:30%;width:10%;height:50%;
+  transform:rotate(50deg);
+  transform-origin:bottom center;
+}
+
+/* Roof: triangle area at top — we use the beam image rotated/positioned as two angled beams */
+.slot-roof{
+  left:25%;top:2%;width:50%;height:24%;
+}
+.slot-roof img{
+  /* For now, show as-is; Tino can design the proper roof later */
+}
+
+/* Guide frame */
 .guide-frame{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:.15;transition:opacity .5s}
+
+/* Human figures */
 .figure{position:absolute;opacity:0;transition:opacity .5s;pointer-events:none}
 .figure.visible{opacity:1}
-.fig-wall1{left:14%;top:53%;width:11%;height:26%}
-.fig-wall2{right:14%;top:53%;width:11%;height:26%}
-.fig-wall3{left:44%;top:81%;width:11%;height:13%}
-.fig-wall4{left:44%;top:35%;width:11%;height:13%}
-.el-label{position:absolute;font-size:8px;font-weight:700;color:#888;text-align:center;pointer-events:none;opacity:0;transition:opacity .3s;text-transform:uppercase;letter-spacing:.05em}
+.fig-wall1{left:8%;top:45%;width:12%;height:22%}
+.fig-wall2{right:8%;top:45%;width:12%;height:22%}
+.fig-wall3{left:43%;top:68%;width:14%;height:14%}
+.fig-wall4{left:43%;top:20%;width:14%;height:14%}
+
+/* Element labels */
+.el-label{position:absolute;font-size:9px;font-weight:700;color:#999;text-align:center;pointer-events:none;opacity:0;transition:opacity .3s;text-transform:uppercase;letter-spacing:.05em}
 .el-label.visible{opacity:1}
-.lbl-wall1{left:12%;top:39%;width:14%}
-.lbl-wall2{right:12%;top:39%;width:14%}
-.lbl-wall3{left:33%;top:80%;width:34%}
-.lbl-wall4{left:33%;top:34%;width:34%}
-.lbl-culture{left:23%;top:61%;width:22%;transform:rotate(-40deg)}
-.lbl-habits{right:23%;top:61%;width:22%;transform:rotate(40deg)}
-.lbl-roof{left:33%;top:23%;width:34%}
-.foundation{position:absolute;bottom:2.5%;left:10%;width:80%;height:5%;border:1px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:7px;color:#aaa;text-transform:uppercase}
-.gravity-arrows{position:absolute;top:0;left:0;width:100%;text-align:center;font-size:10px;color:#888;opacity:0;transition:opacity .5s;font-weight:700}
+.lbl-wall1{left:2%;top:27%;width:16%}
+.lbl-wall2{right:2%;top:27%;width:16%}
+.lbl-wall3{left:30%;top:80%;width:40%}
+.lbl-wall4{left:30%;top:18%;width:40%}
+.lbl-culture{left:18%;top:55%;width:20%;transform:rotate(-50deg)}
+.lbl-habits{right:18%;top:55%;width:20%;transform:rotate(50deg)}
+.lbl-roof{left:30%;top:10%;width:40%}
+
+/* Foundation */
+.foundation{position:absolute;bottom:2%;left:8%;width:84%;height:5%;border:1px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:8px;color:#aaa;text-transform:uppercase;letter-spacing:.05em}
+
+/* Gravity arrows */
+.gravity-arrows{position:absolute;top:-1%;left:0;width:100%;text-align:center;font-size:10px;color:#888;opacity:0;transition:opacity .5s;font-weight:700}
 .gravity-arrows.visible{opacity:1}
+
 .legend{display:flex;gap:1rem;margin-top:.6rem;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:.3rem;font-size:.65rem;color:#888}
 .legend-swatch{width:16px;height:6px;border-radius:1px}
@@ -81,6 +152,8 @@ header .draft{display:inline-block;border:2px solid #000;padding:2px 8px;font-si
 .rblock.cost h3{color:#c44}
 footer{margin-top:2.5rem;padding-top:.75rem;border-top:1px solid #ccc;text-align:center;font-size:.7rem;color:#aaa}
 footer a{color:#888;text-decoration:none}
+
+/* Gravity collapse animations */
 @keyframes tiltL{to{transform:rotate(-14deg)}}
 @keyframes tiltR{to{transform:rotate(14deg)}}
 @keyframes leanL{to{transform:rotate(-5deg)}}
@@ -109,16 +182,24 @@ footer a{color:#888;text-decoration:none}
 <div class="house-label">Ihr Haus</div>
 <div class="house-canvas" id="hCanvas">
 
-<svg class="guide-frame" id="guides" viewBox="0 0 360 400" xmlns="http://www.w3.org/2000/svg">
-<path d="M180 35L315 150L45 150Z" fill="none" stroke="#000" stroke-width="1" stroke-dasharray="4 4"/>
-<rect x="60" y="150" width="240" height="24" rx="1" fill="none" stroke="#000" stroke-width="1" stroke-dasharray="4 4"/>
-<rect x="60" y="174" width="24" height="160" rx="1" fill="none" stroke="#000" stroke-width="1" stroke-dasharray="4 4"/>
-<rect x="276" y="174" width="24" height="160" rx="1" fill="none" stroke="#000" stroke-width="1" stroke-dasharray="4 4"/>
-<rect x="60" y="334" width="240" height="24" rx="1" fill="none" stroke="#000" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="84" y1="334" x2="276" y2="174" stroke="#000" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="276" y1="334" x2="84" y2="174" stroke="#000" stroke-width="1" stroke-dasharray="4 4"/>
+<!-- Guide frame: dashed outline of where the house should be -->
+<svg class="guide-frame" id="guides" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<!-- Roof -->
+<path d="M50 5 L90 28 L10 28 Z" fill="none" stroke="#000" stroke-width=".5" stroke-dasharray="2 2"/>
+<!-- Top beam -->
+<rect x="18" y="28" width="64" height="5" fill="none" stroke="#000" stroke-width=".5" stroke-dasharray="2 2"/>
+<!-- Left pillar -->
+<rect x="10" y="33" width="8" height="45" fill="none" stroke="#000" stroke-width=".5" stroke-dasharray="2 2"/>
+<!-- Right pillar -->
+<rect x="82" y="33" width="8" height="45" fill="none" stroke="#000" stroke-width=".5" stroke-dasharray="2 2"/>
+<!-- Bottom beam -->
+<rect x="18" y="78" width="64" height="5" fill="none" stroke="#000" stroke-width=".5" stroke-dasharray="2 2"/>
+<!-- Cross braces -->
+<line x1="18" y1="78" x2="82" y2="33" stroke="#000" stroke-width=".5" stroke-dasharray="2 2"/>
+<line x1="82" y1="78" x2="18" y2="33" stroke="#000" stroke-width=".5" stroke-dasharray="2 2"/>
 </svg>
 
+<!-- Structural element image slots -->
 <div class="el-slot slot-wall1" id="e-wall1"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
 <div class="el-slot slot-wall2" id="e-wall2"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
 <div class="el-slot slot-wall3" id="e-wall3"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
@@ -127,11 +208,13 @@ footer a{color:#888;text-decoration:none}
 <div class="el-slot slot-habits" id="e-habits"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
 <div class="el-slot slot-roof" id="e-roof"><img class="img-beam" style="display:none"><img class="img-twig" style="display:none"></div>
 
+<!-- Human figures where structure is absent -->
 <svg class="figure fig-wall1" id="f-wall1" viewBox="0 0 40 100"><ellipse cx="20" cy="12" rx="7" ry="9" fill="none" stroke="#000" stroke-width="2"/><line x1="20" y1="21" x2="20" y2="58" stroke="#000" stroke-width="2"/><line x1="20" y1="32" x2="8" y2="20" stroke="#000" stroke-width="2"/><line x1="20" y1="32" x2="32" y2="20" stroke="#000" stroke-width="2"/><line x1="20" y1="58" x2="10" y2="88" stroke="#000" stroke-width="2"/><line x1="20" y1="58" x2="30" y2="88" stroke="#000" stroke-width="2"/></svg>
 <svg class="figure fig-wall2" id="f-wall2" viewBox="0 0 40 100"><ellipse cx="20" cy="12" rx="7" ry="9" fill="none" stroke="#000" stroke-width="2"/><line x1="20" y1="21" x2="20" y2="58" stroke="#000" stroke-width="2"/><line x1="20" y1="32" x2="8" y2="20" stroke="#000" stroke-width="2"/><line x1="20" y1="32" x2="32" y2="20" stroke="#000" stroke-width="2"/><line x1="20" y1="58" x2="10" y2="88" stroke="#000" stroke-width="2"/><line x1="20" y1="58" x2="30" y2="88" stroke="#000" stroke-width="2"/></svg>
 <svg class="figure fig-wall3" id="f-wall3" viewBox="0 0 40 50"><ellipse cx="20" cy="8" rx="6" ry="7" fill="none" stroke="#000" stroke-width="2"/><line x1="20" y1="15" x2="20" y2="34" stroke="#000" stroke-width="2"/><line x1="20" y1="22" x2="10" y2="14" stroke="#000" stroke-width="2"/><line x1="20" y1="22" x2="30" y2="14" stroke="#000" stroke-width="2"/></svg>
 <svg class="figure fig-wall4" id="f-wall4" viewBox="0 0 40 50"><ellipse cx="20" cy="8" rx="6" ry="7" fill="none" stroke="#000" stroke-width="2"/><line x1="20" y1="15" x2="20" y2="34" stroke="#000" stroke-width="2"/><line x1="20" y1="22" x2="10" y2="14" stroke="#000" stroke-width="2"/><line x1="20" y1="22" x2="30" y2="14" stroke="#000" stroke-width="2"/></svg>
 
+<!-- Labels -->
 <div class="el-label lbl-wall1" id="l-wall1">Aufgaben</div>
 <div class="el-label lbl-wall2" id="l-wall2">Wissen</div>
 <div class="el-label lbl-wall3" id="l-wall3">Besprechungen</div>
@@ -162,122 +245,50 @@ footer a{color:#888;text-decoration:none}
 </footer>
 </div>
 <script>
-// ── Images: same beam/twig for all positions ──
-const BEAM='img/beam.png', TWIG='img/twig.png';
-document.querySelectorAll('.el-slot').forEach(el=>{
-el.querySelector('.img-beam').src=BEAM;
-el.querySelector('.img-twig').src=TWIG;
-});
-
+const BEAM='img/beam.png',TWIG='img/twig.png';
+document.querySelectorAll('.el-slot').forEach(el=>{el.querySelector('.img-beam').src=BEAM;el.querySelector('.img-twig').src=TWIG});
 const S=[
 {id:'wall1',t:'wall',name:'Wand 1 — Aufgabenverteilung',qs:[
-{text:'Wenn Arbeit anfällt und niemand offiziell zuständig ist — wie wird sie verteilt?',opts:[
-{l:'Über ein System, das Auslastung und Kapazitäten sichtbar macht',s:2},
-{l:'Wer zuerst gefragt wird oder sich meldet',s:1},
-{l:'Sie wird nicht verteilt — sie bleibt bei dem, der es bemerkt',s:0}]},
-{text:'Können Menschen in Ihrer Organisation die Arbeitsbelastung im Team überblicken?',opts:[
-{l:'Ja, über ein gemeinsames System',s:2},
-{l:'Informell — die Teamleitung hat ein Gefühl dafür',s:1},
-{l:'Nein — jeder verwaltet seine Arbeit allein',s:0}]},
-{text:'Was passiert, wenn jemand zwei Wochen ausfällt?',opts:[
-{l:'Aufgaben sind sichtbar und können umverteilt werden',s:2},
-{l:'Ein Kollege springt ein, aber nur weil er die Person kennt',s:1},
-{l:'Dinge bleiben liegen oder fallen durch, bis die Person zurück ist',s:0}]}
+{text:'Wenn Arbeit anfällt und niemand offiziell zuständig ist — wie wird sie verteilt?',opts:[{l:'Über ein System, das Auslastung und Kapazitäten sichtbar macht',s:2},{l:'Wer zuerst gefragt wird oder sich meldet',s:1},{l:'Sie wird nicht verteilt — sie bleibt bei dem, der es bemerkt',s:0}]},
+{text:'Können Menschen in Ihrer Organisation die Arbeitsbelastung im Team überblicken?',opts:[{l:'Ja, über ein gemeinsames System',s:2},{l:'Informell — die Teamleitung hat ein Gefühl dafür',s:1},{l:'Nein — jeder verwaltet seine Arbeit allein',s:0}]},
+{text:'Was passiert, wenn jemand zwei Wochen ausfällt?',opts:[{l:'Aufgaben sind sichtbar und können umverteilt werden',s:2},{l:'Ein Kollege springt ein, aber nur weil er die Person kennt',s:1},{l:'Dinge bleiben liegen oder fallen durch, bis die Person zurück ist',s:0}]}
 ]},
 {id:'wall2',t:'wall',name:'Wand 2 — Wissensressourcen',qs:[
-{text:'Wo schauen Menschen zuerst, wenn sie wissen müssen, wie etwas funktioniert?',opts:[
-{l:'In einer gepflegten Wissensdatenbank oder Dokumentation',s:2},
-{l:'Sie fragen eine bestimmte Person, die die Antwort kennt',s:1},
-{l:'Es gibt keinen verlässlichen ersten Anlaufpunkt',s:0}]},
-{text:'Können Sie Dokumentation von vor sechs Monaten finden?',opts:[
-{l:'Ja, zuverlässig und schnell',s:2},
-{l:'Wahrscheinlich, aber es würde Suchen und Nachfragen kosten',s:1},
-{l:'Sie existiert wahrscheinlich nicht mehr, oder ich wüsste nicht wo',s:0}]},
-{text:'Wer pflegt gemeinsame Wissensressourcen?',opts:[
-{l:'Eine definierte Rolle oder verteilte Verantwortung mit Standards',s:2},
-{l:'Ein oder zwei engagierte Personen, die es freiwillig tun',s:1},
-{l:'Niemand — Ressourcen werden erstellt und dann sich selbst überlassen',s:0}]}
+{text:'Wo schauen Menschen zuerst, wenn sie wissen müssen, wie etwas funktioniert?',opts:[{l:'In einer gepflegten Wissensdatenbank oder Dokumentation',s:2},{l:'Sie fragen eine bestimmte Person, die die Antwort kennt',s:1},{l:'Es gibt keinen verlässlichen ersten Anlaufpunkt',s:0}]},
+{text:'Können Sie Dokumentation von vor sechs Monaten finden?',opts:[{l:'Ja, zuverlässig und schnell',s:2},{l:'Wahrscheinlich, aber es würde Suchen und Nachfragen kosten',s:1},{l:'Sie existiert wahrscheinlich nicht mehr, oder ich wüsste nicht wo',s:0}]},
+{text:'Wer pflegt gemeinsame Wissensressourcen?',opts:[{l:'Eine definierte Rolle oder verteilte Verantwortung mit Standards',s:2},{l:'Ein oder zwei engagierte Personen, die es freiwillig tun',s:1},{l:'Niemand — Ressourcen werden erstellt und dann sich selbst überlassen',s:0}]}
 ]},
 {id:'wall3',t:'wall',name:'Wand 3 — Besprechungen',qs:[
-{text:'Bei wie vielen Ihrer Besprechungen entstehen dokumentierte, auffindbare Entscheidungen?',opts:[
-{l:'Bei den meisten — Entscheidungen werden festgehalten und sind zugänglich',s:2},
-{l:'Bei einigen — es hängt davon ab, wer Protokoll führt',s:1},
-{l:'Bei wenigen oder keinen — Entscheidungen bleiben in den Köpfen',s:0}]},
-{text:'Wie viele Meetings dienen hauptsächlich der Informationsweitergabe, die auch anders fließen könnte?',opts:[
-{l:'Sehr wenige — Meetings sind für Entscheidungen und komplexe Diskussionen',s:2},
-{l:'Einige — wir könnten ein paar durch bessere asynchrone Wege ersetzen',s:1},
-{l:'Die meisten — Meetings sind unser Hauptkanal für Informationen',s:0}]},
-{text:'Wenn ein Meeting eine Entscheidung produziert — kann jemand, der nicht dabei war, sie eine Woche später finden?',opts:[
-{l:'Ja — Entscheidungen werden an einem bekannten Ort dokumentiert',s:2},
-{l:'Vielleicht — wenn man weiß, wen man fragen muss',s:1},
-{l:'Nein — man musste dabei gewesen sein',s:0}]}
+{text:'Bei wie vielen Ihrer Besprechungen entstehen dokumentierte, auffindbare Entscheidungen?',opts:[{l:'Bei den meisten — Entscheidungen werden festgehalten und sind zugänglich',s:2},{l:'Bei einigen — es hängt davon ab, wer Protokoll führt',s:1},{l:'Bei wenigen oder keinen — Entscheidungen bleiben in den Köpfen',s:0}]},
+{text:'Wie viele Meetings dienen hauptsächlich der Informationsweitergabe, die auch anders fließen könnte?',opts:[{l:'Sehr wenige — Meetings sind für Entscheidungen und komplexe Diskussionen',s:2},{l:'Einige — wir könnten ein paar durch bessere asynchrone Wege ersetzen',s:1},{l:'Die meisten — Meetings sind unser Hauptkanal für Informationen',s:0}]},
+{text:'Wenn ein Meeting eine Entscheidung produziert — kann jemand, der nicht dabei war, sie eine Woche später finden?',opts:[{l:'Ja — Entscheidungen werden an einem bekannten Ort dokumentiert',s:2},{l:'Vielleicht — wenn man weiß, wen man fragen muss',s:1},{l:'Nein — man musste dabei gewesen sein',s:0}]}
 ]},
 {id:'wall4',t:'wall',name:'Wand 4 — Schnelle informelle Kommunikation',qs:[
-{text:'Gibt es einen Chat-Kanal, in dem Routinefragen schnell beantwortet werden?',opts:[
-{l:'Ja, und er ist ein offizieller Teil unserer Arbeitsweise',s:2},
-{l:'Ja, aber er ist informell entstanden und nicht alle nutzen ihn',s:1},
-{l:'Nein — Fragen gehen per E-Mail oder Anruf an Einzelpersonen',s:0}]},
-{text:'Können neue Mitarbeitende diese Kanäle leicht finden und beitreten?',opts:[
-{l:'Ja — sie sind auffindbar und Teil des Onboardings',s:2},
-{l:'Wenn jemand sie zeigt — es läuft über Mundpropaganda',s:1},
-{l:'Es gibt keine gemeinsamen Kanäle, oder sie sind für Neue unsichtbar',s:0}]},
-{text:'Wenn etwas Wichtiges im Chat entschieden wird — wird es an einem dauerhafteren Ort festgehalten?',opts:[
-{l:'Ja — Entscheidungen wandern vom Chat in die Dokumentation',s:2},
-{l:'Manchmal, wenn jemand daran denkt',s:1},
-{l:'Nein — es scrollt weg und ist praktisch verloren',s:0}]}
+{text:'Gibt es einen Chat-Kanal, in dem Routinefragen schnell beantwortet werden?',opts:[{l:'Ja, und er ist ein offizieller Teil unserer Arbeitsweise',s:2},{l:'Ja, aber er ist informell entstanden und nicht alle nutzen ihn',s:1},{l:'Nein — Fragen gehen per E-Mail oder Anruf an Einzelpersonen',s:0}]},
+{text:'Können neue Mitarbeitende diese Kanäle leicht finden und beitreten?',opts:[{l:'Ja — sie sind auffindbar und Teil des Onboardings',s:2},{l:'Wenn jemand sie zeigt — es läuft über Mundpropaganda',s:1},{l:'Es gibt keine gemeinsamen Kanäle, oder sie sind für Neue unsichtbar',s:0}]},
+{text:'Wenn etwas Wichtiges im Chat entschieden wird — wird es an einem dauerhafteren Ort festgehalten?',opts:[{l:'Ja — Entscheidungen wandern vom Chat in die Dokumentation',s:2},{l:'Manchmal, wenn jemand daran denkt',s:1},{l:'Nein — es scrollt weg und ist praktisch verloren',s:0}]}
 ]},
 {id:'culture',t:'brace',name:'Querstrebe — Kultur',qs:[
-{text:'Wird um Hilfe bitten als Kompetenz oder als Schwäche gesehen?',opts:[
-{l:'Als Kompetenz — es wird erwartet und von Führungskräften vorgelebt',s:2},
-{l:'Kommt auf das Team oder die Führungskraft an',s:1},
-{l:'Als Schwäche — man löst Probleme allein',s:0}]},
-{text:'Teilen Menschen Zwischenergebnisse, oder nur fertige Arbeit?',opts:[
-{l:'Zwischenergebnisse werden geteilt, Feedback ist normal',s:2},
-{l:'Informell, innerhalb vertrauensvoller Beziehungen',s:1},
-{l:'Nur fertige Ergebnisse — Entwürfe zu zeigen fühlt sich riskant an',s:0}]},
-{text:'Werden Fehler offen besprochen oder versteckt?',opts:[
-{l:'Offen besprochen als Lernmöglichkeit',s:2},
-{l:'Privat besprochen, aber nicht organisationsweit',s:1},
-{l:'Versteckt — Fehler sichtbar zu machen ist ein Karriererisiko',s:0}]}
+{text:'Wird um Hilfe bitten als Kompetenz oder als Schwäche gesehen?',opts:[{l:'Als Kompetenz — es wird erwartet und von Führungskräften vorgelebt',s:2},{l:'Kommt auf das Team oder die Führungskraft an',s:1},{l:'Als Schwäche — man löst Probleme allein',s:0}]},
+{text:'Teilen Menschen Zwischenergebnisse, oder nur fertige Arbeit?',opts:[{l:'Zwischenergebnisse werden geteilt, Feedback ist normal',s:2},{l:'Informell, innerhalb vertrauensvoller Beziehungen',s:1},{l:'Nur fertige Ergebnisse — Entwürfe zu zeigen fühlt sich riskant an',s:0}]},
+{text:'Werden Fehler offen besprochen oder versteckt?',opts:[{l:'Offen besprochen als Lernmöglichkeit',s:2},{l:'Privat besprochen, aber nicht organisationsweit',s:1},{l:'Versteckt — Fehler sichtbar zu machen ist ein Karriererisiko',s:0}]}
 ]},
 {id:'habits',t:'brace',name:'Querstrebe — Gewohnheiten',qs:[
-{text:'Schauen Menschen in gemeinsame Kanäle, bevor sie ein Meeting einberufen?',opts:[
-{l:'Ja — asynchron zuerst ist die Norm',s:2},
-{l:'Manchmal, aber Meetings sind immer noch der Standard',s:1},
-{l:'Nein — ein Meeting ist immer die erste Reaktion',s:0}]},
-{text:'Ist „Ich dokumentiere das" ein Satz, den Sie regelmäßig hören?',opts:[
-{l:'Ja — Dokumentieren ist ein normaler Teil der Arbeit',s:2},
-{l:'Von bestimmten Personen, nicht von allen',s:1},
-{l:'Selten oder nie — Dokumentation gilt als Extraarbeit',s:0}]},
-{text:'Wie geben erfahrene Kolleg:innen Wissen an neue weiter?',opts:[
-{l:'Durch strukturierte Übergabe mit dokumentierten Ressourcen',s:2},
-{l:'Durch persönliches Mentoring und mündliche Weitergabe',s:1},
-{l:'Neue Mitarbeitende finden sich weitgehend allein zurecht',s:0}]}
+{text:'Schauen Menschen in gemeinsame Kanäle, bevor sie ein Meeting einberufen?',opts:[{l:'Ja — asynchron zuerst ist die Norm',s:2},{l:'Manchmal, aber Meetings sind immer noch der Standard',s:1},{l:'Nein — ein Meeting ist immer die erste Reaktion',s:0}]},
+{text:'Ist „Ich dokumentiere das" ein Satz, den Sie regelmäßig hören?',opts:[{l:'Ja — Dokumentieren ist ein normaler Teil der Arbeit',s:2},{l:'Von bestimmten Personen, nicht von allen',s:1},{l:'Selten oder nie — Dokumentation gilt als Extraarbeit',s:0}]},
+{text:'Wie geben erfahrene Kolleg:innen Wissen an neue weiter?',opts:[{l:'Durch strukturierte Übergabe mit dokumentierten Ressourcen',s:2},{l:'Durch persönliches Mentoring und mündliche Weitergabe',s:1},{l:'Neue Mitarbeitende finden sich weitgehend allein zurecht',s:0}]}
 ]},
 {id:'roof',t:'roof',name:'Dach — Führung und strategische Absicht',qs:[
-{text:'Nutzt die Führungsebene dieselben Zusammenarbeitstools, die sie den Teams bereitstellt?',opts:[
-{l:'Konsequent — sie leben vor, was sie erwarten',s:2},
-{l:'Uneinheitlich — es hängt von der Führungskraft ab',s:1},
-{l:'Nein — Führung arbeitet über E-Mail und Assistenz',s:0}]},
-{text:'Wird Zusammenarbeit gemessen oder nur erwähnt?',opts:[
-{l:'Gemessen — es gibt Kennzahlen oder zumindest regelmäßige Reflexion',s:2},
-{l:'Erwähnt in Leitbildern und Town Halls, aber nicht nachverfolgt',s:1},
-{l:'Weder noch — „besser zusammenarbeiten" ist ein Appell, keine Strategie',s:0}]},
-{text:'Wenn ein neues Tool eingeführt wird — gibt es eine Gestaltungsphase mit den Menschen, die es nutzen werden?',opts:[
-{l:'Ja — Nutzende gestalten mit, wie Tools konfiguriert und eingeführt werden',s:2},
-{l:'Teilweise — es gibt Schulungen, aber kein Co-Design',s:1},
-{l:'Nein — Tools werden ausgerollt und man soll sich anpassen',s:0}]}
+{text:'Nutzt die Führungsebene dieselben Zusammenarbeitstools, die sie den Teams bereitstellt?',opts:[{l:'Konsequent — sie leben vor, was sie erwarten',s:2},{l:'Uneinheitlich — es hängt von der Führungskraft ab',s:1},{l:'Nein — Führung arbeitet über E-Mail und Assistenz',s:0}]},
+{text:'Wird Zusammenarbeit gemessen oder nur erwähnt?',opts:[{l:'Gemessen — es gibt Kennzahlen oder zumindest regelmäßige Reflexion',s:2},{l:'Erwähnt in Leitbildern und Town Halls, aber nicht nachverfolgt',s:1},{l:'Weder noch — „besser zusammenarbeiten" ist ein Appell, keine Strategie',s:0}]},
+{text:'Wenn ein neues Tool eingeführt wird — gibt es eine Gestaltungsphase mit den Menschen, die es nutzen werden?',opts:[{l:'Ja — Nutzende gestalten mit, wie Tools konfiguriert und eingeführt werden',s:2},{l:'Teilweise — es gibt Schulungen, aber kein Co-Design',s:1},{l:'Nein — Tools werden ausgerollt und man soll sich anpassen',s:0}]}
 ]}
 ];
 const G={id:'gravity',t:'gravity',name:'Schwerkraft — Was drückt auf diese Struktur?',qs:[
-{text:'Wie häufig durchläuft Ihre Organisation grundlegende Veränderungen?',opts:[
-{l:'Ständig — Veränderung ist Dauerzustand',s:3},{l:'Alle ein bis zwei Jahre',s:2},{l:'Selten — es ist relativ stabil',s:1}]},
-{text:'Wie viel Ihrer Arbeit hängt von Abstimmung über Team- oder Abteilungsgrenzen hinweg ab?',opts:[
-{l:'Fast alles — nichts geht allein',s:3},{l:'Ein erheblicher Teil',s:2},{l:'Überwiegend eigenständige Arbeit innerhalb der Teams',s:1}]},
-{text:'Wenn wichtige Personen gehen — wie viel Wissen geht mit ihnen?',opts:[
-{l:'Kritisches Wissen verschwindet — Projekte geraten ins Stocken',s:3},{l:'Es gibt Störungen, aber das Team erholt sich',s:2},{l:'Minimale Auswirkung — Wissen ist dokumentiert',s:1}]},
-{text:'Wie viele der Tools und Prozesse wurden eingeführt, ohne die Menschen zu fragen, die damit arbeiten?',opts:[
-{l:'Die meisten',s:3},{l:'Einige',s:2},{l:'Sehr wenige — die Menschen wurden einbezogen',s:1}]}
+{text:'Wie häufig durchläuft Ihre Organisation grundlegende Veränderungen?',opts:[{l:'Ständig — Veränderung ist Dauerzustand',s:3},{l:'Alle ein bis zwei Jahre',s:2},{l:'Selten — es ist relativ stabil',s:1}]},
+{text:'Wie viel Ihrer Arbeit hängt von Abstimmung über Team- oder Abteilungsgrenzen hinweg ab?',opts:[{l:'Fast alles — nichts geht allein',s:3},{l:'Ein erheblicher Teil',s:2},{l:'Überwiegend eigenständige Arbeit innerhalb der Teams',s:1}]},
+{text:'Wenn wichtige Personen gehen — wie viel Wissen geht mit ihnen?',opts:[{l:'Kritisches Wissen verschwindet — Projekte geraten ins Stocken',s:3},{l:'Es gibt Störungen, aber das Team erholt sich',s:2},{l:'Minimale Auswirkung — Wissen ist dokumentiert',s:1}]},
+{text:'Wie viele der Tools und Prozesse wurden eingeführt, ohne die Menschen zu fragen, die damit arbeiten?',opts:[{l:'Die meisten',s:3},{l:'Einige',s:2},{l:'Sehr wenige — die Menschen wurden einbezogen',s:1}]}
 ]};
 const ans={},gans={};
 const totalQ=S.reduce((n,s)=>n+s.qs.length,0)+G.qs.length;
@@ -289,7 +300,7 @@ function state(sid){const s=S.find(x=>x.id===sid);if(!s)return null;const sc=[];
 function upEl(sid){const st=state(sid),el=document.getElementById('e-'+sid),label=document.getElementById('l-'+sid),fig=document.getElementById('f-'+sid);if(st===null){el.classList.remove('visible');label.classList.remove('visible');return}el.classList.add('visible');label.classList.add('visible');el.querySelector('.img-beam').style.display='none';el.querySelector('.img-twig').style.display='none';if(st===2)el.querySelector('.img-beam').style.display='block';else if(st===1)el.querySelector('.img-twig').style.display='block';if(fig){if(st===0)fig.classList.add('visible');else fig.classList.remove('visible')}const a=S.filter(s=>state(s.id)!==null).length;document.getElementById('guides').style.opacity=Math.max(.03,.15-a/S.length*.15)}
 function gWeight(){let t=0,c=0;G.qs.forEach((q,i)=>{const k='gravity-'+i;if(gans[k]!==undefined){t+=gans[k];c++}});if(!c)return'light';const a=t/c;return a>=2.5?'heavy':a>=1.8?'moderate':'light'}
 function applyGravity(){const btn=document.getElementById('gBtn');btn.disabled=true;btn.textContent='...';const canvas=document.getElementById('hCanvas'),w=gWeight();document.getElementById('gravArrows').classList.add('visible');S.forEach(s=>{const fig=document.getElementById('f-'+s.id);if(fig&&state(s.id)===0)fig.classList.add('visible')});const st={};S.forEach(s=>{st[s.id]=state(s.id)});const brAbs=(st.culture===0?1:0)+(st.habits===0?1:0),brFr=(st.culture===1?1:0)+(st.habits===1?1:0);setTimeout(()=>{canvas.classList.add('grav-on');const w1=document.getElementById('e-wall1'),w2=document.getElementById('e-wall2'),rf=document.getElementById('e-roof');if(brAbs===2){if(st.wall1!==0)w1.classList.add('do-tiltL');if(st.wall2!==0)w2.classList.add('do-tiltR');if(st.roof!==0)rf.classList.add('do-rsink')}else if(brAbs===1||brFr>0){if(st.wall1!==0)w1.classList.add('do-leanL');if(st.wall2!==0)w2.classList.add('do-leanR')}if(w==='heavy')document.querySelectorAll('.figure.visible').forEach(f=>f.classList.add('do-buckle'));setTimeout(()=>showResults(st,w),2500)},300)}
-function showResults(st,w){const r=document.getElementById('res');let h='<h2>Ihr Haus</h2>';const brAbs=(st.culture===0?1:0)+(st.habits===0?1:0),brFr=(st.culture===1?1:0)+(st.habits===1?1:0),wn={wall1:'Aufgabenverteilung',wall2:'Wissensressourcen',wall3:'Besprechungen',wall4:'Kommunikation'},allB=Object.values(st).every(v=>v===2);if(allB){h+='<p>Ihre Koordinationsinfrastruktur ist tragfähig. Das Haus steht. Das ist selten.</p>'}else{if(brAbs===2)h+='<p>Sie haben Wände, aber nichts verbindet sie. Werkzeuge existieren, aber ohne Kultur und Gewohnheiten wird die erste ernsthafte Belastung die Wände nach außen drücken.</p>';else if(brAbs===1){const miss=st.culture===0?'Kultur':'Gewohnheiten',have=st.culture===0?'Gewohnheiten':'Kultur';h+=`<p>Die Querstrebe ${have} hält, aber ${miss} fehlt. ${miss==='Kultur'?'Compliance ohne Commitment.':'Wohlwollen ohne Zuverlässigkeit.'}</p>`}else if(brFr>0)h+='<p>Ihre Querstreben sind Zweige, keine Balken. Das hält — bis sich etwas ändert.</p>';const absent=Object.entries(wn).filter(([k])=>st[k]===0),twigs=Object.entries(wn).filter(([k])=>st[k]===1);if(twigs.length>0)h+=`<p><strong>${twigs.map(([,n])=>n).join(', ')}</strong> — funktioniert, weil bestimmte Menschen es am Laufen halten.</p>`;if(absent.length>0)h+=`<p><strong>${absent.map(([,n])=>n).join(', ')}</strong> — nicht vorhanden.</p>`;if(st.roof!==0&&(brAbs>0||twigs.length>=2))h+='<p>Das Dach drückt die Wände nach außen. Strategie macht es schlimmer.</p>'}h+=`<div class="rblock grav"><h3>Schwerkraft</h3>`;if(w==='heavy')h+='<p>Hoher Druck. Wo Balken fehlen, drückt die Last auf Menschen.</p>';else if(w==='moderate')h+='<p>Mittlere Last. Zweige geben bei der nächsten Belastung nach.</p>';else h+='<p>Relativ stabil. Aber die Struktur wächst nicht mit.</p>';h+='</div>';h+=`<div class="rblock cost"><h3>Wo landen die Kosten?</h3><p>Jedes fehlende Element bedeutet: jemand trägt die Last informell. Die Kosten landen bei denen, die sich nicht wehren können.</p></div>`;h+='<p style="margin-top:1.2rem;font-weight:700">Wer in Ihrer Organisation sollte dieses Haus noch sehen?</p>';r.innerHTML=h;r.classList.add('show');r.scrollIntoView({behavior:'smooth',block:'start'})}
+function showResults(st,w){const r=document.getElementById('res');let h='<h2>Ihr Haus</h2>';const brAbs=(st.culture===0?1:0)+(st.habits===0?1:0),brFr=(st.culture===1?1:0)+(st.habits===1?1:0),wn={wall1:'Aufgabenverteilung',wall2:'Wissensressourcen',wall3:'Besprechungen',wall4:'Kommunikation'},allB=Object.values(st).every(v=>v===2);if(allB){h+='<p>Ihre Koordinationsinfrastruktur ist tragfähig. Das Haus steht. Das ist selten.</p>'}else{if(brAbs===2)h+='<p>Sie haben Wände, aber nichts verbindet sie. Ohne Kultur und Gewohnheiten wird die erste ernsthafte Belastung die Wände nach außen drücken.</p>';else if(brAbs===1){const miss=st.culture===0?'Kultur':'Gewohnheiten',have=st.culture===0?'Gewohnheiten':'Kultur';h+=`<p>${have} hält, aber ${miss} fehlt. ${miss==='Kultur'?'Compliance ohne Commitment.':'Wohlwollen ohne Zuverlässigkeit.'}</p>`}else if(brFr>0)h+='<p>Ihre Querstreben sind Zweige. Das hält — bis sich etwas ändert.</p>';const absent=Object.entries(wn).filter(([k])=>st[k]===0),twigs=Object.entries(wn).filter(([k])=>st[k]===1);if(twigs.length>0)h+=`<p><strong>${twigs.map(([,n])=>n).join(', ')}</strong> — hält, weil bestimmte Menschen es am Laufen halten.</p>`;if(absent.length>0)h+=`<p><strong>${absent.map(([,n])=>n).join(', ')}</strong> — nicht vorhanden.</p>`;if(st.roof!==0&&(brAbs>0||twigs.length>=2))h+='<p>Das Dach drückt die Wände nach außen. Strategie macht es schlimmer.</p>'}h+=`<div class="rblock grav"><h3>Schwerkraft</h3>`;if(w==='heavy')h+='<p>Hoher Druck. Wo Balken fehlen, drückt die Last auf Menschen.</p>';else if(w==='moderate')h+='<p>Mittlere Last. Zweige geben bei der nächsten Belastung nach.</p>';else h+='<p>Relativ stabil. Aber die Struktur wächst nicht mit.</p>';h+='</div>';h+=`<div class="rblock cost"><h3>Wo landen die Kosten?</h3><p>Jedes fehlende Element bedeutet: jemand trägt die Last informell. Die Kosten landen bei denen, die sich nicht wehren können.</p></div>`;h+='<p style="margin-top:1.2rem;font-weight:700">Wer in Ihrer Organisation sollte dieses Haus noch sehen?</p>';r.innerHTML=h;r.classList.add('show');r.scrollIntoView({behavior:'smooth',block:'start'})}
 render();
 </script>
 </body>
