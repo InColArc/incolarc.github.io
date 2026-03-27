@@ -8,7 +8,7 @@ The concept
 
 A Fachwerkhaus is a half-timbered house. The structural principle is simple: vertical posts form walls, diagonal braces transfer load between them, and the whole thing only stands when every element does its job. Remove a wall and the house still stands — lopsided. Remove the cross-braces and the walls collapse outward under load. Add a roof to a structure with no braces and the weight brings everything down.
 This is a precise metaphor for coordination infrastructure in organisations. Not a vague analogy — the structure is only sound when the walls and cross braces exist and fultill their function, which means being connected. Organisations have tools (walls), culture and habits (cross-braces), and strategic intent (roof). Most organisations have some walls but no braces. They add roofs (strategy, leadership mandates) to structures that cannot bear the weight. The house diagram makes this visible in a way that no scorecard or traffic-light grid can.
-The tool asks questions. As the user answers, the house renders in real time. Walls appear solid, dashed, or absent. Cross-braces connect or don't. The roof sits on structure or floats unsupported. At the end, you are looking at a picture of your organisation's coordination infrastructure — and you can see exactly where it fails.
+The tool asks questions. As the user answers, the house renders in real time. 
 
 Who this is for
 
