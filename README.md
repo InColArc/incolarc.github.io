@@ -2,7 +2,7 @@ Fachwerkhaus Diagnose
 
 "A lack of infrastructure is not a personal problem that we can solve with coaching or better communication"
 
-An interactive web tool where someone answers questions about how their organisation actually works, and watches a timber-framed house build — or fail to build — in response to their answers.
+An interactive web tool The user answers questions about how their organisation actually works, and watches a timber-framed house build — or fail to build — in response to their answers.
 
 The concept
 
