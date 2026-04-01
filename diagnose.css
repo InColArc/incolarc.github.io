@@ -82,6 +82,7 @@ hr {
 .q p {
   margin-bottom: 4px;
   font-size: 13px;
+  font-weight: bold;  /* add this */
 }
 
 .q label {
@@ -90,6 +91,7 @@ hr {
   color: #444;
   padding: 2px 0;
   cursor: pointer;
+  padding-left: 4px;  /* add this */
 }
 
 .q label:hover {
