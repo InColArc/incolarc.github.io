@@ -39,6 +39,7 @@ hr{border:none;border-top:1px solid #ccc;margin:20px 0}
 .h-roof-right .el img{width:140px;height:auto;transform:rotate(-30deg);transform-origin:bottom left}
 
 .h-roof-center .el-name{font-size:10px;color:#666;line-height:1.3;margin-bottom:4px}
+.roof-label{font-size:10px;color:#666;line-height:1.4}
 
 .h-top{grid-column:1/4;grid-row:2;height:30px;display:flex;align-items:center;justify-content:center}
 .h-left{grid-column:1;grid-row:3;display:flex;align-items:center;justify-content:center}
@@ -106,24 +107,26 @@ footer a{color:#888}
 
 <h1>Das Fachwerkhaus</h1>
 <div class="draft-badge">ENTWURF</div>
-<div class="intro">Sie haben zu viel Information und gleichzeitig nie die richtige 
-zur Hand? Besprechungen füllen den Tag? Wissen 
-geht verloren, wenn Kollegen das Team verlassen? Sie werden nicht gefragt - jetzt soll die KI es richten?<br><br>
+<div class="intro"><b>Die Fachwerkhaus-Diagnose</b><br><br>
+Jeden Tag von Informationen überschwemmt und doch nie die richtige zur Hand?
+Tage voller Meetings? Wissen geht verloren, wenn
+Kollegen das Team verlassen? Sie werden nicht nach Ihrem Wissen gefragt — jetzt soll die KI
+es richten?<br><br>
 
-Das ist kein Kommunikationsproblem. Es ist ein strukturelles: 
-die Wissensinfrastruktur wurde nie richtig gestaltet.<br><br>
+Das ist kein Kommunikationsproblem, das wir mit Motivation, Training, Coaching,
+Teambuilding oder Resilienzworkshops lösen können. Dieses Problem ist strukturell.
+In den meisten Organisationen wurde die Wissensinfrastruktur nie bewusst gestaltet.
+Wissensinfrastruktur bedeutet eine Kombination von Werkzeugen, die von den Wissenden
+selbst verstanden, genutzt und angepasst werden kann — nicht nur in der IT-Abteilung.<br><br>
 
-Wissensinfrastruktur bedeutet 
-eine Kombination von Werkzeugen, die von den Wissenden selbst 
-verstanden, genutzt und angepasst werden kann — nicht nur von der IT.<br><br>
+<b>Collaboration Architecture</b> visualisiert Wissensinfrastruktur zum besseren Verständnis als
+technisches Fachwerk: digitale Werkzeuge, die, zu tragfähigen Strukturen
+kombiniert, unsere Arbeitsumgebung bilden. In dieser nutzendenzentrierten
+Ansicht sind die Werkzeuge nach ihrer Funktion kategorisiert. Kultur und Gewohnheiten halten das Ganze als
+Querstreben hoch.<br><br>
 
-<b>Collaboration Architecture</b> visualisiert Wissensinfrastruktur als technisches Fachwerk: 
-digitale Werkzeuge, die zu tragfähigen Strukturen kombiniert, unsere Arbeitsumgebung bilden. In dieser nutzendenzentrierten Ansicht sind die Werkzeuge nach ihrer Funktion kategorisiert.<br><br>
-
-Beantworten Sie Fragen zu Ihrer Arbeit und schalten dann die 
-Schwerkraft — die Arbeitsflüsse — ein.<br><br>
-
-Das Ergebnis ist der Startpunkt 
+Beantworten Sie Fragen zu Ihrer Arbeit und schalten dann die Schwerkraft
+— die Arbeitsflüsse — ein. Das Ergebnis ist der Startpunkt 
 für gemeinsames Gestalten funktionierender Koordinationsinfrastruktur. Haben Sie Gedanken/Feedback? Wir freuen uns über eine Nachricht.</div>
 <hr>
 
@@ -134,22 +137,21 @@ für gemeinsames Gestalten funktionierender Koordinationsinfrastruktur. Haben Si
 <h3>Ihre Architektur</h3>
 <div class="house-grid">
 
-<!-- Row 1: Roof — two rafters -->
+<!-- Row 1: Roof — two diagonal pieces -->
 <div class="h-roof-left">
-  <div class="el" id="v-roof-left"><img id="img-roof-left" src="" alt=""></div>
+  <div class="el show" id="v-roof-left"><img src="img/roofleft.jpg" alt=""></div>
 </div>
 <div class="h-roof-center">
-  <div class="el" id="v-roof"><div class="el-name">Führung &amp; strategische Absicht</div></div>
-  <div class="figure" id="fig-roof">🧍</div>
+  <div class="roof-label">Führung &amp; strategische Absicht</div>
 </div>
 <div class="h-roof-right">
-  <div class="el" id="v-roof-right"><img id="img-roof-right" src="" alt=""></div>
+  <div class="el show" id="v-roof-right"><img src="img/roofright.jpg" alt=""></div>
 </div>
 
-<!-- Row 2: Top beam -->
+<!-- Row 2: Top beam — informal communication -->
 <div class="h-top">
   <div>
-    <div class="el" id="v-wall4"><img id="img-wall4" src="" alt=""><div class="el-name">spontane Kommunikation - Chat-Kanal</div></div>
+    <div class="el" id="v-wall4"><img id="img-wall4" src="" alt=""><div class="el-name">spontane Kommunikation</div></div>
     <div class="figure" id="fig-wall4">🧍</div>
   </div>
 </div>
@@ -162,28 +164,28 @@ für gemeinsames Gestalten funktionierender Koordinationsinfrastruktur. Haben Si
   </div>
 </div>
 <div class="h-center">
-  <div class="brace-culture">
-    <div>
-      <div class="el" id="v-culture"><img id="img-culture" src="img/beam.png" rotate="90" alt=""><div class="el-name">Kultur</div></div>
-    </div>
-  </div>
   <div class="brace-habits">
     <div>
-      <div class="el" id="v-habits"><img id="img-habits" src="img/beam.png" rotate="-90" alt=""><div class="el-name">Gewohnheiten</div></div>
+      <div class="el" id="v-habits"><img id="img-habits" src="img/beam.png" alt=""><div class="el-name">Gewohnheiten</div></div>
+    </div>
+  </div>
+  <div class="brace-culture">
+    <div>
+      <div class="el" id="v-culture"><img id="img-culture" src="img/beam.png" alt=""><div class="el-name">Kultur</div></div>
     </div>
   </div>
 </div>
 <div class="h-right">
   <div>
-    <div class="el" id="v-wall2"><img id="img-wall2" src="" alt=""><div class="el-name">Wissensbibliothek</div></div>
+    <div class="el" id="v-wall2"><img id="img-wall2" src="img/beam.png" alt=""><div class="el-name">Wissensbibliothek</div></div>
     <div class="figure" id="fig-wall2">🧍</div>
   </div>
 </div>
 
-<!-- Row 4: Bottom beam -->
+<!-- Row 4: Bottom beam — live meetings -->
 <div class="h-bottom">
   <div>
-    <div class="el" id="v-wall3"><img id="img-wall3" src="" alt=""><div class="el-name">zeitgleiche Besprechungen</div></div>
+    <div class="el" id="v-wall3"><img id="img-wall3" src="" alt=""><div class="el-name">Besprechungen</div></div>
     <div class="figure" id="fig-wall3">🧍</div>
   </div>
 </div>
@@ -216,15 +218,12 @@ Keine Daten werden gesendet. Alles bleibt im Browser.
   Diagonal braces: beam-culture.png etc. (pre-rotated)
 */
 const IMG = {
-  wall1:   { beam: 'img/beam.png',         twig: 'img/twig.png' },
-  wall2:   { beam: 'img/beam.png',         twig: 'img/twig.png' },
-  wall3:   { beam: 'img/beam-h.png',       twig: 'img/twig-h.png' },
-  wall4:   { beam: 'img/beam-h.png',       twig: 'img/twig-h.png' },
-  culture: { beam: 'img/beam-culture.png',  twig: 'img/twig-culture.png' },
-  habits:  { beam: 'img/beam-habits.png',   twig: 'img/twig-habits.png' },
-  roof:    { beam: 'img/beam.png',          twig: 'img/twig.png' },
-  'roof-left':  { beam: 'img/roofleft.jpg',  twig: 'img/roofleft.jpg' },
-  'roof-right': { beam: 'img/roofright.jpg', twig: 'img/roofright.jpg' }
+  wall1:   { beam: 'img/beam.png',   twig: 'img/twig.png' },
+  wall2:   { beam: 'img/beam.png',   twig: 'img/twig.png' },
+  wall3:   { beam: 'img/floor.jpg',  twig: 'img/twig-h.png' },
+  wall4:   { beam: 'img/ceiling.jpg',twig: 'img/twig-h.png' },
+  culture: { beam: 'img/beam.png',   twig: 'img/twig2.jpg' },
+  habits:  { beam: 'img/beam.png',   twig: 'img/twig2.jpg' }
 };
 
 // Questions
@@ -399,6 +398,7 @@ function getState(secId) {
 }
 
 function updateHouse(secId) {
+  if (secId === 'roof') return; // roof images are always visible
   const state = getState(secId);
   const vis = document.getElementById('v-' + secId);
   const img = document.getElementById('img-' + secId);
@@ -407,7 +407,6 @@ function updateHouse(secId) {
   if (state === null) {
     vis.classList.remove('show');
     if (fig) fig.classList.remove('show');
-    if (secId === 'roof') updateRoofRafters(null);
     return;
   }
 
@@ -416,34 +415,13 @@ function updateHouse(secId) {
   if (state === 2) {
     if (img) img.src = IMG[secId].beam;
     if (fig) fig.classList.remove('show');
-    if (secId === 'roof') updateRoofRafters('beam');
   } else if (state === 1) {
     if (img) img.src = IMG[secId].twig;
     if (fig) fig.classList.remove('show');
-    if (secId === 'roof') updateRoofRafters('twig');
   } else {
     if (img) img.src = '';
     vis.classList.remove('show');
     if (fig) fig.classList.add('show');
-    if (secId === 'roof') updateRoofRafters(null);
-  }
-}
-
-function updateRoofRafters(type) {
-  const vl = document.getElementById('v-roof-left');
-  const vr = document.getElementById('v-roof-right');
-  const il = document.getElementById('img-roof-left');
-  const ir = document.getElementById('img-roof-right');
-  if (type) {
-    vl.classList.add('show');
-    vr.classList.add('show');
-    il.src = IMG['roof-left'][type];
-    ir.src = IMG['roof-right'][type];
-  } else {
-    vl.classList.remove('show');
-    vr.classList.remove('show');
-    il.src = '';
-    ir.src = '';
   }
 }
 
@@ -492,7 +470,7 @@ function doGravity() {
 
   h += '<div class="grav-box"><b>Schwerkraft:</b> ';
   if (gw==='heavy') h += 'Hoher Druck. Wo Balken fehlen, drückt die Last auf Menschen.';
-  else if (gw==='moderate') h += 'Mittlere Last. Zweige geben bei der nächsten Belastung nach.';
+  else if (gw==='moderate') h += 'Mittlere Last. Zweige brechen bei Belastung.';
   else h += 'Relativ stabil. Aber die Struktur wächst nicht mit.';
   h += '</div>';
 
