@@ -126,12 +126,12 @@ hr {
 }
 
 /* Roof: left diagonal, center label, right diagonal */
-.h-roof-left   { grid-column: 1; grid-row: 1; display: flex; align-items: center; justify-content: center; height: 100px; overflow: visible; }
-.h-roof-center { grid-column: 2; grid-row: 1; display: flex; align-items: center; justify-content: center; text-align: center; height: 100px; }
-.h-roof-right  { grid-column: 3; grid-row: 1; display: flex; align-items: center; justify-content: center; height: 100px; overflow: visible; }
+.h-roof-left   { grid-column: 1; grid-row: 1; display: flex; align-items: flex-start; justify-content: flex-end; height: 100px; overflow: visible; }
+.h-roof-center { grid-column: 2; grid-row: 1; display: flex; align-items: flex-end; justify-content: center; text-align: center; height: 100px; }
+.h-roof-right  { grid-column: 3; grid-row: 1; display: flex; align-items: flex-start; justify-content: flex-start; height: 100px; overflow: visible; }
 
-.h-roof-left img  { height: 60px; width: auto; transform: rotate(45deg); transform-origin: center center; }
-.h-roof-right img { height: 60px; width: auto; transform: rotate(-45deg); transform-origin: center center; }
+.h-roof-left img  { height: 60px; width: auto; transform: rotate(45deg); transform-origin: top right; }
+.h-roof-right img { height: 60px; width: auto; transform: rotate(-45deg); transform-origin: top left; }
 
 .roof-label { font-size: 10px; color: #666; line-height: 1.4; }
 
