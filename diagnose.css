@@ -163,17 +163,17 @@ hr {
 }
 
 .h-roof-left .el img {
-  height: 80px;
+  height: 90px;
   width: auto;
-  transform: rotate(-45deg);
+  transform: rotate(-38deg);
   transform-origin: bottom right;
   display: block;
 }
 
 .h-roof-right .el img {
-  height: 80px;
+  height: 90px;
   width: auto;
-  transform: rotate(45deg);
+  transform: rotate(38deg);
   transform-origin: bottom left;
   display: block;
 }
