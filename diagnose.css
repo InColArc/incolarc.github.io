@@ -133,7 +133,7 @@ hr {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .h-roof-center {
@@ -154,21 +154,23 @@ hr {
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .h-roof-left .el img {
-  width: 140px;
-  height: auto;
+  height: 90px;
+  width: auto;
   transform: rotate(30deg);
   transform-origin: bottom right;
+  display: block;
 }
 
 .h-roof-right .el img {
-  width: 140px;
-  height: auto;
+  height: 90px;
+  width: auto;
   transform: rotate(-30deg);
   transform-origin: bottom left;
+  display: block;
 }
 
 .h-roof-center .el-name {
