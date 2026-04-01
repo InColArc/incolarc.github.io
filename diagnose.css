@@ -132,7 +132,7 @@ hr {
   height: 100px;
   display: flex;
   align-items: flex-end;
-  justify-content: flex-end;
+  justify-content: flex-start;
   overflow: visible;
   z-index: 1;
   pointer-events: none;
@@ -156,25 +156,25 @@ hr {
   height: 100px;
   display: flex;
   align-items: flex-end;
-  justify-content: flex-start;
+  justify-content: flex-end;
   overflow: visible;
   z-index: 1;
   pointer-events: none;
 }
 
 .h-roof-left .el img {
-  height: 90px;
+  height: 80px;
   width: auto;
-  transform: rotate(-38deg);
-  transform-origin: bottom right;
+  transform: rotate(-30deg);
+  transform-origin: bottom left;
   display: block;
 }
 
 .h-roof-right .el img {
-  height: 90px;
+  height: 80px;
   width: auto;
-  transform: rotate(38deg);
-  transform-origin: bottom left;
+  transform: rotate(30deg);
+  transform-origin: bottom right;
   display: block;
 }
 
