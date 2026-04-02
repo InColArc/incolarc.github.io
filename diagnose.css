@@ -165,14 +165,14 @@ hr {
 .h-roof-left .el img {
   width: auto;
   height: 90px;
-  transform: rotate(-38deg);
-  transform-origin: bottom ;
+  transform: rotate(38deg);
+  transform-origin: center ;
   display: block;
 }
 
 .h-roof-right .el img {
-  width: 25%;
-  height: auto;
+  width: auto;
+  height: 90px;
   transform: rotate(-38deg);
   transform-origin: center;
   display: block;
