@@ -1,489 +1,125 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Das Fachwerkhaus — Entwurf</title>
-<style>
-body{font-family:monospace;font-size:14px;max-width:1000px;margin:0 auto;padding:20px;background:#fff;color:#000}
-h1{font-family:Georgia,serif;font-size:1.8rem;margin-bottom:4px}
-.intro{color:#444;margin-bottom:20px;max-width:600px;line-height:1.5}
-.draft-badge{display:inline-block;border:2px solid #000;padding:1px 6px;font-size:11px;font-weight:bold;margin-bottom:16px}
-hr{border:none;border-top:1px solid #ccc;margin:20px 0}
-
-/* Layout: questions left, house right */
-.main{display:flex;gap:30px;align-items:flex-start}
-.questions{flex:1;min-width:0}
-.house-side{width:340px;flex-shrink:0;position:sticky;top:20px}
-
-/* Questions */
-.section-title{font-weight:bold;font-size:13px;margin:18px 0 8px;padding:4px 0;border-bottom:1px solid #ccc}
-.q{margin-bottom:14px;padding-left:12px}
-.q p{margin-bottom:4px;font-size:13px}
-.q label{display:block;font-size:12px;color:#444;padding:2px 0;cursor:pointer}
-.q label:hover{color:#000}
-.q input[type=radio]{margin-right:6px}
-
-/* House display — simple table layout */
-.house-box{border:2px solid #000;padding:10px;background:#fff}
-.house-box h3{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.1em;margin:0 0 8px}
-.house-grid{display:grid;grid-template-columns:80px 1fr 80px;grid-template-rows:auto auto 1fr auto;gap:4px;width:100%;aspect-ratio:1/1.1;position:relative}
-
-/* Grid areas */
-/* Roof: three cells in row 1 — left and right span into center */
-.h-roof-left{grid-column:1/3;grid-row:1;height:100px;display:flex;align-items:flex-end;justify-content:flex-start;overflow:visible;z-index:1;pointer-events:none}
-.h-roof-center{grid-column:2;grid-row:1;height:100px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;z-index:2}
-.h-roof-right{grid-column:2/4;grid-row:1;height:100px;display:flex;align-items:flex-end;justify-content:flex-end;overflow:visible;z-index:1;pointer-events:none}
-
-.h-roof-left .el img{height:80px;width:auto;transform:rotate(-30deg);transform-origin:bottom left;display:block}
-.h-roof-right .el img{height:80px;width:auto;transform:rotate(30deg);transform-origin:bottom right;display:block}
-
-.h-roof-center .el-name{font-size:10px;color:#666;line-height:1.3;margin-bottom:4px}
-.roof-label{font-size:10px;color:#666;line-height:1.4}
-
-.h-top{grid-column:1/4;grid-row:2;height:30px;display:flex;align-items:center;justify-content:center}
-.h-left{grid-column:1;grid-row:3;display:flex;align-items:center;justify-content:center}
-.h-center{grid-column:2;grid-row:3;position:relative;display:flex;align-items:center;justify-content:center}
-.h-right{grid-column:3;grid-row:3;display:flex;align-items:center;justify-content:center}
-.h-bottom{grid-column:1/4;grid-row:4;height:30px;display:flex;align-items:center;justify-content:center}
-
-/* Element display */
-.el{opacity:.1;transition:opacity .3s}
-.el.show{opacity:1}
-.el img{max-width:100%;max-height:100%;object-fit:contain}
-
-/* Vertical images in pillars */
-.h-left img,.h-right img{height:160px;width:auto}
-/* Horizontal images in beams */
-.h-top img,.h-bottom img{width:200px;height:auto}
-/* Diagonal images in center */
-.h-center img{max-height:160px}
-/* Roof images handled above */
-
-/* Cross-braces overlap in center */
-.brace-culture,.brace-habits{position:absolute}
-.brace-culture{left:0;top:0;width:50%;height:100%;display:flex;align-items:center;justify-content:center}
-.brace-habits{right:0;top:0;width:50%;height:100%;display:flex;align-items:center;justify-content:center}
-
-/* Labels */
-.el-name{font-size:9px;color:#999;text-align:center;margin-top:2px}
-
-/* Figures for absent */
-.figure{display:none;font-size:24px;text-align:center}
-.figure.show{display:block}
-
-/* Foundation */
-.foundation{grid-column:1/4;text-align:center;font-size:9px;color:#aaa;border:1px solid #ddd;padding:4px;margin-top:4px}
-
-/* Legend */
-.legend{display:flex;gap:12px;margin-top:8px;font-size:11px;color:#888}
-.legend span{display:flex;align-items:center;gap:4px}
-.legend .sw{width:14px;height:5px;display:inline-block}
-
-/* Progress */
-.progress{font-size:11px;color:#aaa;margin-top:6px}
-
-/* Gravity */
-.gravity-section{text-align:center;margin:20px 0;display:none}
-.gravity-section.show{display:block}
-.gravity-btn{font-family:Georgia,serif;font-size:18px;padding:8px 24px;border:2px solid #000;background:#fff;cursor:pointer}
-.gravity-btn:hover{background:#000;color:#fff}
-
-/* Results */
-.results{display:none;border:2px solid #000;padding:16px;margin:20px 0}
-.results.show{display:block}
-.results h2{font-family:Georgia,serif;font-size:1.2rem;margin-bottom:8px}
-.results p{font-size:13px;color:#333;line-height:1.6;margin-bottom:8px}
-.cost-box{background:#f8f0f0;border-left:3px solid #c44;padding:10px;margin:10px 0}
-.grav-box{background:#f4f4f4;border-left:3px solid #888;padding:10px;margin:10px 0}
-
-footer{text-align:center;font-size:11px;color:#aaa;margin-top:30px;padding-top:10px;border-top:1px solid #eee}
-footer a{color:#888}
-
-@media(max-width:780px){.main{flex-direction:column}.house-side{width:100%;position:static;order:-1}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Das Fachwerkhaus — Entwurf</title>
+  <link rel="stylesheet" href="diagnose.css">
 </head>
 <body>
 
 <h1>Die Fachwerkhaus-Diagnose</h1>
 <div class="draft-badge">ENTWURF</div>
 
-<br><br>Jeden Tag von Informationen überschwemmt und doch nie die richtige zur Hand?
-Tage voller Meetings? Wissen geht verloren, wenn
-Kollegen das Team verlassen? Sie werden nicht nach Ihrem Wissen gefragt — jetzt soll die KI
-es richten?<br><br>
+<div class="intro">
+  Jeden Tag von Informationen überschwemmt und doch nie die richtige zur Hand?
+  Tage voller Meetings? Wissen geht verloren, wenn Kollegen das Team verlassen?
+  Sie werden nicht nach Ihrem Wissen gefragt — jetzt soll die KI es richten?<br><br>
 
-Das ist kein Kommunikationsproblem, das wir mit Motivation, Training, Coaching,
-Teambuilding oder Resilienzworkshops lösen können. Dieses Problem ist strukturell.
-In den meisten Organisationen wurde die Wissensinfrastruktur nie bewusst gestaltet.
-Wissensinfrastruktur bedeutet eine Kombination von Werkzeugen, die von den Wissenden
-selbst verstanden, genutzt und angepasst werden kann — nicht nur in der IT-Abteilung.<br><br>
+  Das ist kein Kommunikationsproblem, das wir mit Motivation, Training, Coaching,
+  Teambuilding oder Resilienzworkshops lösen können. Dieses Problem ist strukturell.
+  In den meisten Organisationen wurde die Wissensinfrastruktur nie bewusst gestaltet.
+  Wissensinfrastruktur bedeutet eine Kombination von Werkzeugen, die von den Wissenden
+  selbst verstanden, genutzt und angepasst werden kann — nicht nur in der IT-Abteilung.<br><br>
 
-<b>Collaboration Architecture</b> visualisiert Wissensinfrastruktur zum besseren Verständnis als
-technisches Fachwerk: digitale Werkzeuge, die, zu tragfähigen Strukturen
-kombiniert, unsere Arbeitsumgebung bilden. In dieser nutzendenzentrierten
-Ansicht sind die Werkzeuge nach ihrer Funktion kategorisiert. Kultur und Gewohnheiten halten das Ganze als
-Querstreben hoch.<br><br>
+  <b>Collaboration Architecture</b> visualisiert Wissensinfrastruktur zum besseren
+  Verständnis als technisches Fachwerk: digitale Werkzeuge, die, zu tragfähigen
+  Strukturen kombiniert, unsere Arbeitsumgebung bilden. In dieser nutzendenzentrierten
+  Ansicht sind die Werkzeuge nach ihrer Funktion kategorisiert. Kultur und Gewohnheiten
+  halten das Ganze als Querstreben hoch.<br><br>
 
-Beantworten Sie Fragen zu Ihrer Arbeit und schalten dann die Schwerkraft
-— die Arbeitsflüsse — ein. Das Ergebnis ist der Startpunkt 
-für gemeinsames Gestalten funktionierender Koordinationsinfrastruktur. Haben Sie Gedanken/Feedback? Wir freuen uns über eine Nachricht.</div>
+  Beantworten Sie Fragen zu Ihrer Arbeit und schalten dann die Schwerkraft —
+  die Arbeitsflüsse — ein. Das Ergebnis ist der Startpunkt für gemeinsames Gestalten
+  funktionierender Koordinationsinfrastruktur. Haben Sie Gedanken/Feedback?
+  Wir freuen uns über eine Nachricht.
+</div>
 <hr>
+
 <div class="main">
-<div class="questions" id="qPanel"></div>
-<div class="house-side">
-<div class="house-box">
-<h3>Ihre Architektur</h3>
-<div class="house-grid">
+  <div class="questions" id="qPanel"></div>
 
-<!-- Row 1: Roof — two diagonal pieces -->
-<div class="h-roof-left">
-  <div class="el show" id="v-roof-left"><img src="img/roofleft.jpg" alt=""></div>
-</div>
-<div class="h-roof-center">
-  <div class="roof-label">Führung &amp; strategische Absicht</div>
-</div>
-<div class="h-roof-right">
-  <div class="el show" id="v-roof-right"><img src="img/roofright.jpg" alt=""></div>
-</div>
+  <div class="house-side">
+    <div class="house-box">
+      <h3>Ihre Architektur</h3>
+      <div class="house-grid">
 
-<!-- Row 2: Top beam — informal communication -->
-<div class="h-top">
-  <div>
-    <div class="el" id="v-wall4"><img id="img-wall4" src="" alt=""><div class="el-name">spontane Kommunikation</div></div>
-    <div class="figure" id="fig-wall4">🧍</div>
-  </div>
-</div>
+        <!-- Roof -->
+        <div class="h-roof-left">
+          <div class="el show" id="v-roof-left"><img src="img/roofleft.jpg" alt=""></div>
+        </div>
+        <div class="h-roof-center">
+          <div class="roof-label">Führung &amp; strategische Absicht</div>
+        </div>
+        <div class="h-roof-right">
+          <div class="el show" id="v-roof-right"><img src="img/roofright.jpg" alt=""></div>
+        </div>
 
-<!-- Row 3: Left pillar | Cross-braces | Right pillar -->
-<div class="h-left">
-  <div>
-    <div class="el" id="v-wall1"><img id="img-wall1" src="img/beam.png" alt=""><div class="el-name">transparente Aufgabenverteilung</div></div>
-    <div class="figure" id="fig-wall1">🧍</div>
-  </div>
-</div>
-<div class="h-center">
-  <div class="brace-habits">
-    <div>
-      <div class="el" id="v-habits"><img id="img-habits" src="img/beam.png" alt=""><div class="el-name">Gewohnheiten</div></div>
+        <!-- Top beam -->
+        <div class="h-top">
+          <div>
+            <div class="el" id="v-wall4"><img id="img-wall4" src="" alt=""><div class="el-name">spontane Kommunikation</div></div>
+            <div class="figure" id="fig-wall4">🧍</div>
+          </div>
+        </div>
+
+        <!-- Left pillar -->
+        <div class="h-left">
+          <div>
+            <div class="el" id="v-wall1"><img id="img-wall1" src="img/beam.png" alt=""><div class="el-name">transparente Aufgabenverteilung</div></div>
+            <div class="figure" id="fig-wall1">🧍</div>
+          </div>
+        </div>
+
+        <!-- Cross-braces -->
+        <div class="h-center">
+          <div class="brace-habits">
+            <div>
+              <div class="el" id="v-habits"><img id="img-habits" src="img/beam.png" alt=""><div class="el-name">Gewohnheiten</div></div>
+            </div>
+          </div>
+          <div class="brace-culture">
+            <div>
+              <div class="el" id="v-culture"><img id="img-culture" src="img/beam.png" alt=""><div class="el-name">Kultur</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right pillar -->
+        <div class="h-right">
+          <div>
+            <div class="el" id="v-wall2"><img id="img-wall2" src="img/beam.png" alt=""><div class="el-name">Wissensbibliothek</div></div>
+            <div class="figure" id="fig-wall2">🧍</div>
+          </div>
+        </div>
+
+        <!-- Bottom beam -->
+        <div class="h-bottom">
+          <div>
+            <div class="el" id="v-wall3"><img id="img-wall3" src="" alt=""><div class="el-name">Besprechungen</div></div>
+            <div class="figure" id="fig-wall3">🧍</div>
+          </div>
+        </div>
+
+        <div class="foundation">WERTESYSTEM/STANDARDS</div>
+      </div>
+
+      <div class="progress" id="prog">0 / 25</div>
     </div>
   </div>
-  <div class="brace-culture">
-    <div>
-      <div class="el" id="v-culture"><img id="img-culture" src="img/beam.png" alt=""><div class="el-name">Kultur</div></div>
-    </div>
-  </div>
 </div>
-<div class="h-right">
-  <div>
-    <div class="el" id="v-wall2"><img id="img-wall2" src="img/beam.png" alt=""><div class="el-name">Wissensbibliothek</div></div>
-    <div class="figure" id="fig-wall2">🧍</div>
-  </div>
-</div>
-
-<!-- Row 4: Bottom beam — live meetings -->
-<div class="h-bottom">
-  <div>
-    <div class="el" id="v-wall3"><img id="img-wall3" src="" alt=""><div class="el-name">Besprechungen</div></div>
-    <div class="figure" id="fig-wall3">🧍</div>
-  </div>
-</div>
-
-<div class="foundation">WERTESYSTEM/STANDARDS</div>
-
-</div>
-<div class="progress" id="prog">0 / 25</div>
-</div><!-- /house-box -->
-</div><!-- /house-side -->
-</div><!-- /main -->
 
 <div class="gravity-section" id="gravSec">
-<button class="gravity-btn" onclick="doGravity()">Schwerkraft einschalten</button>
+  <button class="gravity-btn" onclick="doGravity()">Schwerkraft einschalten</button>
 </div>
 
 <div class="results" id="results"></div>
 
 <footer>
-Institute for Collaboration Architecture · <a href="https://incolarc.com">incolarc.com</a> · 2026 · Entwurf<br>
-Keine Daten werden gesendet. Alles bleibt im Browser.
+  Institute for Collaboration Architecture ·
+  <a href="https://incolarc.com">incolarc.com</a> · 2026 · Entwurf<br>
+  Keine Daten werden gesendet. Alles bleibt im Browser.
 </footer>
 
-<script>
-/*
-  IMAGE FILES — change these paths to match your setup.
-  Each element has a beam image and a twig image.
-  Vertical elements: beam.png / twig.png
-  Horizontal elements: beam-h.png / twig-h.png (pre-rotated)
-  Diagonal braces: beam-culture.png etc. (pre-rotated)
-*/
-const IMG = {
-  wall1:   { beam: 'img/beam.png',   twig: 'img/twig.png' },
-  wall2:   { beam: 'img/beam.png',   twig: 'img/twig.png' },
-  wall3:   { beam: 'img/floor.jpg',  twig: 'img/twig-h.png' },
-  wall4:   { beam: 'img/ceiling.jpg',twig: 'img/twig-h.png' },
-  culture: { beam: 'img/beam.png',   twig: 'img/twig2.jpg' },
-  habits:  { beam: 'img/beam.png',   twig: 'img/twig2.jpg' }
-};
-
-// Questions
-const STRUCT = [
-  { id:'wall1', name:'Wand 1 — Aufgabenverteilung', qs:[
-    {t:'Wenn Arbeit anfällt und niemand offiziell zuständig ist — wie wird sie verteilt?', o:[
-      ['Über ein System, das Auslastung und Kapazitäten sichtbar macht',2],
-      ['Wer zuerst gefragt wird oder sich meldet',1],
-      ['Sie wird nicht verteilt — sie bleibt bei dem, der es bemerkt',0]]},
-    {t:'Können Menschen in Ihrer Organisation die Arbeitsbelastung im Team überblicken?', o:[
-      ['Ja, über ein gemeinsames System',2],
-      ['Informell — die Teamleitung hat ein Gefühl dafür',1],
-      ['Nein — jeder verwaltet seine Arbeit allein',0]]},
-    {t:'Was passiert, wenn jemand zwei Wochen ausfällt?', o:[
-      ['Aufgaben sind sichtbar und können umverteilt werden',2],
-      ['Ein Kollege springt ein, aber nur weil er die Person kennt',1],
-      ['Dinge bleiben liegen oder fallen durch, bis die Person zurück ist',0]]}
-  ]},
-  { id:'wall2', name:'Wand 2 — Wissensressourcen', qs:[
-    {t:'Wo schauen Menschen zuerst, wenn sie wissen müssen, wie etwas funktioniert?', o:[
-      ['In einer gepflegten Wissensdatenbank oder Dokumentation',2],
-      ['Sie fragen eine bestimmte Person, die die Antwort kennt',1],
-      ['Es gibt keinen verlässlichen ersten Anlaufpunkt',0]]},
-    {t:'Können Sie Dokumentation von vor sechs Monaten finden?', o:[
-      ['Ja, zuverlässig und schnell',2],
-      ['Wahrscheinlich, aber es würde Suchen und Nachfragen kosten',1],
-      ['Sie existiert wahrscheinlich nicht mehr, oder ich wüsste nicht wo',0]]},
-    {t:'Wer pflegt gemeinsame Wissensressourcen?', o:[
-      ['Eine definierte Rolle oder verteilte Verantwortung mit Standards',2],
-      ['Ein oder zwei engagierte Personen, die es freiwillig tun',1],
-      ['Niemand — Ressourcen werden erstellt und dann sich selbst überlassen',0]]}
-  ]},
-  { id:'wall3', name:'Wand 3 — Besprechungen', qs:[
-    {t:'Bei wie vielen Ihrer Besprechungen entstehen dokumentierte, auffindbare Entscheidungen?', o:[
-      ['Bei den meisten — Entscheidungen werden festgehalten und sind zugänglich',2],
-      ['Bei einigen — es hängt davon ab, wer Protokoll führt',1],
-      ['Bei wenigen oder keinen — Entscheidungen bleiben in den Köpfen',0]]},
-    {t:'Wie viele Meetings dienen hauptsächlich der Informationsweitergabe?', o:[
-      ['Sehr wenige — Meetings sind für Entscheidungen und komplexe Diskussionen',2],
-      ['Einige — wir könnten ein paar durch bessere asynchrone Wege ersetzen',1],
-      ['Die meisten — Meetings sind unser Hauptkanal für Informationen',0]]},
-    {t:'Kann jemand, der nicht dabei war, eine Meeting-Entscheidung eine Woche später finden?', o:[
-      ['Ja — Entscheidungen werden an einem bekannten Ort dokumentiert',2],
-      ['Vielleicht — wenn man weiß, wen man fragen muss',1],
-      ['Nein — man musste dabei gewesen sein',0]]}
-  ]},
-  { id:'wall4', name:'Wand 4 — Schnelle informelle Kommunikation', qs:[
-    {t:'Gibt es einen Chat-Kanal, in dem Routinefragen schnell beantwortet werden?', o:[
-      ['Ja, und er ist ein offizieller Teil unserer Arbeitsweise',2],
-      ['Ja, aber er ist informell entstanden und nicht alle nutzen ihn',1],
-      ['Nein — Fragen gehen per E-Mail oder Anruf an Einzelpersonen',0]]},
-    {t:'Können neue Mitarbeitende diese Kanäle leicht finden und beitreten?', o:[
-      ['Ja — sie sind auffindbar und Teil des Onboardings',2],
-      ['Wenn jemand sie zeigt — es läuft über Mundpropaganda',1],
-      ['Es gibt keine gemeinsamen Kanäle, oder sie sind für Neue unsichtbar',0]]},
-    {t:'Wenn etwas Wichtiges im Chat entschieden wird — wird es dauerhaft festgehalten?', o:[
-      ['Ja — Entscheidungen wandern vom Chat in die Dokumentation',2],
-      ['Manchmal, wenn jemand daran denkt',1],
-      ['Nein — es scrollt weg und ist praktisch verloren',0]]}
-  ]},
-  { id:'culture', name:'Querstrebe — Kultur', qs:[
-    {t:'Wird um Hilfe bitten als Kompetenz oder als Schwäche gesehen?', o:[
-      ['Als Kompetenz — es wird erwartet und von Führungskräften vorgelebt',2],
-      ['Kommt auf das Team oder die Führungskraft an',1],
-      ['Als Schwäche — man löst Probleme allein',0]]},
-    {t:'Teilen Menschen Zwischenergebnisse, oder nur fertige Arbeit?', o:[
-      ['Zwischenergebnisse werden geteilt, Feedback ist normal',2],
-      ['Informell, innerhalb vertrauensvoller Beziehungen',1],
-      ['Nur fertige Ergebnisse — Entwürfe zu zeigen fühlt sich riskant an',0]]},
-    {t:'Werden Fehler offen besprochen oder versteckt?', o:[
-      ['Offen besprochen als Lernmöglichkeit',2],
-      ['Privat besprochen, aber nicht organisationsweit',1],
-      ['Versteckt — Fehler sichtbar zu machen ist ein Karriererisiko',0]]}
-  ]},
-  { id:'habits', name:'Querstrebe — Gewohnheiten', qs:[
-    {t:'Schauen Menschen in gemeinsame Kanäle, bevor sie ein Meeting einberufen?', o:[
-      ['Ja — asynchron zuerst ist die Norm',2],
-      ['Manchmal, aber Meetings sind immer noch der Standard',1],
-      ['Nein — ein Meeting ist immer die erste Reaktion',0]]},
-    {t:'Ist „Ich dokumentiere das" ein Satz, den Sie regelmäßig hören?', o:[
-      ['Ja — Dokumentieren ist ein normaler Teil der Arbeit',2],
-      ['Von bestimmten Personen, nicht von allen',1],
-      ['Selten oder nie — Dokumentation gilt als Extraarbeit',0]]},
-    {t:'Wie geben erfahrene Kolleg:innen Wissen an neue weiter?', o:[
-      ['Durch strukturierte Übergabe mit dokumentierten Ressourcen',2],
-      ['Durch persönliches Mentoring und mündliche Weitergabe',1],
-      ['Neue Mitarbeitende finden sich weitgehend allein zurecht',0]]}
-  ]},
-  { id:'roof', name:'Dach — Führung und strategische Absicht', qs:[
-    {t:'Nutzt die Führungsebene dieselben Zusammenarbeitstools, die sie den Teams bereitstellt?', o:[
-      ['Konsequent — sie leben vor, was sie erwarten',2],
-      ['Uneinheitlich — es hängt von der Führungskraft ab',1],
-      ['Nein — Führung arbeitet über E-Mail und Assistenz',0]]},
-    {t:'Wird Zusammenarbeit gemessen oder nur erwähnt?', o:[
-      ['Gemessen — es gibt Kennzahlen oder zumindest regelmäßige Reflexion',2],
-      ['Erwähnt in Leitbildern und Town Halls, aber nicht nachverfolgt',1],
-      ['Weder noch — „besser zusammenarbeiten" ist ein Appell, keine Strategie',0]]},
-    {t:'Gibt es eine Gestaltungsphase mit den Nutzenden, wenn ein neues Tool eingeführt wird?', o:[
-      ['Ja — Nutzende gestalten mit',2],
-      ['Teilweise — es gibt Schulungen, aber kein Co-Design',1],
-      ['Nein — Tools werden ausgerollt und man soll sich anpassen',0]]}
-  ]}
-];
-
-const GRAV = { id:'gravity', name:'Schwerkraft — Was drückt auf diese Struktur?', qs:[
-  {t:'Wie häufig durchläuft Ihre Organisation grundlegende Veränderungen?', o:[
-    ['Ständig — Veränderung ist Dauerzustand',3],['Alle ein bis zwei Jahre',2],['Selten — es ist relativ stabil',1]]},
-  {t:'Wie viel Ihrer Arbeit hängt von Abstimmung über Teamgrenzen hinweg ab?', o:[
-    ['Fast alles — nichts geht allein',3],['Ein erheblicher Teil',2],['Überwiegend eigenständige Arbeit',1]]},
-  {t:'Wenn wichtige Personen gehen — wie viel Wissen geht mit ihnen?', o:[
-    ['Kritisches Wissen verschwindet',3],['Es gibt Störungen, aber das Team erholt sich',2],['Minimale Auswirkung',1]]},
-  {t:'Wie viele Tools und Prozesse wurden ohne die Nutzenden eingeführt?', o:[
-    ['Die meisten',3],['Einige',2],['Sehr wenige',1]]}
-]};
-
-// State
-const ans = {};
-const gAns = {};
-const total = STRUCT.reduce((n,s) => n + s.qs.length, 0) + GRAV.qs.length;
-let count = 0;
-
-// Render
-function init() {
-  const p = document.getElementById('qPanel');
-  let h = '';
-  STRUCT.forEach(s => { h += renderSec(s, false); });
-  h += renderSec(GRAV, true);
-  p.innerHTML = h;
-}
-
-function renderSec(sec, isGrav) {
-  let h = `<div class="section-title">${sec.name}</div>`;
-  sec.qs.forEach((q, qi) => {
-    const name = sec.id + '_' + qi;
-    h += `<div class="q"><p>${q.t}</p>`;
-    q.o.forEach((opt, oi) => {
-      h += `<label><input type="radio" name="${name}" value="${opt[1]}" data-sec="${sec.id}" data-grav="${isGrav?1:0}" onchange="pick(this)"> ${opt[0]}</label>`;
-    });
-    h += '</div>';
-  });
-  return h;
-}
-
-function pick(input) {
-  const name = input.name;
-  const score = parseInt(input.value);
-  const secId = input.dataset.sec;
-  const isGrav = input.dataset.grav === '1';
-  const store = isGrav ? gAns : ans;
-
-  if (store[name] === undefined) count++;
-  store[name] = score;
-
-  document.getElementById('prog').textContent = count + ' / ' + total;
-
-  if (!isGrav) updateHouse(secId);
-  if (count >= total) document.getElementById('gravSec').classList.add('show');
-}
-
-function getState(secId) {
-  const sec = STRUCT.find(s => s.id === secId);
-  if (!sec) return null;
-  const scores = [];
-  sec.qs.forEach((q, qi) => {
-    const k = secId + '_' + qi;
-    if (ans[k] !== undefined) scores.push(ans[k]);
-  });
-  if (scores.length === 0) return null;
-  if (scores.includes(0)) return 0;
-  if (scores.includes(1)) return 1;
-  return 2;
-}
-
-function updateHouse(secId) {
-  if (secId === 'roof') return; // roof images are always visible
-  const state = getState(secId);
-  const vis = document.getElementById('v-' + secId);
-  const img = document.getElementById('img-' + secId);
-  const fig = document.getElementById('fig-' + secId);
-
-  if (state === null) {
-    vis.classList.remove('show');
-    if (fig) fig.classList.remove('show');
-    return;
-  }
-
-  vis.classList.add('show');
-
-  if (state === 2) {
-    if (img) img.src = IMG[secId].beam;
-    if (fig) fig.classList.remove('show');
-  } else if (state === 1) {
-    if (img) img.src = IMG[secId].twig;
-    if (fig) fig.classList.remove('show');
-  } else {
-    if (img) img.src = '';
-    vis.classList.remove('show');
-    if (fig) fig.classList.add('show');
-  }
-}
-
-function doGravity() {
-  // Collect states
-  const st = {};
-  STRUCT.forEach(s => { st[s.id] = getState(s.id); });
-
-  // Calculate gravity weight
-  let gt = 0, gc = 0;
-  GRAV.qs.forEach((q, qi) => {
-    const k = 'gravity_' + qi;
-    if (gAns[k] !== undefined) { gt += gAns[k]; gc++; }
-  });
-  const gw = gc === 0 ? 'light' : (gt/gc >= 2.5 ? 'heavy' : (gt/gc >= 1.8 ? 'moderate' : 'light'));
-
-  // Build results
-  const wn = {wall1:'Aufgabenverteilung', wall2:'Wissensressourcen', wall3:'Besprechungen', wall4:'Kommunikation'};
-  const brAbs = (st.culture===0?1:0) + (st.habits===0?1:0);
-  const brFr = (st.culture===1?1:0) + (st.habits===1?1:0);
-  const allOk = Object.values(st).every(v => v === 2);
-
-  let h = '<h2>Ihre Architektur</h2>';
-
-  if (allOk) {
-    h += '<p>Ihre Koordinationsinfrastruktur ist tragfähig. Das Haus steht. Das ist selten.</p>';
-  } else {
-    if (brAbs === 2)
-      h += '<p>Sie haben Wände, aber nichts verbindet sie. Ohne Kultur und Gewohnheiten wird die erste ernsthafte Belastung die Wände nach außen drücken.</p>';
-    else if (brAbs === 1) {
-      const miss = st.culture===0 ? 'Kultur' : 'Gewohnheiten';
-      const have = st.culture===0 ? 'Gewohnheiten' : 'Kultur';
-      h += '<p>' + have + ' hält, aber ' + miss + ' fehlt. ' + (miss==='Kultur' ? 'Compliance ohne Commitment.' : 'Wohlwollen ohne Zuverlässigkeit.') + '</p>';
-    } else if (brFr > 0)
-      h += '<p>Ihre Querstreben sind Zweige. Das hält — bis sich etwas ändert.</p>';
-
-    const absent = Object.entries(wn).filter(([k]) => st[k]===0);
-    const twigs = Object.entries(wn).filter(([k]) => st[k]===1);
-    if (twigs.length > 0)
-      h += '<p><b>' + twigs.map(([,n])=>n).join(', ') + '</b> — hält, weil bestimmte Menschen es am Laufen halten.</p>';
-    if (absent.length > 0)
-      h += '<p><b>' + absent.map(([,n])=>n).join(', ') + '</b> — nicht vorhanden.</p>';
-    if (st.roof !== 0 && (brAbs > 0 || twigs.length >= 2))
-      h += '<p>Das Dach drückt die Wände nach außen. Strategie macht es schlimmer.</p>';
-  }
-
-  h += '<div class="grav-box"><b>Schwerkraft:</b> ';
-  if (gw==='heavy') h += 'Hoher Druck. Wo Balken fehlen, drückt die Last auf Menschen.';
-  else if (gw==='moderate') h += 'Mittlere Last. Zweige brechen bei Belastung.';
-  else h += 'Relativ stabil. Aber die Struktur wächst nicht mit.';
-  h += '</div>';
-
-  h += '<div class="cost-box"><b>Wo landen die Kosten?</b> Jedes fehlende Element bedeutet: jemand trägt die Last informell. Die Kosten landen bei denen, die sich nicht wehren können.</div>';
-
-  h += '<p style="margin-top:14px"><b>Wer in Ihrer Organisation sollte dieses Haus noch sehen?</b></p>';
-
-  const r = document.getElementById('results');
-  r.innerHTML = h;
-  r.classList.add('show');
-  r.scrollIntoView({behavior:'smooth'});
-}
-
-init();
-</script>
+<script src="diagnose.js"></script>
 </body>
 </html>
