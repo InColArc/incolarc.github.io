@@ -1,15 +1,14 @@
 /* diagnose.css — Fachwerkhaus Diagnostic Tool
-   Requires picnic.css as base reset.
-   Overrides picnic font to monospace throughout.
+   Institute for Collaboration Architecture, 2026
 */
 
-/* ── Global override ── */
+/* ── Global ── */
 body {
   font-family: monospace;
   font-size: 14px;
   color: #000;
   background: #fff;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -36,10 +35,19 @@ hr {
   margin: 20px 0;
 }
 
+/* ── Intro ── */
+.intro {
+  color: #444;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  max-width: 600px;
+  font-size: 13px;
+}
+
 /* ── Split layout ── */
 .main {
   display: flex;
-  gap: 40px;
+  gap: 30px;
   align-items: flex-start;
 }
 
@@ -49,33 +57,23 @@ hr {
 }
 
 .house-side {
-  width: 320px;
+  width: 340px;
   flex-shrink: 0;
   position: sticky;
   top: 20px;
 }
 
-/* ── Intro (lives inside left column) ── */
-.intro {
-  color: #333;
-  line-height: 1.6;
-  margin-bottom: 24px;
-  font-size: 13px;
-}
-
 /* ── Questions ── */
 .section-title {
   font-weight: bold;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: .05em;
-  margin: 20px 0 8px;
+  font-size: 13px;
+  margin: 18px 0 8px;
   padding: 4px 0;
   border-bottom: 1px solid #ccc;
 }
 
 .q {
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   padding-left: 12px;
 }
 
@@ -103,31 +101,32 @@ hr {
 /* ── House box ── */
 .house-box {
   border: 2px solid #000;
-  padding: 12px;
+  padding: 10px;
   background: #fff;
 }
 
 .house-box h3 {
-  font-size: 10px;
-  color: #999;
+  font-size: 11px;
+  color: #888;
   text-transform: uppercase;
   letter-spacing: .1em;
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 }
 
 /* ── House grid ── */
 .house-grid {
   display: grid;
   grid-template-columns: 80px 1fr 80px;
-  grid-template-rows: auto auto 1fr auto auto;
+  grid-template-rows: auto auto 1fr auto;
   gap: 4px;
   width: 100%;
+  aspect-ratio: 1 / 1.1;
   position: relative;
 }
 
-/* ── Roof: three cells in row 1 ── */
+/* ── Roof ── */
 .h-roof-left {
-  grid-column: 1/3;
+  grid-column: 1 / 3;
   grid-row: 1;
   height: 100px;
   display: flex;
@@ -151,7 +150,7 @@ hr {
 }
 
 .h-roof-right {
-  grid-column: 2/4;
+  grid-column: 2 / 4;
   grid-row: 1;
   height: 100px;
   display: flex;
@@ -163,10 +162,10 @@ hr {
 }
 
 .h-roof-left .el img {
-  height: 100px;
+  height: 80px;
   width: auto;
-  transform: rotate(40deg);
-  transform-origin: bottom right;
+  transform: rotate(-30deg);
+  transform-origin: bottom left;
   display: block;
 }
 
@@ -178,13 +177,6 @@ hr {
   display: block;
 }
 
-.h-roof-center .el-name {
-  font-size: 10px;
-  color: #666;
-  line-height: 1.3;
-  margin-bottom: 4px;
-}
-
 .roof-label {
   font-size: 10px;
   color: #666;
@@ -192,32 +184,41 @@ hr {
 }
 
 /* ── Walls and beams ── */
-.h-top     { grid-column: 1/4; grid-row: 2; height: 30px;  display: flex; align-items: center; justify-content: center; }
-.h-left    { grid-column: 1;   grid-row: 3; display: flex; align-items: center; justify-content: center; }
-.h-center  { grid-column: 2;   grid-row: 3; position: relative; display: flex; align-items: center; justify-content: center; }
-.h-right   { grid-column: 3;   grid-row: 3; display: flex; align-items: center; justify-content: center; }
-.h-bottom  { grid-column: 1/4; grid-row: 4; height: 30px;  display: flex; align-items: center; justify-content: center; }
+.h-top    { grid-column: 1 / 4; grid-row: 2; height: 30px; display: flex; align-items: center; justify-content: center; }
+.h-left   { grid-column: 1;     grid-row: 3; display: flex; align-items: center; justify-content: center; }
+.h-center { grid-column: 2;     grid-row: 3; position: relative; display: flex; align-items: center; justify-content: center; }
+.h-right  { grid-column: 3;     grid-row: 3; display: flex; align-items: center; justify-content: center; }
+.h-bottom { grid-column: 1 / 4; grid-row: 4; height: 30px; display: flex; align-items: center; justify-content: center; }
 
 /* ── Element states ── */
-.el { opacity: .1; transition: opacity .3s; }
+.el      { opacity: .1; transition: opacity .3s; }
 .el.show { opacity: 1; }
-.el img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.el img  { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-.h-left img, .h-right img { height: 160px; width: auto; }
-.h-top img, .h-bottom img { width: 200px; height: auto; }
-.h-center img { max-height: 160px; }
+.h-left img, .h-right img   { height: 160px; width: auto; }
+.h-top img, .h-bottom img   { width: 200px; height: auto; }
+.h-center img                { max-height: 160px; }
 
+/* ── Cross-braces ── */
 .brace-culture, .brace-habits { position: absolute; }
-.brace-culture { left: 0;   top: 0; width: 50%; height: 100%; display: flex; align-items: center; justify-content: center; }
-.brace-habits  { right: 0;  top: 0; width: 50%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.brace-habits  { right: 0; top: 0; width: 50%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.brace-culture { left: 0;  top: 0; width: 50%; height: 100%; display: flex; align-items: center; justify-content: center; }
 
-.el-name { font-size: 9px; color: #999; text-align: center; margin-top: 2px; }
+/* ── Labels ── */
+.el-name {
+  font-size: 9px;
+  color: #999;
+  text-align: center;
+  margin-top: 2px;
+}
 
-.figure { display: none; font-size: 24px; text-align: center; }
+/* ── Absent element placeholder ── */
+.figure      { display: none; font-size: 24px; text-align: center; }
 .figure.show { display: block; }
 
+/* ── Foundation ── */
 .foundation {
-  grid-column: 1/4;
+  grid-column: 1 / 4;
   text-align: center;
   font-size: 9px;
   color: #aaa;
@@ -230,22 +231,17 @@ hr {
 .progress {
   font-size: 11px;
   color: #aaa;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 /* ── Gravity button ── */
-.gravity-section {
-  text-align: center;
-  margin: 24px 0;
-  display: none;
-}
-
+.gravity-section      { text-align: center; margin: 20px 0; display: none; }
 .gravity-section.show { display: block; }
 
 .gravity-btn {
   font-family: Georgia, serif;
   font-size: 18px;
-  padding: 8px 28px;
+  padding: 8px 24px;
   border: 2px solid #000;
   background: #fff;
   cursor: pointer;
@@ -257,19 +253,13 @@ hr {
 }
 
 /* ── Results ── */
-.results {
-  display: none;
-  border: 2px solid #000;
-  padding: 20px;
-  margin: 20px 0;
-}
-
+.results      { display: none; border: 2px solid #000; padding: 16px; margin: 20px 0; }
 .results.show { display: block; }
 
 .results h2 {
   font-family: Georgia, serif;
   font-size: 1.2rem;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .results p {
@@ -279,19 +269,21 @@ hr {
   margin-bottom: 8px;
 }
 
+.results-cta { margin-top: 14px; }
+
 .cost-box {
   background: #f8f0f0;
   border-left: 3px solid #c44;
-  padding: 10px 14px;
-  margin: 12px 0;
+  padding: 10px;
+  margin: 10px 0;
   font-size: 13px;
 }
 
 .grav-box {
   background: #f4f4f4;
   border-left: 3px solid #888;
-  padding: 10px 14px;
-  margin: 12px 0;
+  padding: 10px;
+  margin: 10px 0;
   font-size: 13px;
 }
 
@@ -300,8 +292,8 @@ footer {
   text-align: center;
   font-size: 11px;
   color: #aaa;
-  margin-top: 40px;
-  padding-top: 12px;
+  margin-top: 30px;
+  padding-top: 10px;
   border-top: 1px solid #eee;
 }
 
@@ -309,12 +301,6 @@ footer a { color: #888; }
 
 /* ── Mobile ── */
 @media (max-width: 780px) {
-  .main {
-    flex-direction: column;
-  }
-  .house-side {
-    width: 100%;
-    position: static;
-    order: -1;
-  }
+  .main { flex-direction: column; }
+  .house-side { width: 100%; position: static; order: -1; }
 }
