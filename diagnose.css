@@ -198,7 +198,7 @@ hr {
 .h-bottom { grid-column: 1 / 4; grid-row: 4; display: flex; align-items: center; justify-content: center; }
 
 /* ── Element states ── */
-.el      { opacity: .1; transition: opacity .3s; }
+
 .el.show { opacity: 1; }
 .el img  { max-width: 100%; max-height: 100%; object-fit: contain; }
 
@@ -209,7 +209,7 @@ hr {
 /* ── Cross-braces ── */
 .brace-culture, .brace-habits { position: absolute; }
 .brace-habits  { 
-  right: 0; top: 0; 
+  right: 50; top: 50; 
   width: 50%; height: 100%; 
   display: flex; align-items: center; justify-content: center; 
 }
