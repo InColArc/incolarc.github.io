@@ -276,6 +276,7 @@ function updateHouse(secId) {
 function doGravity() {
   const st = {};
   STRUCT.forEach(s => { st[s.id] = getState(s.id); });
+   document.getElementById('fig-center').classList.add('show');
 
   // Gravity weight
   let gt = 0, gc = 0;
