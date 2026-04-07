@@ -280,14 +280,14 @@ hr {
 }
 
 /* ── Cross-braces ── 
-   Both braces originate from the center of the ceiling beam.
+   Both braces originate alongside each other from the center of the ceiling beam.
    Culture: from center-top down to left wall  (/)
    Habits:  from center-top down to right wall (\)
    Both at 45 degrees.
 */
 .brace-culture { 
   position: absolute;
-  left: 55%; 
+  left: 40%; 
   top: 0; 
   width: 0;
   height: 0;
@@ -308,7 +308,7 @@ hr {
 
 .brace-habits { 
   position: absolute;
-  left: 35%; 
+  left: 40%; 
   top: 0; 
   width: 0;
   height: 0;
