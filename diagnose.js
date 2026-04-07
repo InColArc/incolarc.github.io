@@ -55,7 +55,7 @@ const STRUCT = [
     ]}
   ]},
 
-  { id: 'wall3', name: 'Wand 3 — Besprechungen', qs: [
+  { id: 'wall3', name: 'Decke — Besprechungen', qs: [
     { t: 'Bei wie vielen Ihrer Besprechungen entstehen dokumentierte, auffindbare Entscheidungen?', o: [
       ['Bei den meisten — Entscheidungen werden festgehalten und sind zugänglich', 2],
       ['Bei einigen — es hängt davon ab, wer Protokoll führt', 1],
@@ -73,7 +73,7 @@ const STRUCT = [
     ]}
   ]},
 
-  { id: 'wall4', name: 'Wand 4 — Schnelle informelle Kommunikation', qs: [
+  { id: 'wall4', name: 'Boden — Schnelle informelle Kommunikation', qs: [
     { t: 'Gibt es einen Chat-Kanal, in dem Routinefragen schnell beantwortet werden?', o: [
       ['Ja, und er ist ein offizieller Teil unserer Arbeitsweise', 2],
       ['Ja, aber er ist informell entstanden und nicht alle nutzen ihn', 1],
@@ -92,12 +92,12 @@ const STRUCT = [
   ]},
 
   { id: 'culture', name: 'Querstrebe — Kultur', qs: [
-    { t: 'Wird um Hilfe bitten als Kompetenz oder als Schwäche gesehen?', o: [
+    { t: 'Wird um Hilfe zu bitten als Kompetenz oder als Schwäche gesehen?', o: [
       ['Als Kompetenz — es wird erwartet und von Führungskräften vorgelebt', 2],
       ['Kommt auf das Team oder die Führungskraft an', 1],
-      ['Als Schwäche — man löst Probleme allein', 0]
+      ['Als Schwäche — man soll seine Probleme allein lösen', 0]
     ]},
-    { t: 'Teilen Menschen Zwischenergebnisse, oder nur fertige Arbeit?', o: [
+    { t: 'Teilen Menschen Zwischenergebnisse oder nur fertige Arbeit?', o: [
       ['Zwischenergebnisse werden geteilt, Feedback ist normal', 2],
       ['Informell, innerhalb vertrauensvoller Beziehungen', 1],
       ['Nur fertige Ergebnisse — Entwürfe zu zeigen fühlt sich riskant an', 0]
