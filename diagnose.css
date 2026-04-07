@@ -113,14 +113,28 @@ hr {
   margin: 0 0 8px;
 }
 
-/* ── House grid ── */
+/* ══════════════════════════════════════════════════
+   HOUSE GRID
+   
+   The house is 320px wide inside the box.
+   We use a fixed-height grid so beams connect 
+   without gaps.
+   
+   Row 1: 140px — roof (rafters + label)
+   Row 2:  28px — ceiling beam
+   Row 3: 200px — walls + cross-braces  
+   Row 4:  28px — floor beam
+   
+   Columns: wall-post | center | wall-post
+   Wall posts overlap into the ceiling/floor rows 
+   via negative margins so there are no gaps.
+   ══════════════════════════════════════════════════ */
 .house-grid {
   display: grid;
-  grid-template-columns: 80px 1fr 80px;
-  grid-template-rows: 120px 40px 1fr 40px;
+  grid-template-columns: 50px 1fr 50px;
+  grid-template-rows: 140px 28px 200px 28px;
   gap: 0;
   width: 100%;
-  aspect-ratio: 1 / 1.2;
   position: relative;
 }
 
@@ -162,7 +176,7 @@ hr {
 }
 
 .h-roof-left .el img {
-  height: 210px;
+  height: 220px;
   width: auto;
   transform: rotate(45deg);
   transform-origin: top left;
@@ -176,7 +190,7 @@ hr {
 }
 
 .h-roof-right .el img {
-  height: 210px;
+  height: 220px;
   width: auto;
   transform: rotate(-45deg);
   transform-origin: top right;
@@ -187,53 +201,164 @@ hr {
   font-size: 10px;
   color: #666;
   line-height: 1.4;
-  margin-top: 100px;
+  margin-top: 80px;
 }
 
-/* ── Walls and beams ── */
-.h-top    { grid-column: 1 / 4; grid-row: 2; display: flex; align-items: center; justify-content: center; z-index: 1; }
-.h-left   { grid-column: 1;     grid-row: 3; display: flex; align-items: center; justify-content: center; }
-.h-center { grid-column: 2;     grid-row: 3; position: relative; display: flex; align-items: center; justify-content: center; }
-.h-right  { grid-column: 3;     grid-row: 3; display: flex; align-items: center; justify-content: center; }
-.h-bottom { grid-column: 1 / 4; grid-row: 4; display: flex; align-items: center; justify-content: center; }
+/* ── Ceiling beam (top, full width, no gaps) ── */
+.h-top { 
+  grid-column: 1 / 4; 
+  grid-row: 2; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  z-index: 1;
+}
+
+/* ── Wall posts (vertical, full height of row 3) ── */
+.h-left { 
+  grid-column: 1; 
+  grid-row: 3; 
+  display: flex; 
+  align-items: stretch; 
+  justify-content: center; 
+}
+
+.h-right { 
+  grid-column: 3; 
+  grid-row: 3; 
+  display: flex; 
+  align-items: stretch; 
+  justify-content: center; 
+}
+
+/* ── Cross-brace area (center, full height of row 3) ── */
+.h-center { 
+  grid-column: 2; 
+  grid-row: 3; 
+  position: relative; 
+  overflow: hidden;
+}
+
+/* ── Floor beam (bottom, full width, no gaps) ── */
+.h-bottom { 
+  grid-column: 1 / 4; 
+  grid-row: 4; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+}
 
 /* ── Element states ── */
-.el      { opacity: 0; transition: opacity .3s; }
+.el      { opacity: .1; transition: opacity .3s; }
 .el.show { opacity: 1; }
-.el img  { max-width: 100%; max-height: 100%; object-fit: contain; }
+.el img  { object-fit: contain; }
 
-.h-left img, .h-right img   { height: 160px; width: auto; }
-.h-top img, .h-bottom img   { width: 200px; height: auto; max-height: 40px; object-fit: contain; }
-.h-center img                { max-height: 160px; }
+/* Wall posts: stretch full height of their cell */
+.h-left .el, .h-right .el { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  height: 100%; 
+}
+.h-left img, .h-right img { 
+  height: 100%; 
+  width: auto; 
+  max-width: 50px;
+}
 
-/* ── Cross-braces ── */
-.brace-culture, .brace-habits { position: absolute; }
-.brace-habits  { 
-  right: 100; top: 100; 
-  width: 50%; height: 100%; 
-  display: flex; align-items: center; justify-content: center; 
+/* Ceiling and floor beams: stretch full width */
+.h-top .el, .h-bottom .el {
+  width: 100%;
+  text-align: center;
 }
-.brace-habits .el img {
-  transform: rotate(-45deg);
-  transform-origin: center center;
+.h-top img, .h-bottom img { 
+  width: 100%; 
+  height: 28px; 
+  object-fit: fill;
 }
+
+/* ── Cross-braces ── 
+   Each brace spans the full diagonal of the center area.
+   They form an X shape.
+   Culture: top-left to bottom-right (\)
+   Habits:  top-right to bottom-left (/)
+*/
 .brace-culture { 
-  left: 100; top: 100; 
-  width: 50%; height: 100%; 
-  display: flex; align-items: center; justify-content: center; 
+  position: absolute;
+  left: 0; top: 0; 
+  width: 100%; height: 100%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  pointer-events: none;
+}
+.brace-culture .el {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .brace-culture .el img {
-  transform: rotate(45deg);
+  /* Diagonal length of the rectangle ≈ longer than height */
+  height: 260px;
+  width: auto;
+  max-width: none;
+  transform: rotate(42deg);
   transform-origin: center center;
 }
+
+.brace-habits { 
+  position: absolute;
+  left: 0; top: 0; 
+  width: 100%; height: 100%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  pointer-events: none;
+}
+.brace-habits .el {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.brace-habits .el img {
+  height: 260px;
+  width: auto;
+  max-width: none;
+  transform: rotate(-42deg);
+  transform-origin: center center;
+}
+
+/* Cross-brace images in their default (non-rotated) context */
+.h-center img { max-height: none; }
 
 /* ── Labels ── */
 .el-name {
-  font-size: 9px;
+  font-size: 8px;
   color: #999;
   text-align: center;
   margin-top: 2px;
 }
+
+/* Labels on walls: below the post */
+.h-left .el-name, .h-right .el-name {
+  font-size: 7px;
+  white-space: nowrap;
+}
+
+/* Labels on cross-braces: positioned at bottom center */
+.brace-habits .el-name,
+.brace-culture .el-name {
+  position: absolute;
+  bottom: 4px;
+  font-size: 7px;
+  white-space: nowrap;
+}
+.brace-culture .el-name { left: 10px; }
+.brace-habits .el-name { right: 10px; }
 
 /* ── Absent element placeholder ── */
 .figure      { display: none; font-size: 24px; text-align: center; }
