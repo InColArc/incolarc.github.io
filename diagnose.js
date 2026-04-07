@@ -294,7 +294,7 @@ function doGravity() {
       const note = miss === 'Kultur' ? 'Compliance ohne Commitment.' : 'Wohlwollen ohne Zuverlässigkeit.';
       h += '<p>' + have + ' hält, aber ' + miss + ' fehlt. ' + note + '</p>';
     } else if (bracesFragile > 0) {
-      h += '<p>Ihre Querstreben sind Zweige. Das hält — bis sich etwas ändert.</p>';
+      h += '<p>Ihre Querstreben halten keine Belastung aus.</p>';
     }
 
     // Walls
@@ -312,22 +312,22 @@ function doGravity() {
 
     // Roof pressure
     if (st.roof !== 0 && (bracesAbsent > 0 || twigs.length >= 2)) {
-      h += '<p>Das Dach drückt die Wände nach außen. Strategie macht es schlimmer.</p>';
+      h += '<p>Das Dach drückt die Wände nach außen</p>';
     }
   }
 
   // Gravity
   h += '<div class="grav-box"><b>Schwerkraft:</b> ';
-  if (gw === 'heavy')         h += 'Hoher Druck. Wo Balken fehlen, drückt die Last auf Menschen.';
+  if (gw === 'heavy')         h += 'Hoher Druck. Wo Strukturen nicht halten, landet die Last auf Menschen.';
   else if (gw === 'moderate') h += 'Mittlere Last. Zweige brechen bei Belastung.';
-  else                        h += 'Relativ stabil. Aber die Struktur wächst nicht mit.';
+  else                        h += 'Stabil! Herzlichen Glückwunsch.';
   h += '</div>';
 
   // Cost externalisation
   h += '<div class="cost-box"><b>Wo landen die Kosten?</b> Jedes fehlende Element bedeutet: ' +
-       'jemand trägt die Last informell. Die Kosten landen bei denen, die sich nicht wehren können.</div>';
+       'jemand trägt die Last informell. Die Mehrarbeit landet bei denen, die sich nicht wehren können.</div>';
 
-  h += '<p class="results-cta"><b>Wer in Ihrer Organisation sollte dieses Haus noch sehen?</b></p>';
+  h += '<p class="results-cta"><b>Fragen? Anregungen? hallo@ankeholst.de</b></p>';
 
   const r = document.getElementById('results');
   r.innerHTML = h;
