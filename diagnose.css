@@ -117,7 +117,7 @@ hr {
 .house-grid {
   display: grid;
   grid-template-columns: 80px 1fr 80px;
-  grid-template-rows: 120px 24px 1fr 24px;
+  grid-template-rows: 120px 40px 1fr 40px;
   gap: 0;
   width: 100%;
   aspect-ratio: 1 / 1.2;
@@ -203,13 +203,29 @@ hr {
 .el img  { max-width: 100%; max-height: 100%; object-fit: contain; }
 
 .h-left img, .h-right img   { height: 160px; width: auto; }
-.h-top img, .h-bottom img   { width: 200px; height: auto; }
+.h-top img, .h-bottom img   { width: 200px; height: auto; max-height: 40px; object-fit: contain; }
 .h-center img                { max-height: 160px; }
 
 /* ── Cross-braces ── */
 .brace-culture, .brace-habits { position: absolute; }
-.brace-habits  { right: 0; top: 0; width: 50%; height: 100%; display: flex; align-items: center; justify-content: center; }
-.brace-culture { left: 0;  top: 0; width: 50%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.brace-habits  { 
+  right: 0; top: 0; 
+  width: 50%; height: 100%; 
+  display: flex; align-items: center; justify-content: center; 
+}
+.brace-habits .el img {
+  transform: rotate(-45deg);
+  transform-origin: center center;
+}
+.brace-culture { 
+  left: 0; top: 0; 
+  width: 50%; height: 100%; 
+  display: flex; align-items: center; justify-content: center; 
+}
+.brace-culture .el img {
+  transform: rotate(45deg);
+  transform-origin: center center;
+}
 
 /* ── Labels ── */
 .el-name {
