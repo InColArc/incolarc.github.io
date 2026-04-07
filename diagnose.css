@@ -221,6 +221,7 @@ hr {
   display: flex; 
   align-items: stretch; 
   justify-content: center; 
+   padding-left: 20px
 }
 
 .h-right { 
@@ -229,6 +230,7 @@ hr {
   display: flex; 
   align-items: stretch; 
   justify-content: center; 
+   padding-right: 20px
 }
 
 /* ── Cross-brace area (center, full height of row 3) ── */
