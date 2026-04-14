@@ -344,6 +344,17 @@ hr {
   height: 180px;
   width: auto;
 }
+.foundation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 2px;
+  text-align: center;
+}
+
+.found img {
+  width: 100%;
+  height: auto;
+}
 
 /* ── Labels ── */
 .el-name {
