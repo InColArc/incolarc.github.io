@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Die Fundament-Diagnose: </title>
+  <link rel="stylesheet" href="diagnose.css">
+</head>
+<body>
+
+<h1>Die Fachwerkhaus-Diagnose</h1>
+<div class="draft-badge">ENTWURF</div>
+
+<div class="intro">
+Dieses Tool richtet sich an Führungskräfte. <br><br>Es untersucht das Fundament Ihrer Organisation: die Governance-Strukturen, auf denen alles andere steht.
+Beantworten Sie Fragen in fünf Kategorien und sehen Sie, ob Ihre Koordinationsinfrastruktur trägt:<br><br>
+
+Entscheidungstransparenz — Erfahren betroffene Menschen von Entscheidungen, bevor sie die Auswirkungen spüren?<br>
+Koordinationsanreize — Wird Zusammenarbeit gemessen und belohnt, oder zählen nur Einzelergebnisse?<br>
+Feedbackinfrastruktur — Können Menschen strukturelle Probleme melden, ohne persönliches Risiko? Passiert danach etwas?<br>
+Verantwortung für Koordinationskosten — Wenn Koordination scheitert: wer trägt die Kosten, und ist das sichtbar?<br>
+Lernfähigkeit der Organisation — Lernt Ihre Organisation aus Projekten und Fehlern, oder startet jedes Vorhaben bei null?<br><br>
+
+Die Fragen testen nicht, ob Menschen an Werte glauben. Sie testen nicht Zufriedenheit. Sie fragen nach beobachtbarem, konkretem Verhalten: Gibt es gestaltete Infrastruktur — oder tragen einzelne Menschen die Last, die Strukturen tragen sollten?
+Jede Antwort beschreibt einen von drei Zuständen:<br><br>
+Stein — Infrastruktur existiert und wird gepflegt.<br>
+Sand — Etwas existiert, aber es hängt an einzelnen Personen, es aufrecht zu halten.<br>
+Luft — Der Wert steht im Leitbild, aber nichts trägt ihn.<br><br>
+
+  Gedanken/Feedback? hallo@ankeholst.de 
+</div>
+<hr>
+
+<div class="main">
+  <div class="questions" id="qPanel"></div>
+
+  <div class="house-side">
+    <div class="house-box">
+      <h3>Ihre Architektur</h3>
+      <div class="house-grid">
+
+        <!-- Roof -->
+        <div class="h-roof-left">
+          <div class="el show" id="v-roof-left"><img src="img/roofleft.png" alt=""></div>
+        </div>
+        <div class="h-roof-center">
+          <div class="roof-label">Führung,<br>strategische Absicht</div>
+        </div>
+        <div class="h-roof-right">
+          <div class="el show" id="v-roof-right"><img src="img/roofright.png" alt=""></div>
+        </div>
+
+        <!-- Top beam -->
+        <div class="h-top">
+          <div>
+            <div class="el" id="v-wall4"><img id="img-wall4" src="" alt=""><div class="el-name">spontane Kommunikation</div></div>
+            <div class="figure" id="fig-wall4"></div>
+          </div>
+        </div>
+
+        <!-- Left pillar -->
+        <div class="h-left">
+          <div>
+            <div class="el" id="v-wall1"><img id="img-wall1" src="img/beam.png" alt=""><div class="el-name">transparente<br>Aufgabenverteilung</div></div>
+            <div class="figure" id="fig-wall1"></div>
+          </div>
+        </div>
+
+        <!-- Cross-braces -->
+        <div class="h-center">
+          <div class="brace-habits">
+            <div>
+              <div class="el" id="v-habits"><img id="img-habits" src="img/beam.png" alt=""><div class="el-name">Gewohnheiten</div></div>
+            </div>
+          </div>
+          <div class="brace-culture">
+            <div>
+              <div class="el" id="v-culture"><img id="img-culture" src="img/beam.png" alt=""><div class="el-name">Kultur</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="figure-center" id="fig-center"><img src="img/figure1.png" alt=""></div>
+
+        <!-- Right pillar -->
+        <div class="h-right">
+          <div>
+            <div class="el" id="v-wall2"><img id="img-wall2" src="img/beam.png" alt=""><div class="el-name">Wissensbibliothek</div></div>
+            <div class="figure" id="fig-wall2"></div>
+          </div>
+        </div>
+
+
+        <!-- Bottom beam -->
+        <div class="h-bottom">
+          <div>
+            <div class="el" id="v-wall3"><img id="img-wall3" src="" alt=""><div class="el-name">Besprechungen</div></div>
+            <div class="figure" id="fig-wall3"></div>
+          </div>
+        </div>
+
+        <div class="foundation">WERTESYSTEM/STANDARDS</div>
+      </div>
+
+      <div class="progress" id="prog">0 / 25</div>
+    </div>
+  </div>
+</div>
+
+<div class="gravity-section" id="gravSec">
+  <button class="gravity-btn" onclick="doGravity()">Schwerkraft einschalten</button>
+</div>
+
+<div class="results" id="results"></div>
+
+<footer>
+  Institute for Collaboration Architecture ·
+  <a href="https://incolarc.com">incolarc.com</a> · 2026 · Entwurf<br>
+  Keine Daten werden gesendet. Alles bleibt im Browser.
+</footer>
+
+<script src="fundament.js"></script>
+</body>
+</html>
