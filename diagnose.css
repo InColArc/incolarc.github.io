@@ -103,6 +103,13 @@ hr {
   border: 2px solid #000;
   padding: 10px;
   background: #fff;
+  overflow: hidden;
+}
+
+.static-house img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
 }
 
 .house-box h3 {
