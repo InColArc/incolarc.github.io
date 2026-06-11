@@ -336,12 +336,14 @@ function doGravity() {
 
   h += '<p class="results-cta"><b>Fragen? Anregungen? hallo@ankeholst.de</b></p>';
 
+  // Export button — must be appended to h BEFORE r.innerHTML = h below.
+  h += '<div class="export-wrap"><button class="export-btn" onclick="exportFachwerkPDF()">' +
+       'Als PDF speichern &amp; weitergeben</button>' +
+       '<span class="export-note">Wird lokal in Ihrem Browser erzeugt. Keine Daten werden gesendet.</span></div>';
+
   const r = document.getElementById('results');
   r.innerHTML = h;
   r.classList.add('show');
-   h += '<div class="export-wrap"><button class="export-btn" onclick="exportFachwerkPDF()">' +
-       'Als PDF speichern &amp; weitergeben</button>' +
-       '<span class="export-note">Wird lokal in Ihrem Browser erzeugt. Keine Daten werden gesendet.</span></div>';
   r.scrollIntoView({ behavior: 'smooth' });
 }
 
