@@ -99,10 +99,9 @@ Tick here so it stops living in one person's head.
 **Fachwerk-Diagnose**
 - [x] German version built and validated (embedded practice + Touchpoint review)
 - [x] Live as a post + link on incolarc.com, house front-and-centre as recognition artwork
-- [ ] **English version** — for international readers arriving via the printed Touchpoint link
-- [ ] Free-text field under each section
-- [ ] Export function (save / share the diagnosis to build alliances)
-- [ ] A designed "next step" — the tool currently leaves the person alone with the insight
+- [ ] **Next iteration — free-text field under each section**
+- [ ] **Next iteration — export result as a PDF and send it on.** This is the designed "next step" so the person is no longer left alone with the insight: a forwardable artefact to build alliances with (the thing the eight-thousand-emails manager could finally send upward). *Keep generation client-side so "Keine Daten werden gesendet" stays true — user generates the PDF and forwards it themselves; no server round-trip.*
+- [ ] English version — for international readers arriving via the printed Touchpoint link
 
 **Fundament-Diagnose**
 - [x] German version built (`fundament.html`), wired onto the static house
