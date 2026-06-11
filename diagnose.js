@@ -179,9 +179,9 @@ function renderSection(sec, isGrav) {
   // data-label = sec.name, so the PDF heading always matches the section.
   if (!isGrav) {
     h += '<div class="freitext-block">' +
-         '<label for="ft-' + sec.id + '">Ihre Notizen zu diesem Bereich</label>' +
+         '<label for="ft-' + sec.id + '">Platz für Ihre Gedanken </label>' +
          '<textarea id="ft-' + sec.id + '" class="freitext" data-label="' + sec.name + '" ' +
-         'rows="3" placeholder="Ein Beispiel, ein konkreter Fall, eine Geschichte aus Ihrem Arbeitsalltag …"></textarea>' +
+         'rows="3" placeholder="Schreiben Sie hier"></textarea>' +
          '</div>';
   }
 
