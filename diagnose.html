@@ -6,9 +6,6 @@
   <title>Die Fachwerkhaus-Diagnose</title>
   <link rel="stylesheet" href="diagnose.css">
 </head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="export.js"></script>
 <body>
 
 <h1>Die Fachwerkhaus-Diagnose</h1>
@@ -118,7 +115,7 @@
         <a href="fundament.html"><div class="foundation">WERTESYSTEM/STANDARDS</div></a>
       </div> <!-- closes house-grid -->
 
-      <div class="progress" id="prog">0 / 25</div>
+      <div class="progress" id="prog">0 / 22</div>
     </div>
   </div>
 </div>
@@ -135,6 +132,10 @@
   Keine Daten werden gesendet. Alles bleibt im Browser.
 </footer>
 
+<!-- Scripts: export deps first, then diagnose.js (which calls exportFachwerkPDF) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="export.js"></script>
 <script src="diagnose.js"></script>
 </body>
 </html>
