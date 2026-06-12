@@ -297,47 +297,13 @@ hr {
    padding-right: 30px
 }
 
-/* ── Cross-braces (Andreaskreuz) ──
-   crossbrace images are horizontal beams (~640×119), so size by WIDTH
-   (the long axis), NOT height. Each brace = bay diagonal, centred,
-   rotated to span corner-to-corner. */
-.brace-culture,
-.brace-habits {
-  position: absolute;
-  inset: 0;                 /* fill the bay; also the label reference box */
-  pointer-events: none;
+/* ── Cross-brace area (center, full height of row 3) ── */
+.h-center { 
+  grid-column: 2; 
+  grid-row: 3; 
+  position: relative; 
+  overflow: hidden;
 }
-
-.brace-culture .el,
-.brace-habits .el {
-  position: absolute;
-  inset: 0;
-}
-
-.brace-culture .el img,
-.brace-habits .el img {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 285px;             /* brace length ≈ bay diagonal (294); 285 keeps tips inside */
-  height: auto;             /* horizontal beam → WIDTH drives length */
-  max-width: none;
-}
-
-.brace-culture .el img { transform: translate(-50%, -50%) rotate(43deg);  }  /* \ */
-.brace-habits  .el img { transform: translate(-50%, -50%) rotate(-43deg); }  /* / */
-
-/* Brace labels at the lower corners, clear of the centre figure */
-.brace-culture .el-name,
-.brace-habits .el-name {
-  position: absolute;
-  bottom: 6px;
-  font-size: 7px;
-  color: #999;
-  white-space: nowrap;
-}
-.brace-culture .el-name { left: 4px; }      /* Kultur — lower left */
-.brace-habits  .el-name { right: 4px; }     /* Gewohnheiten — lower right */
 
 /* ── Floor beam (bottom, full width, no gaps) ── */
 .h-bottom { 
