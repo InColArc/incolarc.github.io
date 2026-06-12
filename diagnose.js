@@ -12,7 +12,7 @@ const IMG = {
   wall3:   { beam: 'img/floor.png',   twig: 'img/floortwig.png' },
   wall4:   { beam: 'img/ceiling.png', twig: 'img/ceilingtwig.png' },
   culture: { beam: 'img/crossbrace1.png',    twig: 'img/twig3.png'  },
-  habits:  { beam: 'img/crossbrace2',    twig: 'img/twig4.png'  }
+  habits:  { beam: 'img/crossbrace2.png',    twig: 'img/twig4.png'  }
 };
 
 // ---------------------------------------------------------------------------
