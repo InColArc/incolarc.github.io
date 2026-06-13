@@ -297,55 +297,12 @@ hr {
    padding-right: 30px
 }
 
-/* ── Cross-braces ──
-   Images are horizontal beams (~5.4:1). They are sized by WIDTH to
-   span the diagonal of the cell, pinned to top-centre, and rotated
-   outward to form an inverted V:
-     habits  → down to the LEFT   (rotate +45deg, origin top-right)
-     culture → down to the RIGHT  (rotate -45deg, origin top-left)
-   The cell (.h-center) is ~150px wide × 200px tall, so the diagonal
-   half-span is ~180px. width:200px gives a beam that reaches the wall.
-*/
-.brace-habits,
-.brace-culture {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-
-.brace-habits .el,
-.brace-culture .el {
-  position: absolute;
-  top: 0;
-}
-
-/* habits: from top-centre down to the left wall */
-.brace-habits .el {
-  right: 0;
-}
-.brace-habits .el img {
-  width: 200px;          /* size by width, not height */
-  height: auto;          /* preserve the beam's real proportions */
-  max-width: none;
-  display: block;
-  transform: rotate(45deg);
-  transform-origin: top right;
-}
-
-/* culture: from top-centre down to the right wall */
-.brace-culture .el {
-  left: 0;
-}
-.brace-culture .el img {
-  width: 200px;
-  height: auto;
-  max-width: none;
-  display: block;
-  transform: rotate(-45deg);
-  transform-origin: top left;
+/* ── Cross-brace area (center, full height of row 3) ── */
+.h-center { 
+  grid-column: 2; 
+  grid-row: 3; 
+  position: relative; 
+  overflow: hidden;
 }
 
 /* ── Floor beam (bottom, full width, no gaps) ── */
