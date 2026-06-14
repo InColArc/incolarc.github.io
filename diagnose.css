@@ -326,7 +326,7 @@ hr {
 
 /* Ceiling and floor beams: stretch full width */
 .h-top .el, .h-bottom .el {
-  width: 100%;
+  width: 94%;
   text-align: center;
 }
 .h-top img, .h-bottom img { 
