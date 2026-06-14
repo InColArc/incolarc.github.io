@@ -63,63 +63,6 @@ hr {
   top: 20px;
 }
 
-/* ── Free-text fields ── */
-.freitext-block {
-  margin: 10px 0 22px;
-  padding-left: 12px;
-}
-
-.freitext-block label {
-  display: block;
-  font-size: 11px;
-  color: #888;
-  margin-bottom: 5px;
-}
-
-.freitext {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  min-height: 70px;
-  padding: 8px;
-  font-family: monospace;
-  font-size: 13px;
-  line-height: 1.5;
-  color: #000;
-  border: 1px solid #ccc;
-  background: #fff;
-  resize: vertical;
-}
-
-.freitext:focus {
-  outline: none;
-  border-color: #000;
-}
-
-/* ── Export button ── */
-.export-wrap { margin-top: 16px; }
-
-.export-btn {
-  font-family: Georgia, serif;
-  font-size: 15px;
-  padding: 7px 18px;
-  border: 2px solid #000;
-  background: #fff;
-  cursor: pointer;
-}
-
-.export-btn:hover {
-  background: #000;
-  color: #fff;
-}
-
-.export-note {
-  display: block;
-  font-size: 11px;
-  color: #aaa;
-  margin-top: 6px;
-}
-
 /* ── Questions ── */
 .section-title {
   font-weight: bold;
@@ -160,13 +103,6 @@ hr {
   border: 2px solid #000;
   padding: 10px;
   background: #fff;
-  overflow: hidden;
-}
-
-.static-house img {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
 }
 
 .house-box h3 {
@@ -177,28 +113,14 @@ hr {
   margin: 0 0 8px;
 }
 
-/* ══════════════════════════════════════════════════
-   HOUSE GRID
-   
-   The house is 320px wide inside the box.
-   We use a fixed-height grid so beams connect 
-   without gaps.
-   
-   Row 1: 140px — roof (rafters + label)
-   Row 2:  28px — ceiling beam
-   Row 3: 200px — walls + cross-braces  
-   Row 4:  28px — floor beam
-   
-   Columns: wall-post | center | wall-post
-   Wall posts overlap into the ceiling/floor rows 
-   via negative margins so there are no gaps.
-   ══════════════════════════════════════════════════ */
+/* ── House grid ── */
 .house-grid {
   display: grid;
-  grid-template-columns: 50px 1fr 50px;
-  grid-template-rows: 140px 28px 200px 28px;
+  grid-template-columns: 80px 1fr 80px;
+  grid-template-rows: 120px 40px 1fr 40px;
   gap: 0;
   width: 100%;
+  aspect-ratio: 1 / 1.2;
   position: relative;
 }
 
@@ -240,7 +162,7 @@ hr {
 }
 
 .h-roof-left .el img {
-  height: 220px;
+  height: 210px;
   width: auto;
   transform: rotate(45deg);
   transform-origin: top left;
@@ -254,7 +176,7 @@ hr {
 }
 
 .h-roof-right .el img {
-  height: 220px;
+  height: 210px;
   width: auto;
   transform: rotate(-45deg);
   transform-origin: top right;
@@ -265,185 +187,53 @@ hr {
   font-size: 10px;
   color: #666;
   line-height: 1.4;
-  margin-top: 80px;
+  margin-top: 100px;
 }
 
-/* ── Ceiling beam (top, full width, no gaps) ── */
-.h-top { 
-  grid-column: 1 / 4; 
-  grid-row: 2; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  z-index: 1;
-}
-
-/* ── Wall posts (vertical, full height of row 3) ── */
-.h-left { 
-  grid-column: 1; 
-  grid-row: 3; 
-  display: flex; 
-  align-items: stretch; 
-  justify-content: center;
-   padding-left: 30px
-}
-
-.h-right { 
-  grid-column: 3; 
-  grid-row: 3; 
-  display: flex; 
-  align-items: stretch; 
-  justify-content: center;
-   padding-right: 30px
-}
-
-/* ── Cross-brace area (center, full height of row 3) ── */
-.h-center { 
-  grid-column: 2; 
-  grid-row: 3; 
-  position: relative; 
-  overflow: hidden;
-}
-
-/* ── Floor beam (bottom, full width, no gaps) ── */
-.h-bottom { 
-  grid-column: 1 / 4; 
-  grid-row: 4; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center;
-}
+/* ── Walls and beams ── */
+.h-top    { grid-column: 1 / 4; grid-row: 2; display: flex; align-items: center; justify-content: center; z-index: 1; }
+.h-left   { grid-column: 1;     grid-row: 3; display: flex; align-items: center; justify-content: center; }
+.h-center { grid-column: 2;     grid-row: 3; position: relative; display: flex; align-items: center; justify-content: center; }
+.h-right  { grid-column: 3;     grid-row: 3; display: flex; align-items: center; justify-content: center; }
+.h-bottom { grid-column: 1 / 4; grid-row: 4; display: flex; align-items: center; justify-content: center; }
 
 /* ── Element states ── */
 .el      { opacity: 0; transition: opacity .3s; }
 .el.show { opacity: 1; }
-.el img  { object-fit: contain; }
+.el img  { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-/* Wall posts: stretch full height of their cell */
-.h-left .el, .h-right .el { 
-  display: flex; 
-  flex-direction: column; 
-  align-items: center; 
-  height: 100%; 
-}
-.h-left img, .h-right img { 
-  height: 100%; 
-  width: auto; 
-  max-width: 50px;
-}
+.h-left img, .h-right img   { height: 160px; width: auto; }
+.h-top img, .h-bottom img   { width: 200px; height: auto; max-height: 40px; object-fit: contain; }
+.h-center img                { max-height: 160px; }
 
-/* Ceiling and floor beams: stretch full width */
-.h-top .el, .h-bottom .el {
-  width: 100%;
-  text-align: center;
-}
-.h-top img, .h-bottom img { 
-  width: 100%; 
-  height: 28px; 
-  object-fit: fill;
-}
-
-/* ── Cross-braces ── 
-   Both braces originate alongside each other from the center of the ceiling beam.
-   Culture: from center-top down to left wall  (/)
-   Habits:  from center-top down to right wall (\)
-   Both at 45 degrees.
-*/
-.brace-culture { 
-  position: absolute;
-  left: 40%; 
-  top: 0; 
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-.brace-culture .el {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.brace-culture .el img {
-  height: 260px;
-  width: auto;
-  max-width: none;
-  transform: rotate(-45deg);
-  transform-origin: top center;
-}
-
-.brace-habits { 
-  position: absolute;
-  left: 40%; 
-  top: 0; 
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-.brace-habits .el {
-  position: absolute;
-  top: 0;
-  left: 0;
+/* ── Cross-braces ── */
+.brace-culture, .brace-habits { position: absolute; }
+.brace-habits  { 
+  right: 100; top: 100; 
+  width: 50%; height: 100%; 
+  display: flex; align-items: center; justify-content: center; 
 }
 .brace-habits .el img {
-  height: 260px;
-  width: auto;
-  max-width: none;
+  transform: rotate(-45deg);
+  transform-origin: center center;
+}
+.brace-culture { 
+  left: 100; top: 100; 
+  width: 50%; height: 100%; 
+  display: flex; align-items: center; justify-content: center; 
+}
+.brace-culture .el img {
   transform: rotate(45deg);
-  transform-origin: top center;
-}
-
-/* Cross-brace images */
-.h-center img { max-height: none; }
-
-/* ── Center figure (appears on gravity) ── */
-.figure-center { 
-  display: none; 
-  position: absolute; 
-  bottom: 0; 
-  left: 50%; 
-  transform: translateX(-50%); 
-  z-index: 5; 
-}
-.figure-center.show { display: block; }
-.figure-center img {
-  height: 180px;
-  width: auto;
-}
-.foundation-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  gap: 2px;
-  text-align: center;
-}
-
-.found img {
-  width: 100%;
-  height: auto;
+  transform-origin: center center;
 }
 
 /* ── Labels ── */
 .el-name {
-  font-size: 8px;
+  font-size: 9px;
   color: #999;
   text-align: center;
   margin-top: 2px;
 }
-
-/* Labels on walls: below the post */
-.h-left .el-name, .h-right .el-name {
-  font-size: 7px;
-  white-space: nowrap;
-}
-
-/* Labels on cross-braces: positioned at bottom of center area */
-.brace-habits .el-name,
-.brace-culture .el-name {
-  position: absolute;
-  bottom: -14px;
-  font-size: 7px;
-  white-space: nowrap;
-}
-.brace-culture .el-name { left: 0; }
-.brace-habits .el-name { right: 0; }
 
 /* ── Absent element placeholder ── */
 .figure      { display: none; font-size: 24px; text-align: center; }
