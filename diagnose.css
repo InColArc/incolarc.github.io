@@ -297,57 +297,6 @@ hr {
    padding-right: 30px
 }
 
-/* ── Cross-braces ──
-   Images are horizontal beams (~5.4:1). They are sized by WIDTH to
-   span the diagonal of the cell, pinned to top-centre, and rotated
-   outward to form an inverted V:
-     habits  → down to the LEFT   (rotate +45deg, origin top-right)
-     culture → down to the RIGHT  (rotate -45deg, origin top-left)
-   The cell (.h-center) is ~150px wide × 200px tall, so the diagonal
-   half-span is ~180px. width:200px gives a beam that reaches the wall.
-*/
-.brace-habits,
-.brace-culture {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-
-.brace-habits .el,
-.brace-culture .el {
-  position: absolute;
-  top: 0;
-}
-
-/* habits: from top-centre down to the left wall */
-.brace-habits .el {
-  right: 0;
-}
-.brace-habits .el img {
-  width: 200px;          /* size by width, not height */
-  height: auto;          /* preserve the beam's real proportions */
-  max-width: none;
-  display: block;
-  transform: rotate(45deg);
-  transform-origin: top right;
-}
-
-/* culture: from top-centre down to the right wall */
-.brace-culture .el {
-  left: 0;
-}
-.brace-culture .el img {
-  width: 200px;
-  height: auto;
-  max-width: none;
-  display: block;
-  transform: rotate(-45deg);
-  transform-origin: top left;
-}
-
 /* ── Floor beam (bottom, full width, no gaps) ── */
 .h-bottom { 
   grid-column: 1 / 4; 
@@ -386,56 +335,82 @@ hr {
   object-fit: fill;
 }
 
-/* ── Cross-braces ── 
-   Both braces originate alongside each other from the center of the ceiling beam.
-   Culture: from center-top down to left wall  (/)
-   Habits:  from center-top down to right wall (\)
-   Both at 45 degrees.
-*/
-.brace-culture { 
+/* ── Cross-brace area (center, full height of row 3) ── */
+.h-center {
+  grid-column: 2;
+  grid-row: 3;
+  position: relative;
+  overflow: visible;            /* braces splay out to the walls; never clip */
+
+  /* ── brace tuning knobs ──
+     --brace-len     : strut length (sizes by WIDTH, height auto → line weight preserved)
+     --apex-y        : nudge the shared apex up/down under the ceiling beam
+     --tip-slide     : outward slide (× length) so the tips touch instead of crossing
+     --label-drop    : caption vertical position (× length); lower = higher up the strut
+     --label-spread  : caption distance from centre (× length); lower = closer to centre
+  */
+  --brace-len: 165px;
+  --apex-y: -18px;
+  --tip-slide: 0.13;
+  --label-drop: 0.65;
+  --label-spread: 0.41;
+}
+
+/* ══════════════════════════════════════════════════
+   CROSS-BRACES
+
+   Authored as horizontal beam PNGs (long axis horizontal).
+   Placed as an inverted-V knee brace: both struts spring from a
+   shared apex at top-centre (under the ceiling beam) and splay
+   down-and-out to the walls.
+
+     habits  → down-LEFT  "/"   crossbrace1.png
+     culture → down-RIGHT "\"   crossbrace2.png
+
+   Sized by WIDTH (= strut length) with height:auto, so the drawn
+   proportions and line weight are preserved. Each strut slides
+   outward by (--tip-slide × length) so the tips meet rather than
+   cross. Tune via the variables on .h-center above — nothing here
+   depends on a specific image dimension.
+   ══════════════════════════════════════════════════ */
+.brace-habits,
+.brace-culture {
   position: absolute;
-  left: 40%; 
-  top: 0; 
+  top: var(--apex-y);
+  left: 50%;
   width: 0;
   height: 0;
   pointer-events: none;
 }
+
+.brace-habits .el,
 .brace-culture .el {
   position: absolute;
   top: 0;
-  left: 0;
+  display: block;
 }
+
+.brace-habits .el img,
 .brace-culture .el img {
-  height: 260px;
-  width: auto;
+  width: var(--brace-len);
+  height: auto;
   max-width: none;
-  transform: rotate(-45deg);
-  transform-origin: top center;
+  display: block;
 }
 
-.brace-habits { 
-  position: absolute;
-  left: 40%; 
-  top: 0; 
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-.brace-habits .el {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
+/* Habits: down-left — pin top-right corner at apex, rotate, slide left */
+.brace-habits .el { right: 0; }
 .brace-habits .el img {
-  height: 260px;
-  width: auto;
-  max-width: none;
-  transform: rotate(45deg);
-  transform-origin: top center;
+  transform: translateX(calc(var(--brace-len) * var(--tip-slide) * -1)) rotate(-45deg);
+  transform-origin: top right;
 }
 
-/* Cross-brace images */
-.h-center img { max-height: none; }
+/* Culture: down-right — pin top-left corner at apex, rotate, slide right */
+.brace-culture .el { left: 0; }
+.brace-culture .el img {
+  transform: translateX(calc(var(--brace-len) * var(--tip-slide))) rotate(45deg);
+  transform-origin: top left;
+}
 
 /* ── Center figure (appears on gravity) ── */
 .figure-center { 
@@ -477,16 +452,19 @@ hr {
   white-space: nowrap;
 }
 
-/* Labels on cross-braces: positioned at bottom of center area */
+/* Labels on cross-braces: centred UNDER each strut's foot */
 .brace-habits .el-name,
 .brace-culture .el-name {
   position: absolute;
-  bottom: -14px;
   font-size: 7px;
+  color: #999;
   white-space: nowrap;
+  text-align: center;
+  transform: translate(-50%, 0);          /* centre horizontally on the foot */
+  top: calc(var(--brace-len) * var(--label-drop));
 }
-.brace-culture .el-name { left: 0; }
-.brace-habits .el-name { right: 0; }
+.brace-habits .el-name  { left: calc(var(--brace-len) * (1 - var(--label-spread))); }
+.brace-culture .el-name { left: calc(var(--brace-len) * var(--label-spread)); }
 
 /* ── Absent element placeholder ── */
 .figure      { display: none; font-size: 24px; text-align: center; }
