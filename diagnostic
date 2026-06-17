@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Timber-Frame Diagnostic</title>
+  <link rel="stylesheet" href="diagnose.css">
+</head>
+<body>
+
+<h1>The Timber-Frame Diagnostic</h1>
+<div class="draft-badge">DRAFT</div>
+<div class="lang-switch" style="font-size:11px;margin-bottom:16px;"><a href="diagnose.html">Auf Deutsch</a></div>
+
+<div class="intro">
+  Drowning in information every day, yet never the right piece to hand?
+  Days full of meetings? Knowledge walks out the door when colleagues leave the team?
+  No one asks for your knowledge — and now AI is supposed to fix it?<br><br>
+
+  This is not a communication problem that motivation, training, coaching,
+  team-building or resilience workshops can solve. This problem is structural.
+  In most organisations, the knowledge infrastructure was never deliberately designed.<br><br>
+
+  <b>Collaboration Architecture</b> makes knowledge infrastructure visible — as
+  a technical timber frame: digital tools that, combined into load-bearing structures,
+  form our working environment. In this user-centred view, the tools are arranged by
+  function. Culture and habits hold the whole together as cross-braces.<br><br>
+
+  <b>How the diagnostic works:</b> Answer the questions about your work.
+  Under each section you will find a free-text field for your own notes. What you write
+  stays in your browser until you actively choose to export it.<br><br>
+
+  When every question is answered, the &bdquo;Gravity&ldquo; button appears. Switch on
+  gravity — and you will see whether your structure holds under real operational
+  pressure, or gives way.<br><br>
+
+  If you like, you can export your result as a PDF, save it, and pass it on.
+  The finding is not an endpoint. It is the starting point for designing
+  working structures together.<br><br>
+
+  Thoughts or feedback? Write to
+  <a href="mailto:hallo@ankeholst.de">hallo@ankeholst.de</a>.
+</div>
+<hr>
+
+<div class="main">
+  <div class="questions" id="qPanel"></div>
+
+  <div class="house-side">
+    <div class="house-box">
+      <h3>Your architecture</h3>
+      <div class="house-grid">
+
+        <!-- Roof -->
+        <div class="h-roof-left">
+          <div class="el show" id="v-roof-left"><img src="img/roofleft.png" alt=""></div>
+        </div>
+        <div class="h-roof-center">
+          <div class="roof-label">Workload,<br>operational pressure</div>
+        </div>
+        <div class="h-roof-right">
+          <div class="el show" id="v-roof-right"><img src="img/roofright.png" alt=""></div>
+        </div>
+
+        <!-- Top beam -->
+        <div class="h-top">
+          <div>
+            <div class="el" id="v-wall4"><img id="img-wall4" src="" alt=""><div class="el-name">informal communication</div></div>
+            <div class="figure" id="fig-wall4"></div>
+          </div>
+        </div>
+
+        <!-- Left pillar -->
+        <div class="h-left">
+          <div>
+            <div class="el" id="v-wall1"><img id="img-wall1" src="img/beam.png" alt=""><div class="el-name">transparent<br>task allocation</div></div>
+            <div class="figure" id="fig-wall1"></div>
+          </div>
+        </div>
+
+        <!-- Cross-braces -->
+        <div class="h-center">
+          <div class="brace-habits">
+            <div>
+              <div class="el" id="v-habits"><img id="img-habits" src="img/crossbrace1.png" alt=""><div class="el-name">Habits</div></div>
+            </div>
+          </div>
+          <div class="brace-culture">
+            <div>
+              <div class="el" id="v-culture"><img id="img-culture" src="img/crossbrace2.png" alt=""><div class="el-name">Culture</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="figure-center" id="fig-center"><img src="img/figure1.png" alt=""></div>
+
+        <!-- Right pillar -->
+        <div class="h-right">
+          <div>
+            <div class="el" id="v-wall2"><img id="img-wall2" src="img/beam.png" alt=""><div class="el-name">Knowledge library</div></div>
+            <div class="figure" id="fig-wall2"></div>
+          </div>
+        </div>
+
+
+       <!-- Bottom beam -->
+        <div class="h-bottom">
+          <div>
+            <div class="el" id="v-wall3"><img id="img-wall3" src="" alt=""><div class="el-name">Meetings</div></div>
+            <div class="figure" id="fig-wall3"></div>
+          </div>
+        </div>
+
+      </div> <!-- closes house-grid -->
+
+      <div class="progress" id="prog">0 / 22</div>
+    </div>
+  </div>
+</div>
+
+<div class="gravity-section" id="gravSec">
+  <button class="gravity-btn" onclick="doGravity()">Switch on gravity</button>
+</div>
+
+<div class="results" id="results"></div>
+
+<footer>
+  Institute for Collaboration Architecture ·
+  <a href="https://incolarc.com">incolarc.com</a> · 2026 · Draft<br>
+  No data is sent. Everything stays in the browser.
+</footer>
+
+<!-- Scripts: export deps first, then diagnose-en.js (which calls exportFachwerkPDF) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="export-en.js"></script>
+<script src="diagnose-en.js"></script>
+</body>
+</html>
