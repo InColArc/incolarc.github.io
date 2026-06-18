@@ -351,7 +351,7 @@ hr {
   */
   --brace-len: 165px;
   --apex-y: -18px;
-  --tip-slide: 0.15;
+  --tip-slide: 0.10;
   --label-drop: 0.65;
   --label-spread: 0.41;
 }
